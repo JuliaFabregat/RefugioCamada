@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-03-2025 a las 16:47:42
+-- Tiempo de generación: 21-04-2025 a las 19:43:42
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -29,13 +29,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `animales` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `especie` varchar(50) NOT NULL,
-  `raza` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) NOT NULL,
   `edad` varchar(255) DEFAULT NULL,
   `genero` varchar(10) DEFAULT NULL,
+  `estado` varchar(250) NOT NULL,
   `joined` timestamp NOT NULL DEFAULT current_timestamp(),
   `especie_id` int(11) DEFAULT NULL,
+  `raza_id` int(11) DEFAULT NULL,
+  `vet_data_id` int(11) NOT NULL,
   `imagen_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -43,14 +44,10 @@ CREATE TABLE `animales` (
 -- Volcado de datos para la tabla `animales`
 --
 
-INSERT INTO `animales` (`id`, `nombre`, `especie`, `raza`, `edad`, `genero`, `joined`, `especie_id`, `imagen_id`) VALUES
-(1, 'Algodón', 'Gato', 'Siamés', '1 año', 'Macho', '2025-03-11 08:36:49', 2, 1),
-(2, 'Apicho', 'Mapache', 'Común', '2 años', 'Macho', '2025-03-11 08:36:49', 6, 2),
-(3, 'Lola', 'Perro', 'Yorkshire Terrier', '4 años', 'Hembra', '2025-03-11 08:36:49', 1, 3),
-(5, 'Marlino', 'Perro', 'Pug', '11 meses', 'Macho', '2025-03-11 08:36:49', 1, 5),
-(6, 'Luisito', 'Gato', 'Naranja Comun', '3 meses', 'Macho', '2025-03-11 11:59:36', 2, 10),
-(10, 'Phynx', 'Gato', 'Esfinge', '1 año', 'Macho', '2025-03-11 13:25:34', 2, 14),
-(13, 'Warrior', 'Perro', 'Beagle', '2 años', 'Macho', '2025-03-11 14:25:26', 1, 17);
+INSERT INTO `animales` (`id`, `nombre`, `edad`, `genero`, `estado`, `joined`, `especie_id`, `raza_id`, `vet_data_id`, `imagen_id`) VALUES
+(23, 'Warrior', 'Cachorro (6 meses)', 'Macho', 'Disponible', '2025-04-15 07:18:11', 1, 3, 5, 28),
+(24, 'Jinx', 'Joven (2 a&ntilde;os y 1 mes)', 'Hembra', 'Disponible', '2025-04-15 08:02:39', 2, 2, 6, 29),
+(25, 'Apicho', 'Adulto (4 a&ntilde;os)', 'Macho', 'Disponible', '2025-04-16 07:28:54', 6, 4, 7, 30);
 
 -- --------------------------------------------------------
 
@@ -93,13 +90,54 @@ CREATE TABLE `imagenes` (
 --
 
 INSERT INTO `imagenes` (`id`, `imagen`, `alt`) VALUES
-(1, 'algodon.jpg', 'Gato: Siamés.'),
-(2, 'apicho.jpg', 'Mapache'),
-(3, 'lola.jpg', 'Perro: Yorkshire Terrier'),
-(5, 'marlino.jpg', 'Perro: Pug'),
-(10, 'luis.jpg', 'Gato: Común Naranja'),
-(14, 'phynx.jpg', 'Gato: Esfinge gris'),
-(17, 'warrior.jpg', 'Perro: Beagle');
+(28, 'warrior_67fe083363e5d.jpg', 'Perro: Labrador'),
+(29, 'jinx_67fe129f8b274.jpg', 'Gato: Azul Ruso'),
+(30, 'apicho_67ff5c364dbe8.jpg', 'Mapache: Común');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `raza`
+--
+
+CREATE TABLE `raza` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `especie_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `raza`
+--
+
+INSERT INTO `raza` (`id`, `nombre`, `especie_id`) VALUES
+(1, 'Calico', 2),
+(2, 'Azul Ruso', 2),
+(3, 'Labrador', 1),
+(4, 'Com&uacute;n Silvestre', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vet_data`
+--
+
+CREATE TABLE `vet_data` (
+  `id` int(11) NOT NULL,
+  `microchip` tinyint(1) DEFAULT NULL,
+  `castracion` tinyint(1) DEFAULT NULL,
+  `vacunas` varchar(250) DEFAULT NULL,
+  `info_adicional` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `vet_data`
+--
+
+INSERT INTO `vet_data` (`id`, `microchip`, `castracion`, `vacunas`, `info_adicional`) VALUES
+(5, 0, 0, 'N/E', 'N/E'),
+(6, 1, 0, 'Rabia', 'N/E'),
+(7, 0, 0, 'N/E', 'N/E');
 
 --
 -- Índices para tablas volcadas
@@ -110,8 +148,10 @@ INSERT INTO `imagenes` (`id`, `imagen`, `alt`) VALUES
 --
 ALTER TABLE `animales`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `especie_id` (`especie_id`),
-  ADD KEY `imagen_id` (`imagen_id`);
+  ADD KEY `fk_animales_especie` (`especie_id`),
+  ADD KEY `fk_animales_imagen` (`imagen_id`),
+  ADD KEY `fk_animales_raza` (`raza_id`),
+  ADD KEY `fk_animales_vet_data` (`vet_data_id`);
 
 --
 -- Indices de la tabla `especies`
@@ -127,6 +167,19 @@ ALTER TABLE `imagenes`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `raza`
+--
+ALTER TABLE `raza`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `raza_especie_id` (`especie_id`);
+
+--
+-- Indices de la tabla `vet_data`
+--
+ALTER TABLE `vet_data`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -134,7 +187,7 @@ ALTER TABLE `imagenes`
 -- AUTO_INCREMENT de la tabla `animales`
 --
 ALTER TABLE `animales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `especies`
@@ -146,7 +199,19 @@ ALTER TABLE `especies`
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT de la tabla `raza`
+--
+ALTER TABLE `raza`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `vet_data`
+--
+ALTER TABLE `vet_data`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -156,8 +221,16 @@ ALTER TABLE `imagenes`
 -- Filtros para la tabla `animales`
 --
 ALTER TABLE `animales`
-  ADD CONSTRAINT `animales_ibfk_1` FOREIGN KEY (`especie_id`) REFERENCES `especies` (`id`),
-  ADD CONSTRAINT `animales_ibfk_2` FOREIGN KEY (`imagen_id`) REFERENCES `imagenes` (`id`);
+  ADD CONSTRAINT `fk_animales_especie` FOREIGN KEY (`especie_id`) REFERENCES `especies` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_animales_imagen` FOREIGN KEY (`imagen_id`) REFERENCES `imagenes` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_animales_raza` FOREIGN KEY (`raza_id`) REFERENCES `raza` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_animales_vet_data` FOREIGN KEY (`vet_data_id`) REFERENCES `vet_data` (`id`);
+
+--
+-- Filtros para la tabla `raza`
+--
+ALTER TABLE `raza`
+  ADD CONSTRAINT `raza_especie_id` FOREIGN KEY (`especie_id`) REFERENCES `especies` (`id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

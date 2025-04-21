@@ -446,7 +446,6 @@ textarea#content {
 }
 
 .form-search .btn {
-  -webkit-appearance: none;
   border-radius: 0 4px 4px 0;
   font-size: 1rem;
 }
@@ -521,7 +520,6 @@ nav.pagination {
   font-family: "icons";
   font-style: normal;
   font-weight: normal;
-  speak: never;
   display: inline-block;
   text-decoration: none;
   width: 1em;
