@@ -20,8 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('finalConfirmBtn').addEventListener('click', () => {
-        if (animalIdToDelete) {
-            window.location.href = `eliminar-animal.php?id=${animalIdToDelete}`;
-        }
+        if (animalIdToDelete) window.location.href = `eliminar-animal.php?id=${animalIdToDelete}`;
     });
 });

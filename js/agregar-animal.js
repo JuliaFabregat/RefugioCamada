@@ -10,11 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Mostrar u ocultar la ficha veterinaria dependiendo del estado del checkbox
     checkbox.addEventListener('change', function () {
-        if (checkbox.checked) {
-            fichaVeterinaria.style.display = 'block';
-        } else {
-            fichaVeterinaria.style.display = 'none';
-        }
+        fichaVeterinaria.style.display = checkbox.checked ? 'block' : 'none';
     });
 
     // Asegurarse de que el estado inicial sea correcto

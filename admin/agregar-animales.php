@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validación - Edad
     $errors['edad'] = is_age_valid($animal['edad']) 
-        ? '' : 'Debe introducir una edad aproximada. Formato: "2 años", "11 meses".';
+        ? '' : 'Debe introducir una edad aproximada. Formato: "Joven(2 años)", "Cachorro(11 meses)".';
 
     // Validación - Imagen
     if (!empty($_FILES['imagen']['name'])) {

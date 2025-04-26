@@ -25,5 +25,10 @@ function is_imagen_valida(array $imagen): bool {
 }
 
 function is_age_valid(string $age): bool {
-    return preg_match('/^\d+\s+(años|año|meses|mes|semanas|semana|días|día)$/i', $age) === 1;
+    $age = trim($age);
+    // Aceptamos 2 formatos: 5 meses o Cachorro(5 meses)
+    return preg_match(
+        '/^[\p{L}\s]*\(?\d+\s+(?:años?|meses?|semanas?|días?)\)?$/iu',
+        $age
+    ) === 1;
 }

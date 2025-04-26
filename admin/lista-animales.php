@@ -161,7 +161,7 @@ $section = 'listaAnimales';
                     </button>
                 </div>
                 <div class="modal-body">
-                    Esta acción es irreversible. ¿Realmente deseas eliminar a <span id="animalNombreModalFinal"></span>?
+                    <span id="animalNombreModalFinal">Esta acción es irreversible. ¿Realmente deseas eliminar a </span>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

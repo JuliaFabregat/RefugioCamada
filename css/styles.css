@@ -1,3 +1,23 @@
+/* IMPORT */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+
+/**********************/
+/* PALETA  */
+/**********************/
+:root {
+  --color-primary: #344e41;
+  --color-accent:  #588157;
+  --color-bg:   #f2f2f2;
+  --color-dark:    #2b2b2b;
+  --color-white:   #ffffff;
+  --color-danger:  #9a031e;
+
+  /* Tipografía y otros */
+  --font-base:       'Nunito', sans-serif;
+  --radius:          8px;
+  --transition-fast: 0.3s ease;
+}
+
 /**********************/
 /* ESTILOS GENERALES  */
 /**********************/
@@ -8,34 +28,35 @@
 
 body {
   margin: 0;
-  color: #666;
-  background-color: #f2f2f2;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  background-color: var(--color-bg);
+  font-family: var(--font-base);
   font-size: 100%;
 }
 
 a {
-  color: #588157;
-  text-decoration: none;
+  color: var(--color-accent);
 }
 
-a:hover{
+/* a:hover{
   color: #2b2b2b;
-}
+} */
 
 /* H's */
 h1 {
-  font-size: 1.8em;
+  font-size: 2em;
+  font-weight: 600;
+  color: var(--color-primary);
 }
 
-h1, h2 {
-  font-weight: 600;
-  margin: 0 0 0.14em 0;
+h2{
+  font-size: 1.8rem;
+  color: var(--color-accent);
 }
 
 /* P */
 p {
   margin: 0 0 1em 0;
+  color: var(--color-primary);
 }
 
 .date, p.credit, p.member {
@@ -70,33 +91,27 @@ article.summary p {
 }
 
 /* animal.php - Info de cada Animal */
-.details{
+.details {
   margin-top: 20px;
-
-  h1{
-    color: #c494e0;
-  }
-
-  .metadata{
-    margin-top: 20px;
-  }
-
-  .description{
-
-    h3{
-      padding-top: 20px;
-      color: #c494e0;
-    }
-  }
+}
+.details h1 {
+  color: var(--color-accent);
+}
+.details .metadata {
+  margin-top: 20px;
+}
+.details .description h3 {
+  padding-top: 20px;
+  color: var(--color-accent);
 }
 
 /**********************/
-/* 2: HEADER + FOOTER */
+/* HEADER + FOOTER    */
 /**********************/
 header {
-  background-color: #588157;
+  background-color: var(--color-primary);
   padding: 1rem 2rem;
-  color: white;
+  color:var(--color-white);
 }
 
 header .container {
@@ -111,6 +126,9 @@ header .container {
   max-height: 40px;
 }
 
+/**********************/
+/* NAV                */
+/**********************/
 nav ul {
   display: flex;
   align-items: center;
@@ -121,26 +139,42 @@ nav ul {
 }
 
 nav ul li a {
-  color: white;
+  position: relative;
+  display: inline-block;
+  padding: 0.4rem 0.7rem;
   font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s ease;
+  color: var(--color-white);
+  font-weight: bold;
+  text-decoration: none !important;
+
+  border-bottom: 2px solid var(--color-white);
+
+  background-image: linear-gradient(white, white);
+  background-repeat: no-repeat;
+  background-size: 100% 0%;
+  background-position: bottom;
+  transition: background-size 0.3s ease, color 0.3s ease;
 }
 
-nav ul li a:hover,
+nav ul li a:hover {
+  background-size: 100% 100%;
+  color: var(--color-accent);
+  border-bottom-color: transparent;
+}
+
 nav ul li a.on {
-  background-color: #ffffff;
-  color: #588157;
-  border: 1px solid #588157;
-  border-radius: 8px;
-  padding: 0.4rem 0.7rem;
+  background-size: 100% 100%;
+  color: var(--color-accent);
+  border-bottom-color: transparent;
 }
 
 nav ul li .btn-danger {
   padding: 0.4rem 0.7rem;
   font-size: 0.9rem;
   border-radius: 6px;
+  font-weight: bold;
 }
+
 
 /* Botón hamburguesa */
 .menu-toggle {
@@ -148,11 +182,11 @@ nav ul li .btn-danger {
   font-size: 1.8rem;
   background: none;
   border: none;
-  color: white;
+  color: var(--color-white);
   cursor: pointer;
 }
 
-/* Responsive */
+/* NAV Responsive */
 @media (max-width: 768px) {
   nav {
     width: 100%;
@@ -177,8 +211,103 @@ nav ul li .btn-danger {
 
 
 /**********************/
-/*   3: LAYOUT    */
+/* ADMIN - index.php   */
 /**********************/
+.admin-dashboard {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.dashboard-main {
+  margin-top: 2rem;
+  flex: 1 1 auto;
+
+  h2{
+    margin-top: 1rem;
+  }
+}
+
+.dashboard-sidebar {
+  margin-top: 2rem;
+  flex: 0 0 250px;
+  max-width: 250px;
+  background: var(--color-bg);
+  border: 1px solid #cfcfcf;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.dashboard-sidebar ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.dashboard-sidebar ul li{
+  color: var(--color-primary);
+}
+
+.ultimos-animales {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.animal-card {
+  background: var(--color-white);
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  padding: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  will-change: transform, box-shadow;
+}
+
+.animal-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.animal-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.animal-card h3 {
+  margin-top: 1rem;
+  color: var(--color-accent) !important;
+}
+
+.animal-card:hover h3,
+.animal-card a:hover h3 {
+  color: var(--color-accent) !important;
+  text-decoration: none !important;
+}
+
+.animal-card p {
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.animal-card a,
+.animal-card a * {
+  text-decoration: none !important;
+}
+
+.animal-card a:hover,
+.animal-card a:hover * {
+  text-decoration: none !important;
+}
+
+
+
+/* idk */
 
 .container {    
   margin: 0 auto 0 auto;
@@ -244,33 +373,6 @@ article.summary p {
   line-height: 1.5em;
 }
 
-
-/* Styles are for top of category, member and admin list pages */
-.header {
-  text-align: center;
-  margin-bottom: 2em;
-  text-transform: uppercase;
-}
-
-.header h1 {
-  color: #295073;
-  border: 3px solid #295073;
-  letter-spacing: 0.1em;
-  display: inline-block;
-  padding: .2em .5em;
-}
-
-.header p {
-  font-size: 80%;
-  padding-top: .5em;
-  position: relative;
-}
-
-.header img {
-  max-width: 70px;
-  border-radius: 50%;
-}
-
 /*************************/
 /* 5: FORMS & PAGINATION */
 /*************************/
@@ -328,12 +430,12 @@ button, input, optgroup, select, textarea {
 }
 
 .btn-danger {
-  background-color: #dc3545;
-  border-color: #dc3545;
+  background-color: var(--color-danger);
+  border-color: var(--color-danger);
 }
 .btn-danger:hover {
-  background-color: #c82333;
-  border-color: #bd2130
+  background-color: var(--color-danger);
+  border-color: var(--color-danger)
 }
 
 .form-control {
@@ -388,7 +490,7 @@ input[type=submit]:hover {
 }
 
 .errors {
-  color: #ae2000;
+  color: var(--color-danger);
   font-weight: bold;
 }
 
@@ -551,7 +653,7 @@ nav.pagination {
 
 /* Estilos para cada animal */
 .summary {
-  background: #f5f5f5;
+  background: var(--color-bg);
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -582,11 +684,15 @@ nav.pagination {
 .table th, .table td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--color-white);
 }
 
 .table th {
-  background-color: #f5f5f5;
+  background-color: var(--color-bg);
+}
+
+.table tr {
+  border-bottom: 2px solid gainsboro;
 }
 
 .thumbnail {
@@ -607,25 +713,25 @@ nav.pagination {
 }
 
 .edit {
-  background-color: #588157;
+  background-color: var(--color-accent);
 }
 
 .delete {
-  background-color: #dc3545;
+  background-color: var(--color-danger);
 }
 
 .secondary {
-  background-color: #2b2b2b;
+  background-color: var(--color-dark);
 }
 
 .secondary:hover {
-  background-color: #c494e0;
-  color: #f5f5f5;
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }
 
 .alert.success {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: var(--color-white);
+  color: var(--color-primary);
   padding: 1em;
   border-radius: 5px;
   margin-bottom: 1em;
@@ -639,19 +745,19 @@ nav.pagination {
   max-width: 400px;
   margin: 5% auto;
   padding: 2em;
-  background-color: #fff;
+  background-color: var(--color-bg);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 .login-container h1 {
-  color: #2b2b2b;
+  color: var(--color-dark);
   font-size: 1.6em;
   margin-bottom: 1.5em;
 }
 .login-container h2 {
-  color: #588157;
+  color: var(--color-accent);
   font-size: 16pxem;
   margin-bottom: 1.5em;
 }
@@ -666,8 +772,8 @@ nav.pagination {
 }
 
 .login-container button {
-  background-color: #588157;
-  color: white;
+  background-color: var(--color-accent);
+  color: var(--color-white);
   border: none;
   padding: 0.75rem;
   width: 100%;
@@ -678,10 +784,10 @@ nav.pagination {
 }
 
 .login-container button:hover {
-  background-color: #588157;
+  background-color: var(--color-accent);
 }
 
 .login-container .error {
-  color: #f23838;
+  color: var(--color-danger);
   margin-top: 1em;
 }

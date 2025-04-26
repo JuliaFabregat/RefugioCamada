@@ -11,7 +11,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 
-// Consulta para obtener los animales ordenados por más recientes
+// Consulta: últimos 3 animales refugiados
 $sql = "SELECT 
             a.id, 
             a.nombre, 
@@ -26,15 +26,25 @@ $sql = "SELECT
         JOIN especies AS e ON a.especie_id = e.id
         JOIN raza AS r ON a.raza_id = r.id
         LEFT JOIN imagenes AS i ON a.imagen_id = i.id
-        ORDER BY a.joined DESC;";
-        // LIMIT 6";
+        ORDER BY a.joined DESC
+        LIMIT 4;";
 
-$animales = pdo($pdo, $sql)->fetchAll();
+$ultimosAnimales = pdo($pdo, $sql)->fetchAll();
+
+// Consulta: estadísticas del refugio
+$sqlTotal = "SELECT 
+                COUNT(*) AS total,
+                SUM(estado = 'Disponible') AS disponibles,
+                SUM(estado = 'En proceso') AS en_proceso,
+                SUM(estado = 'Adoptado') AS adoptados
+            FROM animales;";
+
+$estadisticas = pdo($pdo, $sqlTotal)->fetch();
 
 // Datos
 $section = 'Inicio';
 $title = 'Refugio de Animales';
-$description = 'Últimos animales rescatados en nuestro refugio';
+$description = 'Inicio del Administrador';
 ?>
 
 
@@ -43,26 +53,36 @@ $description = 'Últimos animales rescatados en nuestro refugio';
 <!-- HTML -->
 <?php include '../includes/header.php'; ?>
 
-<div class="divUltimosAnimales">
-    <h1 class="h1_title">Últimos animales rescatados</h1>
-</div>
+<div class="admin-dashboard container">
+    <div class="dashboard-main">
+        <h1>Bienvenid@ Administrador de la Camada</h1>
 
-<main class="container grid" id="content">
-    <?php foreach ($animales as $animal) { ?>
-        <article class="summary">
-            <a href="animal.php?id=<?= $animal['id'] ?>">
-                <img src="../uploads/<?= html_escape($animal['image_file'] ?? 'blank.png') ?>"
-                     alt="<?= html_escape($animal['image_alt'] ?? 'Imagen de animal') ?>">
-                <h2><?= html_escape($animal['nombre']) ?></h2>
-                <p>
-                    <b>Especie:</b> <?= html_escape($animal['especie']) ?><br>
-                    <b>Raza:</b> <?= html_escape($animal['raza'] ?? 'Desconocida') ?><br>
-                    <b>Edad:</b> <?= html_escape($animal['edad'] ?? 'N/A') ?><br>
-                    <b>Género:</b> <?= html_escape($animal['genero']) ?>
-                </p>
-            </a>
-        </article>
-    <?php } ?>
-</main>
+        <h2>Últimos animales recogidos</h2>
+
+        <div class="ultimos-animales">
+            <?php foreach ($ultimosAnimales as $animal) { ?>
+                <div class="animal-card">
+                    <a href="animal.php?id=<?= $animal['id'] ?>">
+                        <img src="../uploads/<?= html_escape($animal['image_file'] ?? 'blank.png') ?>" 
+                            alt="<?= html_escape($animal['image_alt'] ?? 'Imagen de animal') ?>">
+                        <h3><?= html_escape($animal['nombre']) ?></h3>
+                        <p><b>Especie:</b> <?= html_escape($animal['especie']) ?></p>
+                        <p><b>Raza:</b> <?= html_escape($animal['raza'] ?? 'Desconocida') ?></p>
+                    </a>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+
+    <aside class="dashboard-sidebar">
+        <h2>Info de la Camada</h2>
+        <ul>
+            <li><b>Total de animales:</b> <?= $estadisticas['total'] ?></li>
+            <li><b>Disponibles:</b> <?= $estadisticas['disponibles'] ?></li>
+            <li><b>En proceso:</b> <?= $estadisticas['en_proceso'] ?></li>
+            <li><b>Adoptados:</b> <?= $estadisticas['adoptados'] ?></li>
+        </ul>
+    </aside>
+</div>
 
 <?php include '../includes/footer.php'; ?>
