@@ -1,0 +1,92 @@
+/* ADMIN - index.php */
+.admin-dashboard {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.dashboard-main {
+    margin-top: 2rem;
+    flex: 1 1 auto;
+
+    h2 {
+        margin-top: 1rem;
+    }
+}
+
+.dashboard-sidebar {
+    margin-top: 2rem;
+    flex: 0 0 250px;
+    max-width: 250px;
+    background: var(--color-bg);
+    border: 1px solid #cfcfcf;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.dashboard-sidebar ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.dashboard-sidebar ul li{
+    color: var(--color-primary);
+}
+
+.ultimos-animales {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.animal-card {
+    background: var(--color-white);
+    overflow: hidden;
+    text-align: center;
+    padding: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    will-change: transform, box-shadow;
+}
+
+.animal-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.animal-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.animal-card h3 {
+    margin-top: 1rem;
+    color: var(--color-accent) !important;
+}
+
+.animal-card:hover h3,
+.animal-card a:hover h3 {
+    color: var(--color-accent) !important;
+    text-decoration: none !important;
+}
+
+.animal-card p {
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.animal-card > a {
+    text-decoration: none !important;
+}
+
+.ultimos-animales-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

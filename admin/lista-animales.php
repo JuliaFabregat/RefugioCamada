@@ -11,11 +11,13 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 
-// Recoger la especie seleccionada (si existe) y la validamos
+// Recoger filtros
 $selectedSpecies = $_GET['especie'] ?? '';
+$searchName = trim($_GET['nombre'] ?? '');
 
+// Validar especie
 if ($selectedSpecies !== '' && !ctype_digit($selectedSpecies)) {
-    $selectedSpecies = ''; // Si no es un valor numérico, lo ignoramos
+    $selectedSpecies = '';
 }
 
 // Consulta Base
@@ -29,35 +31,44 @@ $sql = "SELECT
         JOIN especies AS e ON a.especie_id = e.id
         LEFT JOIN imagenes AS i ON a.imagen_id = i.id";
 
-// Array de parámetros para la consulta
+// Condiciones dinámicas
+$conditions = [];
 $params = [];
 
-// Si se ha seleccionado una especie, se añade una condición
 if ($selectedSpecies !== '') {
-    $sql .= " WHERE e.id = :especie_id";
+    $conditions[] = "e.id = :especie_id";
     $params['especie_id'] = $selectedSpecies;
+}
+
+if ($searchName !== '') {
+    $conditions[] = "a.nombre LIKE :nombre";
+    $params['nombre'] = '%' . $searchName . '%';
+}
+
+if ($conditions) {
+    $sql .= ' WHERE ' . implode(' AND ', $conditions);
 }
 
 $sql .= " ORDER BY a.nombre ASC";
 
-// Ejecutar la consulta con o sin parámetros
+// Ejecutar consulta
 $animales = pdo($pdo, $sql, $params)->fetchAll();
 
-// Consulta para obtener todas las especies para el filtro
+// Consulta para especies
 $sqlEspecies = "SELECT id, especie FROM especies ORDER BY especie ASC";
 $especies = pdo($pdo, $sqlEspecies)->fetchAll();
 
-// Datos
+// Datos de la página
 $title = 'Gestión de Animales';
 $description = 'Lista de todos los animales del refugio';
 $section = 'listaAnimales';
 ?>
 
-
-
-
 <!-- HTML -->
 <?php include '../includes/header.php'; ?>
+
+<!-- CSS -->
+<link rel="stylesheet" href="../css/admin/lista-animales.css">
 
 <main class="container" id="content">
 
@@ -65,7 +76,6 @@ $section = 'listaAnimales';
         <div id="mensaje-exito" class="alert success">
             ✅ Animal modificado correctamente.
         </div>
-        <!-- Independizar en el futuro -->
         <script>
             setTimeout(function() {
                 const mensajeExito = document.getElementById('mensaje-exito');
@@ -79,8 +89,8 @@ $section = 'listaAnimales';
 
     <h1>Gestión de Animales</h1>
     
-    <!-- Formulario de filtro por especie -->
-    <form method="GET" action="lista-animales.php">
+    <!-- Formulario de filtros -->
+    <form method="GET" action="lista-animales.php" id="filtroForm">
         <label for="especie">Filtrar por especie:</label>
         <select name="especie" id="especie">
             <option value="">Todas</option>
@@ -90,10 +100,12 @@ $section = 'listaAnimales';
                 </option>
             <?php } ?>
         </select>
-        <button type="submit">Filtrar</button>
+
+        <label for="nombre">Buscar por nombre:</label>
+        <input type="text" name="nombre" id="nombre" value="<?= html_escape($searchName) ?>" placeholder="Introduce un nombre...">
     </form>
 
-    <!-- Lista de Animales -->
+    <!-- Tabla de Animales -->
     <table class="table">
         <thead>
             <tr>
@@ -105,31 +117,31 @@ $section = 'listaAnimales';
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($animales as $animal) { ?>
-                <tr>
-                    <td>
-                        <img src="../uploads/<?= html_escape($animal['image_file'] ?? 'blank.jpg') ?>" 
-                             alt="<?= html_escape($animal['nombre']) ?>" class="thumbnail">
-                    </td>
-                    <td><?= html_escape($animal['nombre']) ?></td>
-                    <td><?= html_escape($animal['especie']) ?></td>
-                    <td><?= html_escape($animal['edad'] ?? 'N/A') ?></td>
-                    <td>
-                        <a href="editar-animal.php?id=<?= $animal['id'] ?>" class="button edit">Editar</a>
-                        <button type="button" class="button delete btn-delete" 
-                                data-id="<?= $animal['id'] ?>" 
-                                data-nombre="<?= html_escape($animal['nombre']) ?>">
-                            Eliminar
-                        </button>
-
-                    </td>
-                </tr>
-            <?php } ?>
+        <?php foreach ($animales as $animal): ?>
+            <tr onclick="window.location.href='animal.php?id=<?= $animal['id'] ?>';" style="cursor: pointer;">
+                <td>
+                    <img src="../uploads/<?= html_escape($animal['image_file'] ?? 'blank.jpg') ?>" 
+                         alt="<?= html_escape($animal['nombre']) ?>" class="thumbnail">
+                </td>
+                <td><?= html_escape($animal['nombre']) ?></td>
+                <td><?= html_escape($animal['especie']) ?></td>
+                <td><?= html_escape($animal['edad'] ?? 'N/A') ?></td>
+                <td class="animal-acciones">
+                    <a href="editar-animal.php?id=<?= $animal['id'] ?>" class="btn-edit" title="Editar <?= html_escape($animal['nombre']) ?>">
+                        <span class="material-icons" aria-hidden="true">edit</span>
+                    </a>
+                    <a href="eliminar-animal.php?id=<?= $animal['id'] ?>" class="btn-delete"
+                        onclick="return confirm('¿Eliminar a <?= html_escape($animal['nombre']) ?>?');"
+                        title="Eliminar <?= html_escape($animal['nombre']) ?>">
+                        <span class="material-icons" aria-hidden="true">delete</span>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
         </tbody>
     </table>
 
     <!-- MODALES DE CONFIRMACIÓN -->
-    <!-- Confirmación inicial -->
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -150,7 +162,6 @@ $section = 'listaAnimales';
         </div>
     </div>
 
-    <!-- Confirmación final -->
     <div class="modal fade" id="finalConfirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="finalConfirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -161,7 +172,7 @@ $section = 'listaAnimales';
                     </button>
                 </div>
                 <div class="modal-body">
-                    <span id="animalNombreModalFinal">Esta acción es irreversible. ¿Realmente deseas eliminar a </span>?
+                    Esta acción es irreversible. ¿Realmente deseas eliminar a <span id="animalNombreModalFinal"></span>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -171,8 +182,9 @@ $section = 'listaAnimales';
         </div>
     </div>
 
-    <!-- Script -->
+    <!-- Scripts -->
     <script src="../js/eliminar-animal.js"></script>
+    <script src="../js/lista-animales.js"></script>
 
 </main>
 

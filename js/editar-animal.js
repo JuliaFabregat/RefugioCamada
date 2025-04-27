@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Modal de confirmación (si lo usas)
+    // Modal de confirmación
     const btnConfirmar = document.getElementById('btn-confirmar-cambios');
     const modal = document.getElementById('modalConfirmacion');
     const btnCancelar = document.getElementById('btn-cancelar');

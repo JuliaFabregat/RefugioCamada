@@ -2,7 +2,6 @@
 declare(strict_types = 1);
 require '../includes/database-connection.php';
 require '../includes/functions.php';
-
 // Sesión
 session_start();
 
@@ -54,8 +53,8 @@ $sql_especies = "SELECT id, especie FROM Especies";
 $especies_nav = pdo($pdo, $sql_especies)->fetchAll();
 
 // Datos
-$title = html_escape($animal['nombre']);
-$description = "Detalles de {$animal['nombre']} - {$animal['especie']}";
+$title = html_escape("Información de {$animal['nombre']}");
+$description = "Detalles de {$animal['nombre']} - {$animal['raza']}{$animal['especie']}";
 $section = "descripcionAnimal";
 ?>
 
@@ -65,47 +64,62 @@ $section = "descripcionAnimal";
 <!-- HTML -->
 <?php include '../includes/header.php'; ?>
 
-<main class="container" id="content">
-    <div class="animal-detail">
-        <section class="image">
-            <img src="../uploads/<?= html_escape($animal['image_file'] ?? 'blank.jpg') ?>" 
-                 alt="<?= html_escape($animal['image_alt'] ?? 'Imagen de animal') ?>">
-        </section>
-        <section class="details">
+<!-- CSS de animal.php -->
+<link rel="stylesheet" href="../css/admin/animal.css">
 
+<main class="container" id="content">
+    <div class="detalles-animal">
+
+        <!-- IMAGEN -->
+        <section class="animal-imagen">
+            <img src="../uploads/<?= html_escape($animal['image_file'] ?? 'blank.jpg') ?>"
+                alt="<?= html_escape($animal['image_alt'] ?? 'Imagen de animal') ?>">
+                
+            <!-- BOTÓN DE EDICIÓN -->
+            <div class="animal-acciones">
+                <a href="editar-animal.php?id=<?= $animal['id'] ?>" class="btn-edit">
+                    <span class="material-icons" aria-hidden="true">edit</span>
+                </a>
+                <a href="eliminar-animal.php?id=<?= $animal['id'] ?>" class="btn-delete"
+                    onclick="return confirm('¿Eliminar a <?= html_escape($animal['nombre']) ?>?');">
+                    <span class="material-icons" aria-hidden="true">delete</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- INFO -->
+        <section class="animal-info details">
             <h1><?= html_escape($animal['nombre']) ?></h1>
             
-            <div class="metadata">
-                <p><strong>Estado:</strong> <?= html_escape($animal['estado'] ?? 'No especificado') ?></p>
-                <p><strong>Especie:</strong> <?= html_escape($animal['especie']) ?></p>
-                <p><strong>Raza:</strong> <?= html_escape($animal['raza'] ?? 'Desconocida') ?></p>
-                <p><strong>Edad:</strong> <?= html_escape($animal['edad'] ?? 'N/A') ?></p>
-                <p><strong>Género:</strong> <?= html_escape($animal['genero']) ?></p>
-                <p><strong>Rescatado:</strong> <?= format_date($animal['joined']) ?></p>
-            </div>
-
-            <div class="description">
-                <h3><b>Dato curioso sobre la especie</b></h3>
+            <ul class="metadata animal-datos">
+                <li><strong>Estado:</strong> <?= html_escape($animal['estado'] ?? 'No especificado') ?></li>
+                <li><strong>Especie:</strong> <?= html_escape($animal['especie']) ?></li>
+                <li><strong>Raza:</strong> <?= html_escape($animal['raza'] ?? 'Desconocida') ?></li>
+                <li><strong>Edad:</strong> <?= html_escape($animal['edad'] ?? 'N/A') ?></li>
+                <li><strong>Género:</strong> <?= html_escape($animal['genero']) ?></li>
+                <li><strong>Rescatado:</strong> <?= format_date($animal['joined']) ?></li>
+            </ul>
+            
+            <!-- <div class="descripcion">
+                <h2>Dato curioso sobre la especie</h2>
                 <p><?= html_escape($animal['especie_descripcion'] ?? 'No hay dato curioso disponible :(') ?></p>
-            </div>
+            </div> -->
             
             <?php if ($animal['microchip'] !== null || $animal['castracion'] !== null || $animal['vacunas'] || $animal['info_adicional']) : ?>
-                
-                <div class="description">
-                    
-                    <h3><b>Ficha Veterinaria</b></h3>
-                    <div class="metadata">
-                        <p><strong>Microchip:</strong> <?= $animal['microchip'] ? 'Sí' : 'No' ?></p>
-                        <p><strong>Castración:</strong> <?= $animal['castracion'] ? 'Sí' : 'No' ?></p>
-                        <p><strong>Vacunas:</strong> <?= html_escape($animal['vacunas'] ?? 'N/E') ?></p>
-                        <p><strong>Información adicional:</strong> <?= html_escape($animal['info_adicional'] ?? 'N/E') ?></p>
-                    </div>
-
+                <div class="descripcion">
+                    <h2>Ficha Veterinaria</h2>
+                    <ul class="animal-datos">
+                        <li><strong>Microchip:</strong> <?= $animal['microchip'] ? 'Sí' : 'No' ?></li>
+                        <li><strong>Castración:</strong> <?= $animal['castracion'] ? 'Sí' : 'No' ?></li>
+                        <li><strong>Vacunas:</strong> <?= html_escape($animal['vacunas'] ?? 'N/E') ?></li>
+                        <li><strong>Información adicional:</strong> <?= html_escape($animal['info_adicional'] ?? 'N/E') ?></li>
+                        </ul>
                 </div>
             <?php endif; ?>
-
+            
         </section>
     </div>
 </main>
+
 
 <?php include '../includes/footer.php'; ?>

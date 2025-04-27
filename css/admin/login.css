@@ -1,0 +1,52 @@
+/* Login */
+.login-container {
+    max-width: 400px;
+    margin: 5% auto;
+    padding: 2em;
+    background-color: var(--color-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container h1 {
+    color: var(--color-dark);
+    font-size: 1.6em;
+    margin-bottom: 1.5em;
+}
+
+.login-container h2 {
+    color: var(--color-accent);
+    font-size: 16pxem;
+    margin-bottom: 1.5em;
+}
+
+.login-container .form-control {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.login-container button {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    border: none;
+    padding: 0.75rem;
+    width: 100%;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+    background-color: var(--color-accent);
+}
+
+.login-container .error {
+    color: var(--color-danger);
+    margin-top: 1em;
+}

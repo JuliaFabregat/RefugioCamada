@@ -53,6 +53,9 @@ $description = 'Inicio del Administrador';
 <!-- HTML -->
 <?php include '../includes/header.php'; ?>
 
+<!-- CSS -->
+<link rel="stylesheet" href="../css/admin/index.css">
+
 <div class="admin-dashboard container">
     <div class="dashboard-main">
         <h1>Bienvenid@ Administrador de la Camada</h1>
@@ -77,7 +80,7 @@ $description = 'Inicio del Administrador';
     <aside class="dashboard-sidebar">
         <h2>Info de la Camada</h2>
         <ul>
-            <li><b>Total de animales:</b> <?= $estadisticas['total'] ?></li>
+            <li><b>Total de animales:</b> <?= $estadisticas['total'] ?></li>    
             <li><b>Disponibles:</b> <?= $estadisticas['disponibles'] ?></li>
             <li><b>En proceso:</b> <?= $estadisticas['en_proceso'] ?></li>
             <li><b>Adoptados:</b> <?= $estadisticas['adoptados'] ?></li>

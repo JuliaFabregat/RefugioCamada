@@ -1,0 +1,99 @@
+/* H1 */
+h1{
+    margin-top: 2rem;
+}
+
+/* Tabla */
+.table tbody tr {
+    transition: background-color 0.2s ease;
+    border-bottom: 2px solid gainsboro;
+}
+
+.table tbody tr:hover {
+    background-color: #dbdbdb;
+}
+
+/* Botones - Editar + Eliminar */
+.animal-acciones {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-start;
+}
+
+.btn-edit,
+.btn-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: var(--radius);
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    text-decoration: none !important;
+    transition: background-color 0.2s;
+}
+
+.btn-edit:hover {
+    color: var(--color-white);
+    background-color: var(--color-primary);
+}
+
+.btn-delete {
+    background-color: var(--color-danger);
+}
+
+.btn-delete:hover {
+    color: var(--color-white);
+    background-color: var(--color-danger-hover);
+}
+
+.btn-edit .material-icons,
+.btn-delete .material-icons {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* Lista estilos */
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    margin: 2px;
+}
+
+.edit {
+    background-color: var(--color-accent);
+}
+
+.delete {
+    background-color: var(--color-danger);
+}
+
+.secondary {
+    background-color: var(--color-dark);
+}
+
+.secondary:hover {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+}
+
+.alert.success {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    padding: 1em;
+    border-radius: 5px;
+    margin-bottom: 1em;
+    border: 1px solid #c3e6cb;
+}

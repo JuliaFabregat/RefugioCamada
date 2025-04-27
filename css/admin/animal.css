@@ -1,0 +1,93 @@
+/* animal.php - Info de cada Animal */
+.descripcion h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.descripcion p {
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+}
+
+/* Información del animal */
+.animal-info {
+    flex: 2 1 400px;
+}
+
+.animal-info h1 {
+    margin-bottom: 1rem;
+    color: var(--color-accent);
+}
+
+.animal-datos {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.animal-datos li {
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+}
+
+/* Contenedor general */
+.detalles-animal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Imagen */
+.animal-imagen {
+    flex: 1 1 500px;
+}
+
+.animal-imagen img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: var(--box-shadow);
+    object-fit: cover;
+}
+
+/* ACCIONES - Botón Editar */
+.animal-acciones {
+    margin-top: 1rem;
+    text-align: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-edit {
+    display: inline-block;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    border-radius: var(--radius);
+    text-decoration: none !important;
+    transition: background-color 0.2s ease;
+}
+
+.btn-edit:hover {
+    color: var(--color-white);
+    background-color: var(--color-primary);
+}
+
+.btn-delete {
+    display: inline-block;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    background-color: var(--color-danger);
+    color: var(--color-white);
+    border-radius: var(--radius);
+    text-decoration: none !important;
+    transition: background-color 0.2s ease;
+}
+
+.btn-delete:hover {
+    color: var(--color-white);
+    background-color: var(--color-danger-hover);
+}
