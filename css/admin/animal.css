@@ -51,43 +51,11 @@
     object-fit: cover;
 }
 
-/* ACCIONES - Botón Editar */
+/* ACCIONES - Botones de editar y eliminar */
 .animal-acciones {
     margin-top: 1rem;
     text-align: center;
     display: flex;
     gap: 0.5rem;
     justify-content: center;
-}
-
-.btn-edit {
-    display: inline-block;
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
-    background-color: var(--color-accent);
-    color: var(--color-white);
-    border-radius: var(--radius);
-    text-decoration: none !important;
-    transition: background-color 0.2s ease;
-}
-
-.btn-edit:hover {
-    color: var(--color-white);
-    background-color: var(--color-primary);
-}
-
-.btn-delete {
-    display: inline-block;
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
-    background-color: var(--color-danger);
-    color: var(--color-white);
-    border-radius: var(--radius);
-    text-decoration: none !important;
-    transition: background-color 0.2s ease;
-}
-
-.btn-delete:hover {
-    color: var(--color-white);
-    background-color: var(--color-danger-hover);
 }

@@ -250,7 +250,10 @@ $section = 'agregarAnimales';
 <!-- HTML -->
 <?php include '../includes/header.php'; ?>
 
-<main class="container admin" id="content">
+<!-- CSS -->
+<link rel="stylesheet" href="../css/admin/editar-animal.css">
+
+<main class="formDiv admin" id="content">
     <form action="agregar-animales.php" method="post" enctype="multipart/form-data" class="narrow" novalidate>
         
         <!-- FORM - Datos del Animal -->
@@ -260,13 +263,13 @@ $section = 'agregarAnimales';
             <div class="alert alert-danger"><?= $errors['warning'] ?></div>
         <?php endif; ?>
 
-        <div class="form-group">
+        <div class="campo">
             <label>Nombre:</label>
             <input type="text" name="nombre" value="<?= html_escape($animal['nombre']) ?>" placeholder="Rex, Kitty..." required> <br>
             <span class="errors"><?= $errors['nombre'] ?></span>
         </div>
 
-        <div class="form-group">
+        <div class="campo">
             <label>Especie:</label>
             <select name="especie_id" required>
                 <option value="">Selecciona</option>
@@ -279,20 +282,20 @@ $section = 'agregarAnimales';
             <span class="errors"><?= $errors['especie'] ?></span>
         </div>
 
-        <div class="form-group">
+        <div class="campo">
             <label>Raza:</label>
             <input type="text" name="raza" value="<?= html_escape($animal['raza']) ?>" placeholder="Labrador, Persa..." required> <br>
             <span class="errors"><?= $errors['raza'] ?></span>
         </div>
 
-        <div class="form-group">
+        <div class="campo">
             <label>Edad:</label>
             <input type="text" name="edad" value="<?= html_escape($animal['edad']) ?>" 
                 placeholder="Ej: 2 años, 11 meses"> <br>
             <span class="errors"><?= $errors['edad'] ?></span>
         </div>
 
-        <div class="form-group">
+        <div class="campo">
             <label>Género:</label>
             <select name="genero">
                 <option value="Indefinido">N/E</option>
@@ -301,7 +304,7 @@ $section = 'agregarAnimales';
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="campo">
             <label>Imagen:</label>
             <input type="file" name="imagen" accept="image/*" required> <br>
             <span class="errors"><?= $errors['imagen'] ?></span>
@@ -310,18 +313,20 @@ $section = 'agregarAnimales';
         <br>
 
         <!-- CHECKBOX para rellenar la ficha Veterinaria -->
-        <label>
-            <input type="checkbox" id="rellenar_ficha" name="rellenar_ficha" value="1" 
-            <?php echo isset($_POST['rellenar_ficha']) ? 'checked' : ''; ?>>
-            ¿Desea rellenar la ficha veterinaria del animal?
-        </label>
+        <div class="campo campo-inline">
+            <label>
+                <input type="checkbox" id="rellenar_ficha" name="rellenar_ficha" value="1"
+                <?php echo isset($_POST['rellenar_ficha']) ? 'checked' : ''; ?>>
+                ¿Desea rellenar la ficha veterinaria del animal?
+            </label>
+        </div>
 
         <div id="ficha_veterinaria" style="display: none;">
             
             <!-- FORM - Datos del Animal -->
             <h2>Datos Veterinarios</h2>
 
-            <div class="form-group">
+            <div class="campo">
                 <label>¿Tiene Microchip?</label>
                 <select name="microchip" required>
                     <option value="" <?= $vet_data['microchip'] === '' ? 'selected' : '' ?>>N/E</option>
@@ -330,7 +335,7 @@ $section = 'agregarAnimales';
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="campo">
                 <label>¿Está Castrado?</label>
                 <select name="castracion">
                     <option value="" <?= $vet_data['castracion'] === '' ? 'selected' : '' ?>>N/E</option>
@@ -339,12 +344,12 @@ $section = 'agregarAnimales';
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="campo">
                 <label>Vacunas:</label>
                 <input type="text" name="vacunas" value="<?= html_escape($vet_data['vacunas']) ?>" placeholder="Ej: Rabia, trivalente...">
             </div>
 
-            <div class="form-group">
+            <div class="campo">
                 <label>Información adicional:</label>
                 <textarea name="info_adicional"><?= html_escape($vet_data['info_adicional']) ?></textarea>
             </div>
@@ -352,8 +357,9 @@ $section = 'agregarAnimales';
 
         <br><br>
 
-        <!-- Botón de Enviar -->
-        <button type="submit" class="btn btn-primary">Agregar Animal</button>
+        <!-- Botones de Acción -->
+        <button type="submit" class="button aceptar">Agregar Animal</button>
+        <a href="lista-animales.php" class="button cancelar">Cancelar</a>
 
         <!-- Script -->
         <script src="../js/agregar-animal.js"></script>

@@ -10,7 +10,7 @@ h1{
 }
 
 .table tbody tr:hover {
-    background-color: #dbdbdb;
+    background-color: var(--color-grey);
 }
 
 /* Botones - Editar + Eliminar */
@@ -20,39 +20,6 @@ h1{
     justify-content: flex-start;
 }
 
-.btn-edit,
-.btn-delete {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.2rem;
-    height: 2.2rem;
-    border-radius: var(--radius);
-    background-color: var(--color-accent);
-    color: var(--color-white);
-    text-decoration: none !important;
-    transition: background-color 0.2s;
-}
-
-.btn-edit:hover {
-    color: var(--color-white);
-    background-color: var(--color-primary);
-}
-
-.btn-delete {
-    background-color: var(--color-danger);
-}
-
-.btn-delete:hover {
-    color: var(--color-white);
-    background-color: var(--color-danger-hover);
-}
-
-.btn-edit .material-icons,
-.btn-delete .material-icons {
-    font-size: 1.2rem;
-    line-height: 1;
-}
 
 /* Lista estilos */
 .thumbnail {

@@ -64,6 +64,9 @@ $description = 'Lista de todos los animales del refugio';
 $section = 'listaAnimales';
 ?>
 
+
+
+
 <!-- HTML -->
 <?php include '../includes/header.php'; ?>
 

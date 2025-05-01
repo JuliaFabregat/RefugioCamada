@@ -1,4 +1,7 @@
 /* Login */
+body{
+    background-color: var(--color-primary);
+}
 .login-container {
     max-width: 400px;
     margin: 5% auto;
@@ -17,7 +20,7 @@
 
 .login-container h2 {
     color: var(--color-accent);
-    font-size: 16pxem;
+    font-size: 1.5em;
     margin-bottom: 1.5em;
 }
 
@@ -43,10 +46,22 @@
 }
 
 .login-container button:hover {
-    background-color: var(--color-accent);
+    background-color: var(--color-primary);
 }
 
-.login-container .error {
+.login-container .form-control:focus {
+    border-color: var(--color-accent);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 128, 0, 0.2);
+}
+
+/* Mensaje de Error */
+.error {
     color: var(--color-danger);
     margin-top: 1em;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+.error.hidden {
+    opacity: 0;
 }

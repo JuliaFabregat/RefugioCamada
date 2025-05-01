@@ -18,9 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: index.php");
         exit;
     } else {
-        $error = 'Usuario o contraseña incorrectos.';
+        $_SESSION['login_error'] = 'Usuario o contraseña incorrectos.';
     }
 }
+
+// Recuperar y limpiar error
+$error = $_SESSION['login_error'] ?? '';
+unset($_SESSION['login_error']);
 ?>
 
 

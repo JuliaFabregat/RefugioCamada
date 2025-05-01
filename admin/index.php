@@ -57,14 +57,14 @@ $description = 'Inicio del Administrador';
 <link rel="stylesheet" href="../css/admin/index.css">
 
 <div class="admin-dashboard container">
-    <div class="dashboard-main">
+    <div class="dashboard-izq">
         <h1>Bienvenid@ Administrador de la Camada</h1>
 
         <h2>Últimos animales recogidos</h2>
 
         <div class="ultimos-animales">
             <?php foreach ($ultimosAnimales as $animal) { ?>
-                <div class="animal-card">
+                <div class="tarjeta-animal">
                     <a href="animal.php?id=<?= $animal['id'] ?>">
                         <img src="../uploads/<?= html_escape($animal['image_file'] ?? 'blank.png') ?>" 
                             alt="<?= html_escape($animal['image_alt'] ?? 'Imagen de animal') ?>">
@@ -77,7 +77,7 @@ $description = 'Inicio del Administrador';
         </div>
     </div>
 
-    <aside class="dashboard-sidebar">
+    <aside class="dashboard-der">
         <h2>Info de la Camada</h2>
         <ul>
             <li><b>Total de animales:</b> <?= $estadisticas['total'] ?></li>    

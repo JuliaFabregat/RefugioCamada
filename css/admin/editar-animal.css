@@ -1,0 +1,42 @@
+body{
+    background-color: var(--color-grey);
+}
+
+.formDiv h3 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    color: var(--color-primary);
+}
+
+/* Imagen del animal */
+.animal-imagen-clickable {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: opacity .2s;
+}
+
+.animal-imagen-clickable:hover { opacity: .8; }
+.overlay {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,.5); color: white;
+    padding: .2em .5em; border-radius: .3em;
+    opacity: 0; transition: opacity .2s;
+}
+
+.imagen-label:hover .overlay { opacity: 1; }
+.hidden { display: none; }
+
+/* Vet-data en dos columnas */
+@media(min-width: 600px) {
+    .detalle-vet {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
