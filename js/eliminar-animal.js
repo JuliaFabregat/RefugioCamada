@@ -22,4 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('finalConfirmBtn').addEventListener('click', () => {
         if (animalIdToDelete) window.location.href = `eliminar-animal.php?id=${animalIdToDelete}`;
     });
+
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        animalIdToDelete = btn.getAttribute('data-id');
+        animalNombreToDelete = btn.getAttribute('data-nombre');
+    
+        document.getElementById('animalNombreModal').textContent = animalNombreToDelete;
+        document.getElementById('animalNombreModalFinal').textContent = animalNombreToDelete;
+    
+        $('#confirmDeleteModal').modal('show');
+    });
+    
 });

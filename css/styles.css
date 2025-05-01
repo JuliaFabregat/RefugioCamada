@@ -286,6 +286,18 @@ nav ul li .btn-danger:hover {
   transition: border-color var(--transition-fast);
 }
 
+/* Hover en el select - Solo funciona en Firefox y Safari :(*/
+select option:hover {
+  background-color: var(--color-accent) !important;
+  color: var(--color-white) !important;
+}
+
+/* Opción seleccionada */
+select option:checked {
+  background-color: var(--color-accent) !important;
+  color: var(--color-white) !important;
+}
+
 /* Textarea */
 .campo textarea {
   min-height: 100px;
