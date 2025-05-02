@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 require '../includes/database-connection.php';
 require '../includes/functions.php';
@@ -85,16 +84,6 @@ $section     = 'listaAnimales';
         <div id="mensaje-exito" class="alert success">
             ✅ Animal modificado correctamente.
         </div>
-        <!-- Independizar para reutilizar -->
-        <script>
-            setTimeout(() => {
-                const m = document.getElementById('mensaje-exito');
-                if (m) {
-                    m.style.opacity = '0';
-                    setTimeout(() => m.remove(), 500);
-                }
-            }, 3000);
-        </script>
     <?php endif; ?>
 
     <!-- Confirmación de animal agregado -->
@@ -102,15 +91,6 @@ $section     = 'listaAnimales';
         <div id="mensaje-exito" class="alert success">
             ✅ Animal agregado correctamente.
         </div>
-        <script>
-            setTimeout(() => {
-                const m = document.getElementById('mensaje-exito');
-                if (m) {
-                    m.style.opacity = '0';
-                    setTimeout(() => m.remove(), 500);
-                }
-            }, 3000);
-        </script>
     <?php endif; ?>
 
     <h1>Gestión de Animales</h1>
@@ -240,6 +220,7 @@ $section     = 'listaAnimales';
     <!-- Scripts -->
     <script src="../js/eliminar-animal.js" defer></script>
     <script src="../js/lista-animales.js" defer></script>
+    <script src="../js/mensaje-exito.js" defer></script>
 
 </main>
 
