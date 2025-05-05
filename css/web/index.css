@@ -98,6 +98,11 @@
     color: var(--color-accent) !important;
 }
 
+.cta-adoptar a:hover {
+    background-color: var(--color-accent) !important;
+    color: var(--color-accent) !important;
+}
+
 /* ==== FAQ Acordeón ==== */
 .faq__container {
     margin-top: 2rem;
