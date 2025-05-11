@@ -65,8 +65,14 @@ p {
 /* Contenedor */
 .container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 2rem auto 2rem auto;
   padding: 0 1rem;
+}
+
+.container-web {
+  max-width: 1200px;
+  margin: 1rem auto;
+  padding: 2rem 1rem;
 }
 
 /* Márgenes */
@@ -78,13 +84,13 @@ p {
 /* Texto centrado */
 .text-center { text-align: center; }
 
-/* Grid genérico */
+/* Grid */
 .grid {
   display: grid;
   grid-gap: 1.5rem;
 }
 
-/* Carta (card) genérica */
+/* Card */
 .card {
   background: var(--color-white);
   border-radius: var(--radius);
@@ -109,7 +115,7 @@ p {
   transition: background var(--transition-fast), border-color var(--transition-fast);
 }
 
-/* Botones  (TEXTO) Aceptar - Cancelar */
+/* Botones (TEXTO) Aceptar - Cancelar */
 .button.aceptar {
   background: var(--color-accent);
   color: var(--color-white);
@@ -171,7 +177,6 @@ p {
 /**********************/
 header {
   background-color: var(--color-primary);
-  padding: 1rem 2rem;
   color:var(--color-white);
 }
 
@@ -185,6 +190,27 @@ header .container {
 
 .logo img {
   max-height: 40px;
+}
+
+/* HEADER-WEB */
+.header-web nav ul {
+  gap: 1.5rem;
+}
+
+.header-web .logo img {
+  max-height: 50px;
+}
+
+@media (max-width:768px) {
+  .header-web nav ul.show {
+      flex-direction: column;
+      background: var(--color-primary);
+      padding: 1rem;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+  }
 }
 
 /**********************/
@@ -311,6 +337,7 @@ nav ul li .btn-danger:hover {
 
 /* Inputs y selects */
 .campo input[type="text"],
+.campo input[type="email"],
 .campo select,
 .campo textarea {
   padding: 0.75rem 1rem;

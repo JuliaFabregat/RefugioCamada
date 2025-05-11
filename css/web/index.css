@@ -1,29 +1,11 @@
-/* ==== HEADER-WEB ajustes ==== */
-.header-web nav ul {
-    gap: 1.5rem;
-}
-
-.header-web .logo img {
-    max-height: 50px;
-}
-
-@media (max-width:768px) {
-    .header-web nav ul.show {
-        flex-direction: column;
-        background: var(--color-primary);
-        padding: 1rem;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-    }
-}
-
-/* ==== HERO ==== */
+/*  HERO  */
 .hero {
     position: relative;
-    height: 70vh;
-    background: url('../../img/hero.jpg') center/cover no-repeat;
+    height: 100vh;
+    background: url('../../img/hero.webp') center/cover no-repeat;
+    padding-top: 150px;
+    padding-bottom: 150px;
+
 }
 
 .hero-overlay {
@@ -36,24 +18,24 @@
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--color-white);
     padding: 0 1rem;
 }
 
 .hero-content h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
+    color: var(--color-white);
 }
 
 .hero-content p {
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
+    color: var(--color-white);
 }
 
-/* ==== VENTAJAS ==== */
+/*  VENTAJAS  */
 .ventajas {
     background: var(--color-bg);
-    padding: 4rem 0;
 }
 
 .ventajas h2 {
@@ -81,11 +63,10 @@
     margin-bottom: 0.5rem;
 }
 
-/* ==== CTA ADOPTAR ==== */
+/*  CTA ADOPTAR  */
 .cta-adoptar {
     background: var(--color-accent);
     color: var(--color-white);
-    padding: 4rem 0;
 }
 
 .cta-adoptar h2 {
@@ -99,29 +80,25 @@
 }
 
 .cta-adoptar a:hover {
-    background-color: var(--color-accent) !important;
-    color: var(--color-accent) !important;
+    background-color: var(--color-primary) !important;
+    color: var(--color-white) !important;
 }
 
-/* ==== FAQ Acordeón ==== */
-.faq__container {
-    margin-top: 2rem;
-    border-top: 1px solid var(--color-grey);
-    border-bottom: 1px solid var(--color-grey);
+/*  FAQ  */
+.faq-container{
     background: var(--color-white);
-    padding: 2rem 0;
 }
 
-.faq__item {
+.faq-item {
     padding: 1rem 0;
     border-bottom: 1px solid var(--color-grey);
 }
 
-.faq__item:last-child {
+.faq-item:last-child {
     border-bottom: none;
 }
 
-.faq__question {
+.faq-question {
     background: none;
     border: none;
     width: 100%;
@@ -134,7 +111,7 @@
     position: relative;
 }
 
-.faq__question::after {
+.faq-question::after {
     content: '+';
     position: absolute;
     right: 0;
@@ -142,27 +119,26 @@
     transition: transform 0.2s ease;
 }
 
-.faq__item.active .faq__question::after {
+.faq-item.active .faq-question::after {
     content: '-';
 }
 
-.faq__answer {
+.faq-answer {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease, padding 0.3s ease;
     padding-left: 1rem;
 }
 
-.faq__item.active .faq__answer {
+.faq-item.active .faq-answer {
     padding: 0.75rem 1rem;
     max-height: 200px;
 }
 
 
-/* ==== CONTACTO FINAL ==== */
+/*  CONTACTO  */
 .contacto-final {
     background: var(--color-bg);
-    padding: 2rem 0;
 }
 
 .button.aceptar{

@@ -35,8 +35,3 @@
             </nav>
         </div>
     </header>
-    <script>
-        document.querySelector('.menu-toggle').addEventListener('click', () => {
-            document.getElementById('menu-web').classList.toggle('show');
-        });
-    </script>
