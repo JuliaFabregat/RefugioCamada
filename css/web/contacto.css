@@ -1,25 +1,6 @@
 /* Hero */
 .hero-contacto {
-    position: relative;
-    height: 100vh;
     background: url('../../img/contacto-hero.jpg') center/cover no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 150px;
-    padding-bottom: 150px;
-}
-
-.hero-contacto::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.hero-contacto .hero-contacto-contenido {
-    position: relative;
-    text-align: center;
 }
 
 .hero-contacto h1 {
@@ -32,8 +13,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 6rem;
-    margin: 4rem auto;
-    padding: 0 1 rem;
+    padding: 4rem 2rem;
     box-sizing: border-box;
 }
 
@@ -55,6 +35,11 @@
     background-color: var(--color-accent);
     padding: 2rem 2rem;
     border-radius: var(--radius);
+}
+
+.contacto-form h2{
+    margin: 0;
+    margin-bottom: 30px;
 }
 .refugio-info h2 {
     color: var(--color-white);

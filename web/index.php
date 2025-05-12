@@ -16,9 +16,8 @@ $description = 'Bienvenid@ al Refugio Camada en Baena.';
 <link rel="stylesheet" href="../css/web/index.css">
 
 <!-- Hero -->
-<section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content container-web text-center">
+<section class="hero-index">
+    <div class="hero-index-contenido">
         <h1>Bienvenid@ al Refugio Camada</h1>
         <p>Ubicado en Baena, comprometidos con el bienestar animal</p>
         <a href="quienes-somos.php" class="button aceptar">Quiénes Somos</a>
@@ -96,9 +95,6 @@ $description = 'Bienvenid@ al Refugio Camada en Baena.';
         </div>
     </div>
 </section>
-
-<!-- Contacto -->
-
 
 <?php include '../includes/footer-web.php'; ?>
 

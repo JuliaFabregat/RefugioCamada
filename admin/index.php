@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 require '../includes/database-connection.php';
 require '../includes/functions.php';
@@ -12,7 +11,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 
-// Consulta: últimos 3 animales refugiados
+// Consulta: últimos 4 animales
 $sql = "SELECT 
             a.id, 
             a.nombre, 
@@ -44,7 +43,7 @@ $estadisticas = pdo($pdo, $sqlTotal)->fetch();
 
 // Datos
 $section = 'Inicio';
-$title = 'Refugio de Animales';
+$title = 'Refugio Camada - Admin';
 $description = 'Inicio del Administrador';
 ?>
 
@@ -98,7 +97,6 @@ $description = 'Inicio del Administrador';
             </ul>
         </aside>
     </div>
-
 </main>
 
 <?php include '../includes/footer.php'; ?>

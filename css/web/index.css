@@ -1,34 +1,18 @@
 /*  HERO  */
-.hero {
-    position: relative;
-    height: 100vh;
-    background: url('../../img/hero.webp') center/cover no-repeat;
-    padding-top: 150px;
-    padding-bottom: 150px;
-
+.hero-index {
+    background: url('../../img/index-hero.webp') center/cover no-repeat;
+    min-height: calc(40vh + 300px);
 }
 
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.hero-content {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0 1rem;
-}
-
-.hero-content h1 {
+.hero-index h1 {
     font-size: 3rem;
-    margin-bottom: 1rem;
     color: var(--color-white);
+    margin: 15px 0px;
+    padding: 0;
 }
 
-.hero-content p {
-    font-size: 1.2rem;
+.hero-index-contenido p {
+    font-size: 1.1rem;
     margin-bottom: 1.5rem;
     color: var(--color-white);
 }

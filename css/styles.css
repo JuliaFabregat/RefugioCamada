@@ -110,7 +110,6 @@ p {
   border-radius: var(--radius);
   border: 1px solid transparent;
   text-decoration: none !important;
-  font-weight: 600;
   font-size: 1rem;
   transition: background var(--transition-fast), border-color var(--transition-fast);
 }
@@ -393,4 +392,39 @@ select option:checked {
 .campo-inline input[type="checkbox"] {
   margin-right: 0.5rem;
   margin-bottom: 0;
+}
+
+/**********************/
+/* Hero        */
+/**********************/
+.hero-about,
+.hero-contacto,
+.hero-index {
+  position: relative;
+  min-height: calc(20vh + 300px);
+  padding: 150px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-about::before,
+.hero-contacto::before,
+.hero-index::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.hero-about-contenido,
+.hero-contacto-contenido,
+.hero-index-contenido {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: var(--color-white);
 }
