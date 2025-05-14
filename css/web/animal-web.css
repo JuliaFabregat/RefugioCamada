@@ -1,0 +1,160 @@
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Volver / Siguiente juntos y centrados */
+.nav-animal {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.nav-animal a {
+    font-weight: 700;
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+/* Flex: imagen + info */
+.detalles-animal {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+/* Imagen fija 35% ancho, 400px alto */
+.animal-imagen {
+    flex: 0 0 35%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: var(--radius);
+}
+
+.animal-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Info 65% ancho, siempre al lado */
+.animal-info {
+    flex: 1 1 65%;
+    overflow-wrap: anywhere;
+}
+
+/* Título */
+.animal-info h1 {
+    margin-bottom: 1rem;
+    color: var(--color-accent);
+}
+
+/* Lista de datos */
+.animal-datos {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+.animal-datos li {
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+}
+
+/* Dato curioso */
+.descripcion h2 {
+    margin: 1.5rem 0 0.5rem;
+    color: var(--color-primary);
+}
+
+.descripcion p {
+    line-height: 1.6;
+    color: var(--color-dark);
+}
+
+/* Ficha veterinaria horizontal */
+.vet-icons {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    overflow-x: auto;
+}
+
+.vet-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.vet-item .material-icons {
+    font-size: 1.6rem;
+    color: var(--color-accent);
+}
+
+.vet-item .material-icons.cancel {
+    color: var(--color-primary);
+}
+
+.vet-label {
+    font-weight: 600;
+    color: var(--color-dark);
+}
+
+.vet-value {
+    margin-left: 0.25rem;
+    color: var(--color-primary);
+}
+
+/* CTA ancho completo */
+.animal-cta {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    margin-left: -50vw;
+    height: 300px;
+    background: url('../img/tu-foto-animal.jpg') center/cover no-repeat;
+}
+
+.animal-cta__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.animal-cta__contenido {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-white);
+    padding: 0 2rem;
+}
+
+.animal-cta__contenido h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .detalles-animal {
+        flex-direction: column;
+    }
+
+    .animal-imagen,
+    .animal-info {
+        flex: 1 1 100%;
+    }
+
+    .vet-icons {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+}

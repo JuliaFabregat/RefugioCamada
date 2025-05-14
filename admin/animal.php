@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 require '../includes/database-connection.php';
 require '../includes/functions.php';
+
 // Sesión
 session_start();
 
@@ -64,7 +65,7 @@ $section = "descripcionAnimal";
 <!-- HTML -->
 <?php include '../includes/header.php'; ?>
 
-<!-- CSS de animal.php -->
+<!-- CSS -->
 <link rel="stylesheet" href="../css/admin/animal.css">
 
 <main class="container" id="content">
@@ -100,11 +101,6 @@ $section = "descripcionAnimal";
                 <li><strong>Rescatado:</strong> <?= format_date($animal['joined']) ?></li>
             </ul>
             
-            <!-- <div class="descripcion">
-                <h2>Dato curioso sobre la especie</h2>
-                <p><?= html_escape($animal['especie_descripcion'] ?? 'No hay dato curioso disponible :(') ?></p>
-            </div> -->
-            
             <?php if ($animal['microchip'] !== null || $animal['castracion'] !== null || $animal['vacunas'] || $animal['info_adicional']) : ?>
                 <div class="descripcion">
                     <h2>Ficha Veterinaria</h2>
@@ -113,13 +109,12 @@ $section = "descripcionAnimal";
                         <li><strong>Castración:</strong> <?= $animal['castracion'] ? 'Sí' : 'No' ?></li>
                         <li><strong>Vacunas:</strong> <?= html_escape($animal['vacunas'] ?? 'N/E') ?></li>
                         <li><strong>Información adicional:</strong> <?= html_escape($animal['info_adicional'] ?? 'N/E') ?></li>
-                        </ul>
+                    </ul>
                 </div>
             <?php endif; ?>
             
         </section>
     </div>
 </main>
-
 
 <?php include '../includes/footer.php'; ?>

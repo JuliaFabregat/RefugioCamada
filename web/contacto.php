@@ -67,7 +67,7 @@ $description = 'Contacto del Refugio Camada.';
 </section>
 
 <!-- Contact Form + Info -->
-<section class="contacto-grid">
+<section class="container contacto-grid">
 
     <!-- Formulario -->
     <div class="contacto-form">
