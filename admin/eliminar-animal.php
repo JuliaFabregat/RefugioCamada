@@ -1,15 +1,8 @@
 <?php
 declare(strict_types = 1);
+require __DIR__ . '/../includes/admin-auth.php';
 require '../includes/database-connection.php';
 require '../includes/functions.php';
-
-// Sesión
-session_start();
-
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header('Location: login.php');
-    exit;
-}
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {

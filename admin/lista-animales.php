@@ -1,14 +1,9 @@
 <?php
+
 declare(strict_types=1);
+require __DIR__ . '/../includes/admin-auth.php';
 require '../includes/database-connection.php';
 require '../includes/functions.php';
-
-// Sesión
-session_start();
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header('Location: login.php');
-    exit;
-}
 
 // Recoger filtros
 $selectedSpecies = $_GET['especie'] ?? '';
@@ -183,7 +178,7 @@ $section     = 'listaAnimales';
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmDeleteLabel">Confirmar eliminación</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                    <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -203,7 +198,7 @@ $section     = 'listaAnimales';
                 <div class="modal-header">
                     <h5 class="modal-title" id="finalConfirmDeleteLabel">Confirmación final</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                    <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -216,12 +211,11 @@ $section     = 'listaAnimales';
             </div>
         </div>
     </div>
-
-    <!-- Scripts -->
-    <script src="../js/eliminar-animal.js" defer></script>
-    <script src="../js/lista-animales.js" defer></script>
-    <script src="../js/mensaje-exito.js" defer></script>
-
 </main>
+
+<!-- Scripts -->
+<script src="../js/eliminar-animal.js" defer></script>
+<script src="../js/lista-animales.js" defer></script>
+<script src="../js/mensaje-exito.js" defer></script>
 
 <?php include '../includes/footer.php'; ?>
