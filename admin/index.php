@@ -1,15 +1,9 @@
 <?php
+
 declare(strict_types=1);
+require __DIR__ . '/../includes/admin-auth.php';
 require '../includes/database-connection.php';
 require '../includes/functions.php';
-
-// Sesión
-session_start();
-
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header('Location: login.php');
-    exit;
-}
 
 // Consulta: últimos 4 animales
 $sql = "SELECT 
@@ -42,9 +36,9 @@ $sqlTotal = "SELECT
 $estadisticas = pdo($pdo, $sqlTotal)->fetch();
 
 // Datos
+$title = html_escape('Refugio Camada - Admin');
+$description = html_escape('Inicio del Administrador');
 $section = 'Inicio';
-$title = 'Refugio Camada - Admin';
-$description = 'Inicio del Administrador';
 ?>
 
 
@@ -63,7 +57,7 @@ $description = 'Inicio del Administrador';
 
             <h2>Últimos animales recogidos</h2>
 
-            <div class="ultimos-animales">
+            <div class="grid-tarjetas-animales">
                 <?php foreach ($ultimosAnimales as $animal) { ?>
                     <div class="tarjeta-animal">
                         <a href="animal.php?id=<?= $animal['id'] ?>">
@@ -80,9 +74,20 @@ $description = 'Inicio del Administrador';
             <section class="refugio-info">
                 <h2>Información del Refugio</h2>
                 <ul>
-                    <li><strong>Dirección:</strong> Avenida Castro del Río 15, Baena</li>
-                    <li><strong>Email:</strong> contacto@refugio-camada.es</li>
-                    <li><strong>Teléfono:</strong> +34 600 123 456</li>
+                    <li>
+                        <strong>Dirección:</strong>
+                        <a class="a-blanco" href="https://www.google.com/maps?q=Avenida+Castro+del+R%C3%ADo+15,+Baena" target="_blank" rel="noopener">
+                            Avenida Castro del Río 15, Baena
+                        </a>
+                    </li>
+                    <li>
+                        <strong>Email:</strong>
+                        <a class="a-blanco" href="mailto:contacto@refugiocamada.es">contacto@refugiocamada.es</a>
+                    </li>
+                    <li>
+                        <strong>Teléfono:</strong>
+                        <a class="a-blanco" href="tel:+34600123456">+34 600 123 456</a>
+                    </li>
                 </ul>
             </section>
         </section>

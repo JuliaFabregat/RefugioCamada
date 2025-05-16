@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 http_response_code(404);
+require __DIR__ . '/../includes/admin-auth.php';
 require_once '../includes/database-connection.php';
 require_once '../includes/functions.php';
 

@@ -46,6 +46,10 @@
     overflow-wrap: anywhere;
 }
 
+.animal-acciones {
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
 /* Título */
 .animal-info h1 {
     margin-bottom: 1rem;
@@ -157,4 +161,24 @@
         flex-wrap: wrap;
         justify-content: flex-start;
     }
+}
+
+.solicitud-adopcion {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.mensaje {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.login-requerido {
+    color: var(--color-accent);
+}
+
+.no-disponible {
+    color: gray;
 }

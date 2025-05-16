@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="es-ES">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= html_escape($title) ?></title>
-    <meta name="description" content="<?= html_escape($description) ?>">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><?= html_escape($title) ?></title>
+  <meta name="description" content="<?= html_escape($description) ?>">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="../css/styles.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/styles.css">
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/png" href="../img/logoColor_blank.png" alt="Logotipo Camada">
-  </head>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-  <body>
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="../img/logoColor_blank.png" alt="Logotipo Camada">
+</head>
 
+<body>
+  
   <header>
-    <div class="container">
+    <div class="header-div">
 
       <div class="logo">
         <a href="index.php"><img src="../img/logoCompleto.png" alt="Logotipo Camada - Refugio Animales"></a>
@@ -36,17 +37,38 @@
       <nav>
         <ul id="menu">
           <li>
-            <a href="index.php" <?= ($section == 'Inicio') ? 'class="on" aria-current="page"' : '' ?>>INICIO</a>
+            <a href="index.php"
+              <?= ($section === 'Inicio') ? 'class="on" aria-current="page"' : '' ?>>
+              INICIO
+            </a>
           </li>
           <li>
-            <a href="lista-animales.php" <?= ($section == 'listaAnimales') ? 'class="on" aria-current="page"' : '' ?>>LISTA</a>
+            <a href="lista-animales.php"
+              <?= ($section === 'listaAnimales') ? 'class="on" aria-current="page"' : '' ?>>
+              LISTA
+            </a>
           </li>
           <li>
-            <a href="agregar-animales.php" <?= ($section == 'agregarAnimales') ? 'class="on" aria-current="page"' : '' ?>>AGREGAR</a>
+            <a href="agregar-animales.php"
+              <?= ($section === 'agregarAnimales') ? 'class="on" aria-current="page"' : '' ?>>
+              AGREGAR
+            </a>
           </li>
           <li>
-            <a href="logout.php" class="btn btn-danger">LOGOUT</a>
+            <a href="solicitudes.php"
+              <?= ($section === 'solicitudes') ? 'class="on" aria-current="page"' : '' ?>>
+              SOLICITUDES
+            </a>
           </li>
+
+          <!-- sólo si hay un usuario logueado -->
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <li class="ml-auto">
+              <a href="../web/logout.php" class="btn btn-danger">
+                Logout (<?= htmlspecialchars($_SESSION['user_name'], ENT_QUOTES, 'UTF-8') ?>)
+              </a>
+            </li>
+          <?php endif; ?>
         </ul>
       </nav>
     </div>
