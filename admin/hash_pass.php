@@ -1,5 +1,4 @@
 <?php
-// hash_generator.php
-echo password_hash('adminCamada123', PASSWORD_DEFAULT);
-
+// Creación de un hash para crear un nuevo usuario administrador
+echo password_hash('adminContraseña', PASSWORD_DEFAULT);
 ?>

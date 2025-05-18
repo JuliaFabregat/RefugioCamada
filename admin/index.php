@@ -82,7 +82,7 @@ $section = 'Inicio';
                     </li>
                     <li>
                         <strong>Email:</strong>
-                        <a class="a-blanco" href="mailto:contacto@refugiocamada.es">contacto@refugiocamada.es</a>
+                        <a class="a-blanco" href="mailto:contacto@refugiocamada.es">contacto@refugiocamada.org</a>
                     </li>
                     <li>
                         <strong>Teléfono:</strong>

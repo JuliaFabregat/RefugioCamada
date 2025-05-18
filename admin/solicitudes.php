@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 require __DIR__ . '/../includes/admin-auth.php';
 require '../includes/database-connection.php';
@@ -28,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['solicitud_id'], $_POS
         // Iniciar transacción
         $pdo->beginTransaction();
 
-        // 1) Denegar todas las solicitudes de ese animal
+        // Denegar todas las solicitudes de ese animal
         pdo(
             $pdo,
             "UPDATE solicitudes_adopcion 
@@ -37,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['solicitud_id'], $_POS
             ['aid' => $animalId]
         );
 
-        // 2) Aceptar la seleccionada
+        // Aceptar la seleccionada
         pdo(
             $pdo,
             "UPDATE solicitudes_adopcion 
@@ -46,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['solicitud_id'], $_POS
             ['id' => $solId]
         );
 
-        // 3) Cambiar estado del animal a 'Adoptado'
+        // Cambiar estado del animal a 'Adoptado'
         pdo(
             $pdo,
             "UPDATE animales 
@@ -56,10 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['solicitud_id'], $_POS
         );
 
         $pdo->commit();
-    } elseif ($newRes === 'Denegada') {
+    } elseif ($newRes === 'Denegada') { // Si es denegada
         $pdo->beginTransaction();
 
-        // 1) Denegar esta solicitud
+        // Denegar esta solicitud
         pdo(
             $pdo,
             "UPDATE solicitudes_adopcion 
@@ -68,12 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['solicitud_id'], $_POS
             ['id' => $solId]
         );
 
-        // 2) Comprobar si quedan solicitudes Aceptadas o Pendientes
+        // Comprobar si quedan solicitudes Aceptadas o Pendientes
         $sql = "SELECT COUNT(*) FROM solicitudes_adopcion
                 WHERE id_animal = :aid AND resolucion != 'Denegada'";
         $count = pdo($pdo, $sql, ['aid' => $animalId])->fetchColumn();
 
-        // 3) Si no hay ninguna otra solicitud activa, el animal vuelve a estar Disponible
+        // Si no hay ninguna otra solicitud activa, el animal vuelve a estar 'Disponible'
         if ((int)$count === 0) {
             pdo(
                 $pdo,
@@ -102,9 +101,9 @@ $sql = "SELECT s.id, s.fecha, s.resolucion,
         ORDER BY s.fecha DESC";
 $solicitudes = pdo($pdo, $sql)->fetchAll();
 
-// Cabecera de página
-$title       = 'Solicitudes de Adopción';
-$description = 'Revisa y gestiona las solicitudes de adopción';
+// Datos
+$title       = html_escape('Solicitudes de Adopción');
+$description = html_escape('Revisa y gestiona las solicitudes de adopción');
 $section     = 'solicitudes';
 ?>
 
@@ -114,69 +113,72 @@ $section     = 'solicitudes';
 <!-- HTML -->
 <?php include '../includes/header.php'; ?>
 
-<main class="container" id="content">
-    <h1>Solicitudes de Adopción</h1>
+<!-- CSS -->
+<link rel="stylesheet" href="../css/admin/solicitudes.css">
+<link rel="stylesheet" href="../css/admin/lista-animales.css">
 
-    <?php if (empty($solicitudes)): ?>
-        <p>No hay solicitudes registradas.</p>
-    <?php else: ?>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Fecha</th>
-                    <th>Usuario</th>
-                    <th>Email</th>
-                    <th>Animal</th>
-                    <th>Resolución</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($solicitudes as $s): ?>
+<main>
+    <div class="container">
+        <h1>Solicitudes de Adopción</h1>
+
+        <?php if (empty($solicitudes)): ?>
+            <p>No hay solicitudes registradas.</p>
+        <?php else: ?>
+            <table class="table">
+                <thead>
                     <tr>
-                        <td><?= $s['id'] ?></td>
-                        <td><?= html_escape($s['fecha']) ?></td>
-                        <td><?= html_escape("{$s['usuario_nombre']} {$s['usuario_apellidos']}") ?></td>
-                        <td><a href="mailto:<?= html_escape($s['usuario_email']) ?>"><?= html_escape($s['usuario_email']) ?></a></td>
-                        <td><?= html_escape($s['animal_nombre']) ?></td>
-                        <td>
-                            <span class="status status-<?= strtolower(str_replace(' ', '', $s['resolucion'])) ?>">
-                                <?= html_escape($s['resolucion']) ?>
-                            </span>
-                        </td>
-                        <td>
-                            <?php if ($s['resolucion'] === 'En proceso'): ?>
-                                <form method="post" style="display:inline">
-                                    <input type="hidden" name="solicitud_id" value="<?= $s['id'] ?>">
-                                    <button
-                                        type="submit"
-                                        name="resolucion"
-                                        value="Aceptada"
-                                        class="btn btn-primary">
-                                        Aceptar
-                                    </button>
-                                </form>
-                                <form method="post" style="display:inline">
-                                    <input type="hidden" name="solicitud_id" value="<?= $s['id'] ?>">
-                                    <button
-                                        type="submit"
-                                        name="resolucion"
-                                        value="Denegada"
-                                        class="btn btn-secondary">
-                                        Denegar
-                                    </button>
-                                </form>
-                            <?php else: ?>
-                                <span class="text-muted">Resuelta</span>
-                            <?php endif; ?>
-                        </td>
-
+                        <th>Fecha</th>
+                        <th>Usuario</th>
+                        <th>Email</th>
+                        <th>Animal</th>
+                        <th>Resolución</th>
+                        <th>Acciones</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php endif; ?>
+                </thead>
+                <tbody>
+                    <?php foreach ($solicitudes as $s): ?>
+                        <tr>
+                            <td><?= html_escape($s['fecha']) ?></td>
+                            <td><?= html_escape("{$s['usuario_nombre']} {$s['usuario_apellidos']}") ?></td>
+                            <td><a href="mailto:<?= html_escape($s['usuario_email']) ?>"><?= html_escape($s['usuario_email']) ?></a></td>
+                            <td><?= html_escape($s['animal_nombre']) ?></td>
+                            <td>
+                                <span class="status status-<?= strtolower(str_replace(' ', '', $s['resolucion'])) ?>">
+                                    <?= html_escape($s['resolucion']) ?>
+                                </span>
+                            </td>
+                            <td>
+                                <?php if ($s['resolucion'] === 'En proceso'): ?>
+                                    <form method="post" style="display:inline">
+                                        <input type="hidden" name="solicitud_id" value="<?= $s['id'] ?>">
+                                        <button
+                                            type="submit"
+                                            name="resolucion"
+                                            value="Aceptada"
+                                            class="btn btn-primary">
+                                            Aceptar
+                                        </button>
+                                    </form>
+                                    <form method="post" style="display:inline">
+                                        <input type="hidden" name="solicitud_id" value="<?= $s['id'] ?>">
+                                        <button
+                                            type="submit"
+                                            name="resolucion"
+                                            value="Denegada"
+                                            class="btn btn-secondary">
+                                            Denegar
+                                        </button>
+                                    </form>
+                                <?php else: ?>
+                                    <span class="text-muted">Resuelta</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+    </div>
 </main>
 
 <?php include '../includes/footer.php'; ?>

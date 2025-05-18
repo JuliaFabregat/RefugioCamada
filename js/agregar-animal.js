@@ -1,4 +1,4 @@
-// Script para mostrar/ocultar la ficha veterinaria al marcar el checkbox
+// Mostrar/ocultar la ficha veterinaria al marcar el checkbox
 document.addEventListener('DOMContentLoaded', function () {
     const checkbox = document.getElementById('rellenar_ficha');
     const fichaVeterinaria = document.getElementById('ficha_veterinaria');

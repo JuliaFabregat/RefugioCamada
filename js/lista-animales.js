@@ -7,7 +7,7 @@ function handleRowClick(event, animalId) {
     window.location.href = `animal.php?id=${animalId}`;
 }
 
-// Filtros de la tabla - Tiempo de actualización sin un botón que sea "filtrar"
+// Filtros de la tabla
 document.addEventListener('DOMContentLoaded', function () {
     const especieSelect = document.getElementById('especie');
     const estadoSelect = document.getElementById('estado');

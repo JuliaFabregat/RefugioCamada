@@ -1,8 +1,3 @@
-/* H1 */
-h1 {
-    margin-top: 2rem;
-}
-
 /* Padre flex */
 .divFiltro {
     display: flex;
@@ -24,14 +19,6 @@ h1 {
 .table tbody tr:hover {
     background-color: var(--color-grey);
     cursor: pointer;
-}
-
-
-/* Botones - Editar + Eliminar */
-.animal-acciones {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: flex-start;
 }
 
 /* Lista estilos */

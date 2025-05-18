@@ -167,6 +167,10 @@ a {
   color: var(--color-accent);
 }
 
+a:hover {
+  color: var(--color-primary);
+}
+
 .a-blanco {
   color: var(--color-white);
 }
@@ -215,11 +219,10 @@ p {
   padding: 2rem 1rem;
 }
 
-/* Márgenes */
-.mt-1 { margin-top: 1rem; }
-.mt-2 { margin-top: 2rem; }
-.mb-1 { margin-bottom: 1rem; }
-.mb-2 { margin-bottom: 2rem; }
+/* Ocultar un componente */
+.ocultar {
+  display: none;
+}
 
 /* Texto centrado */
 .text-center { text-align: center; }

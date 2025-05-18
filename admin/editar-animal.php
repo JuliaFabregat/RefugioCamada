@@ -177,9 +177,11 @@ $section = 'listaAnimales';
             <input type="text" name="edad" value="<?= $animal['edad'] ?? '' ?>">
         </div>
 
+        <!-- Como ahora lo controlamos mediante la lista de solicitudes ocultamos el campo -->
+        <!-- Mejora: Quitarlo de la consulta o hacerlo block -->
         <div class="campo">
-            <label>Estado:</label>
-            <select name="estado" required>
+            <label class="ocultar">Estado:</label>
+            <select name="estado" class="ocultar" required>
                 <option value="Disponible" <?= ($animal['estado'] === 'Disponible') ? 'selected' : '' ?>>Disponible</option>
                 <option value="En proceso" <?= ($animal['estado'] === 'En proceso') ? 'selected' : '' ?>>En proceso</option>
                 <option value="Adoptado" <?= ($animal['estado'] === 'Adoptado') ? 'selected' : '' ?>>Adoptado</option>
