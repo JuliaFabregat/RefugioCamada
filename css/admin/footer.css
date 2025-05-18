@@ -16,9 +16,9 @@ main {
     background-color: var(--color-primary);
     color: var(--color-white);
     text-align: center;
-    padding: 0.75rem 0;
-    font-size: 0.9rem;
-    flex-shrink: 0;
+    height: 70px;
+    align-items: center;
+    display: flex;
 }
 
 .admin-footer .footer-link {

@@ -1,18 +1,12 @@
 <?php
+
 declare(strict_types=1);
+require __DIR__ . '/../includes/admin-auth.php';
 require '../includes/database-connection.php';
 require '../includes/functions.php';
 require '../includes/validate.php';
 
-// Sesión
-session_start();
-
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header('Location: login.php');
-    exit;
-}
-
-// Obtener lista de especies
+// Obtenemos la lista de especies
 $sql_especies = "SELECT id, especie FROM especies ORDER BY especie";
 $especies_list = pdo($pdo, $sql_especies)->fetchAll();
 
@@ -44,7 +38,7 @@ $errors = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Capturar datos del formulario de animal
+    // Captar los datos del formulario
     $animal['nombre']   = $_POST['nombre'] ?? '';
     $animal['especie_id'] = $_POST['especie_id'] ?? '';
     $animal['raza']     = $_POST['raza'] ?? '';
@@ -52,17 +46,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $animal['genero']   = $_POST['genero'] ?? '';
     $animal['alt']      = $_POST['alt'] ?? '';
 
-    // Comprobar si se seleccionó el checkbox de rellenar la ficha veterinaria
+    // Comprobar checkbox de Vet_Data
     $rellenar_ficha_vet = isset($_POST['rellenar_ficha']) && $_POST['rellenar_ficha'] == '1';
 
     if ($rellenar_ficha_vet) {
-        // Capturar los datos de la parte de Vet Data (si el checkbox está marcado)
+        // Capturar los datos de Vet Data
         $vet_data['microchip'] = isset($_POST['microchip']) && $_POST['microchip'] !== '' ? $_POST['microchip'] : 0;
         $vet_data['castracion'] = isset($_POST['castracion']) && $_POST['castracion'] !== '' ? $_POST['castracion'] : 0;
         $vet_data['vacunas'] = trim($_POST['vacunas'] ?? '') !== '' ? $_POST['vacunas'] : 'N/E';
         $vet_data['info_adicional'] = trim($_POST['info_adicional'] ?? '') !== '' ? $_POST['info_adicional'] : 'N/E';
     } else {
-        // Si no se, guardamos los valores por defecto
+        // Si no, guardamos los valores por defecto
         $vet_data['microchip'] = 0;
         $vet_data['castracion'] = 0;
         $vet_data['vacunas'] = 'N/E';
@@ -70,23 +64,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validación - Nombre
-    $errors['nombre'] = is_text($animal['nombre'], 1, 50) 
+    $errors['nombre'] = is_text($animal['nombre'], 1, 50)
         ? '' : 'El nombre es obligatorio.';
 
     // Validación - Especie
-    $errors['especie'] = is_especie_id($animal['especie_id'], $especies_list) 
+    $errors['especie'] = is_especie_id($animal['especie_id'], $especies_list)
         ? '' : 'Debe seleccionar una Especie existente.';
 
+    // Validación - Raza
+    $errors['raza'] = is_text($animal['raza'], 1, 50)
+        ? '' : 'Debe introducir una raza.';
+
     // Validación - Edad
-    $errors['edad'] = is_age_valid($animal['edad']) 
+    $errors['edad'] = is_age_valid($animal['edad'])
         ? '' : 'Debe introducir una edad aproximada. Formato: "Joven(2 años)", "Cachorro(11 meses)".';
 
     // Validación - Imagen
     if (!empty($_FILES['imagen']['name'])) {
-        $allowed_extensions = ['jpg', 'jpeg', 'png'];
-        $allowed_mime_types = ['image/jpeg', 'image/png'];
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
+        $allowed_mime_types = ['image/jpeg', 'image/png', 'image/webp'];
         $max_size = 2 * 1024 * 1024; // 2MB
-        
+
         $file_name = $_FILES['imagen']['name'];
         $file_tmp = $_FILES['imagen']['tmp_name'];
         $file_size = $_FILES['imagen']['size'];
@@ -103,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime_type = finfo_file($finfo, $file_tmp);
         finfo_close($finfo);
-        
+
         if (!in_array($mime_type, $allowed_mime_types)) {
             $errors['imagen'] = 'El archivo no es una imagen válida.';
         }
@@ -134,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Procesar si no hay errores
     if (!array_filter($errors)) {
         try {
-            // Configurar nombre personalizado
+            // Configurar nombre único para la img
             $animal_name = strtolower(preg_replace('/[^a-zA-Z0-9]/', '_', $animal['nombre']));
             $animal_name = trim($animal_name, '_') ?: 'animal';
             $new_filename = $animal_name . '_' . uniqid() . '.' . $file_extension;  // Nombre con código aleatorio
@@ -146,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $especie_result = pdo($pdo, $sql_especie_nombre, ['id' => $animal['especie_id']])->fetch();
             $especie_name = $especie_result ? $especie_result['especie'] : 'Animal';
 
-            // Crear texto alternativo automáticamente
+            // Texto alt automático
             $alt_text = "{$especie_name}: {$animal['raza']}";
 
             // Crear directorio si no existe
@@ -180,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                              (microchip, castracion, vacunas, info_adicional) 
                              VALUES 
                              (:microchip, :castracion, :vacunas, :info_adicional)";
-            
+
             pdo($pdo, $sql_vet_data, [
                 'microchip' => $vet_data['microchip'],
                 'castracion' => $vet_data['castracion'],
@@ -227,7 +225,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
 
             redirect('lista-animales.php', ['success' => 'Animal agregado']);
-
         } catch (PDOException $e) {
             $errors['warning'] = 'Error en la base de datos: ' . $e->getMessage();
         } catch (Exception $e) {
@@ -239,8 +236,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Datos
-$title = 'Agregar Animal';
-$description = 'Formulario para dar de alta nuevos animales';
+$title = html_escape("Agregar Animal");
+$description = html_escape("Formulario para dar de alta nuevos animales");
 $section = 'agregarAnimales';
 ?>
 
@@ -253,12 +250,12 @@ $section = 'agregarAnimales';
 <!-- CSS -->
 <link rel="stylesheet" href="../css/admin/editar-animal.css">
 
-<main class="formDiv admin" id="content">
+<main class="formDiv">
     <form action="agregar-animales.php" method="post" enctype="multipart/form-data" class="narrow" novalidate>
-        
+
         <!-- FORM - Datos del Animal -->
         <h1>Datos del Animal</h1>
-        
+
         <?php if ($errors['warning']): ?>
             <div class="alert alert-danger"><?= $errors['warning'] ?></div>
         <?php endif; ?>
@@ -290,7 +287,7 @@ $section = 'agregarAnimales';
 
         <div class="campo">
             <label>Edad:</label>
-            <input type="text" name="edad" value="<?= html_escape($animal['edad']) ?>" 
+            <input type="text" name="edad" value="<?= html_escape($animal['edad']) ?>"
                 placeholder="Ej: 2 años, 11 meses"> <br>
             <span class="errors"><?= $errors['edad'] ?></span>
         </div>
@@ -316,13 +313,13 @@ $section = 'agregarAnimales';
         <div class="campo campo-inline">
             <label>
                 <input type="checkbox" id="rellenar_ficha" name="rellenar_ficha" value="1"
-                <?php echo isset($_POST['rellenar_ficha']) ? 'checked' : ''; ?>>
+                    <?php echo isset($_POST['rellenar_ficha']) ? 'checked' : ''; ?>>
                 ¿Desea rellenar la ficha veterinaria del animal?
             </label>
         </div>
 
         <div id="ficha_veterinaria" style="display: none;">
-            
+
             <!-- FORM - Datos del Animal -->
             <h2>Datos Veterinarios</h2>
 
@@ -360,10 +357,10 @@ $section = 'agregarAnimales';
         <!-- Botones de Acción -->
         <button type="submit" class="button aceptar">Agregar Animal</button>
         <a href="lista-animales.php" class="button cancelar">Cancelar</a>
-
-        <!-- Script -->
-        <script src="../js/agregar-animal.js"></script>
     </form>
 </main>
+
+<!-- Script -->
+<script src="../js/agregar-animal.js"></script>
 
 <?php include '../includes/footer.php'; ?>

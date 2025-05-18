@@ -7,7 +7,7 @@ require '../includes/functions.php';
 $selectedSpecies = $_GET['especie'] ?? '';
 $searchName      = trim($_GET['nombre']  ?? '');
 $page            = max(1, (int)($_GET['p'] ?? 1));
-$perPage         = 20;  // <-- ahora 20 por página
+$perPage         = 20;
 
 // Obtener especies
 $sqlEspeces = "SELECT id, especie FROM especies ORDER BY especie";
@@ -67,11 +67,10 @@ $section     = 'webAnimales';
 <!-- HTML -->
 <?php include '../includes/header-web.php'; ?>
 
-<!-- <link rel="stylesheet" href="../css/admin/index.css"> -->
 <link rel="stylesheet" href="../css/web/lista-animales-web.css">
 
 <main class="container layout">
-    <section class="content">
+    <section class="lista-animales">
 
         <h1>Animales en Adopción</h1>
 
@@ -96,7 +95,7 @@ $section     = 'webAnimales';
             </div>
         </form>
 
-        <div class="grid-animales">
+        <div class="grid-tarjetas-animales">
             <?php if (!$animales): ?>
                 <p>No hay resultados.</p>
             <?php endif; ?>
@@ -132,7 +131,6 @@ $section     = 'webAnimales';
     </section>
 
     <aside class="sidebar">
-        <h3>Lee también</h3>
         <ul>
             <li><a href="/web/quienes-somos.php">Quiénes somos</a></li>
             <li><a href="/web/contacto.php">Contáctanos</a></li>

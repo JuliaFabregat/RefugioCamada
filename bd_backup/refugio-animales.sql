@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-05-2025 a las 19:59:46
+-- Tiempo de generación: 18-05-2025 a las 22:26:34
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -46,12 +46,13 @@ CREATE TABLE `animales` (
 
 INSERT INTO `animales` (`id`, `nombre`, `edad`, `genero`, `estado`, `joined`, `especie_id`, `raza_id`, `vet_data_id`, `imagen_id`) VALUES
 (23, 'Warrior', 'Cachorro (6 meses)', 'Macho', 'Disponible', '2025-04-15 07:18:11', 1, 3, 5, 28),
-(24, 'Jinx', 'Joven (2 a&ntilde;os y 1 mes)', 'Hembra', 'Adoptado', '2025-04-15 08:02:39', 2, 2, 6, 29),
+(24, 'Jinx', 'Joven (2 a&ntilde;os y 1 mes)', 'Hembra', 'Disponible', '2025-04-15 08:02:39', 2, 2, 6, 29),
 (25, 'Apicho', 'Adulto (2 a&ntilde;os)', 'Macho', 'Disponible', '2025-04-16 07:28:54', 6, 4, 7, 37),
 (26, 'Marlino', 'Cachorro (5 meses)', 'Macho', 'Disponible', '2025-04-26 08:19:01', 1, 5, 8, 31),
-(28, 'Phynx', 'Joven (3 a&ntilde;os)', 'Hembra', 'En proceso', '2025-04-27 10:39:23', 2, 6, 10, 33),
+(28, 'Phynx', 'Joven (3 a&ntilde;os)', 'Hembra', 'Adoptado', '2025-04-27 10:39:23', 2, 6, 10, 33),
 (33, 'Lola', 'Adulto (5 años)', 'Hembra', 'Disponible', '2025-05-02 08:13:44', 1, 7, 15, 42),
-(34, 'Gaty', 'Adulto (8 a&ntilde;os)', 'Macho', 'En proceso', '2025-05-14 17:54:22', 2, 8, 16, 43);
+(39, 'Gaty', 'Adulto (8 meses)', 'Macho', 'Disponible', '2025-05-16 15:44:48', 2, 8, 21, 51),
+(40, 'Kenobi', 'Joven (3 a&ntilde;os)', 'Macho', 'Disponible', '2025-05-17 12:14:29', 2, 9, 22, 52);
 
 -- --------------------------------------------------------
 
@@ -100,7 +101,8 @@ INSERT INTO `imagenes` (`id`, `imagen`, `alt`) VALUES
 (33, 'phynx_680e095bdf573.jpg', 'Gato: Esfinge'),
 (37, 'apicho_681335dcd7503.jpg', 'Apicho'),
 (42, 'lola_68147eb8c0274.jpg', 'Perro: Yorkshire'),
-(43, 'gaty_6824d8ced0dc1.jpg', 'Gato: Naranja Comun');
+(51, 'gaty_68275d706e012.jpg', 'Gato: Naranja Comun'),
+(52, 'kenoby_68287da5226c8.jpeg', 'Gato: Atigrado');
 
 -- --------------------------------------------------------
 
@@ -126,7 +128,54 @@ INSERT INTO `raza` (`id`, `nombre`, `especie_id`) VALUES
 (5, 'Pug', 1),
 (6, 'Esfinge', 2),
 (7, 'Yorkshire', 1),
-(8, 'Naranja Comun', 2);
+(8, 'Naranja Comun', 2),
+(9, 'Atigrado', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solicitudes_adopcion`
+--
+
+CREATE TABLE `solicitudes_adopcion` (
+  `id` int(11) NOT NULL,
+  `id_animal` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT current_timestamp(),
+  `resolucion` enum('En proceso','Aceptada','Denegada') NOT NULL DEFAULT 'En proceso'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `solicitudes_adopcion`
+--
+
+INSERT INTO `solicitudes_adopcion` (`id`, `id_animal`, `id_usuario`, `fecha`, `resolucion`) VALUES
+(2, 26, 2, '2025-05-16 13:48:47', 'Denegada'),
+(3, 28, 2, '2025-05-16 14:05:33', 'Aceptada');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `apellidos` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `email`, `password`, `admin`, `created_at`) VALUES
+(1, 'Administrador', 'Camada', 'admin@refugiocamada.org', '$2y$10$SNWgvo5RkhChuS677RWRjugsn30NvIerBcU7T63tgqe6y8fGZF7di', 1, '2025-05-16 12:13:18'),
+(2, 'Alfonso', 'Reverte', 'alfonso@gmail.com', '$2y$10$6qDidZBxm/9WmRdzxzaP2O2YmPT2YsNyRG4Km.PndaVAkknXzhHTW', 0, '2025-05-16 13:31:26');
 
 -- --------------------------------------------------------
 
@@ -153,7 +202,8 @@ INSERT INTO `vet_data` (`id`, `microchip`, `castracion`, `vacunas`, `info_adicio
 (8, 0, 0, 'N/E', 'N/E'),
 (10, 1, 1, 'Trivalente', 'Problemas de piel leves.'),
 (15, 1, 0, 'N/E', 'N/E'),
-(16, 1, 1, 'Todas', 'Obesidad');
+(21, 1, 1, 'Todas', 'Obesidad'),
+(22, 1, 1, 'Todas', 'La fuerza le acompa&ntilde;a');
 
 --
 -- Índices para tablas volcadas
@@ -190,6 +240,21 @@ ALTER TABLE `raza`
   ADD KEY `raza_especie_id` (`especie_id`);
 
 --
+-- Indices de la tabla `solicitudes_adopcion`
+--
+ALTER TABLE `solicitudes_adopcion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_animal` (`id_animal`),
+  ADD KEY `idx_usuario` (`id_usuario`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- Indices de la tabla `vet_data`
 --
 ALTER TABLE `vet_data`
@@ -203,7 +268,7 @@ ALTER TABLE `vet_data`
 -- AUTO_INCREMENT de la tabla `animales`
 --
 ALTER TABLE `animales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `especies`
@@ -215,19 +280,31 @@ ALTER TABLE `especies`
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT de la tabla `raza`
 --
 ALTER TABLE `raza`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `solicitudes_adopcion`
+--
+ALTER TABLE `solicitudes_adopcion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `vet_data`
 --
 ALTER TABLE `vet_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Restricciones para tablas volcadas
@@ -247,6 +324,13 @@ ALTER TABLE `animales`
 --
 ALTER TABLE `raza`
   ADD CONSTRAINT `raza_especie_id` FOREIGN KEY (`especie_id`) REFERENCES `especies` (`id`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `solicitudes_adopcion`
+--
+ALTER TABLE `solicitudes_adopcion`
+  ADD CONSTRAINT `fk_solicitudes_animal` FOREIGN KEY (`id_animal`) REFERENCES `animales` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_solicitudes_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
