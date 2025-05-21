@@ -1,6 +1,6 @@
     <footer class="admin-footer">
       <div class="container">
-        &copy; <a href="../web/index.php" class="footer-link">Camada - Refugio de Animales <?= date('Y'); ?></a>
+        &copy; Camada - Refugio de Animales <?= date('Y'); ?></a>
       </div>
     </footer>
 

@@ -28,40 +28,40 @@ $description = 'Conoce la historia, misión y visión del Refugio Camada en Baen
         <div class="historia-imagen">
             <img src="../img/about-historia.jpg" alt="Rescate de animales en Refugio Camada">
         </div>
-        <div class="historia-texto">
-            <h2>Nuestra Historia</h2>
+        <section class="historia-texto">
+            <h1>Nuestra historia</h1>
             <p>
-                Somos una organización protectora de animales independiente, fundada en 2018 en Baena,
-                que no recibe subvenciones de organismos oficiales, empresas ni partidos políticos.
-                Gracias a las cuotas de nuestros socios y donaciones de simpatizantes, mantenemos
-                nuestra labor sostenible y preservamos nuestra libertad de acción.
+                Refugio Camada nació en 2018 en Baena con un solo propósito: dar voz y una segunda oportunidad a los animales sin hogar.
+                Desde entonces, este proyecto ha crecido gracias al esfuerzo colectivo de un pequeño grupo de personas comprometidas que,
+                sin apoyos externos, han construido algo enorme desde cero. No contamos con subvenciones de instituciones ni empresas,
+                y hasta ahora no tenemos socios ni donantes habituales. Todo lo que hemos conseguido ha sido posible con trabajo, constancia
+                y mucho corazón.
             </p>
+
             <p>
-                Contamos con un centro veterinario abierto al público en Madrid, cuyos ingresos
-                se destinan íntegramente al cuidado de animales abandonados, y un centro de
-                acogida en El Espinar (Segovia).
+                Nos dedicamos al rescate y recuperación de animales abandonados de todo tipo: perros, gatos y otros que han sido víctimas
+                del maltrato, el abandono o la indiferencia. Nos encargamos de cuidarlos, rehabilitarlos y prepararlos para su adopción,
+                con el objetivo de encontrarles una familia que los quiera como merecen. En Refugio Camada defendemos firmemente el principio
+                del <strong>sacrificio cero</strong>: ningún animal sano o recuperable debería morir por falta de recursos o espacio.
             </p>
+
             <p>
-                Nuestra acción se divide en dos ámbitos:
+                Sabemos que aún queda mucho por hacer y, por eso, estamos buscando colaborar activamente con clínicas veterinarias locales,
+                como Tucán, que compartan nuestra visión. Estas alianzas nos permitirán ofrecer un mejor servicio veterinario a nuestros
+                animales rescatados y avanzar hacia un modelo más sostenible y profesionalizado.
             </p>
-            <ul>
-                <li>
-                    <strong>Acción directa:</strong> Rescate de perros y gatos víctimas de maltrato
-                    o abandono, atención veterinaria completa (analíticas, tratamientos, cirugías),
-                    identificación, esterilización y búsqueda de adoptantes responsables.
-                </li>
-                <li>
-                    <strong>Acción divulgativa:</strong> Campañas en medios de comunicación para
-                    educar en el respeto animal y defender derechos básicos como el libre acceso
-                    de mascotas a espacios públicos, siempre promoviendo la tenencia responsable.
-                </li>
-            </ul>
+
             <p>
-                Defendemos el <em>sacrificio cero</em>, entendiendo la eutanasia únicamente
-                en casos de sufrimiento irreversible por enfermedad terminal, siempre con
-                la dignidad y el cariño que nuestros animales merecen.
+                En Camada creemos que cada vida cuenta. Y aunque nuestro camino no ha sido fácil, seguimos adelante con la misma ilusión del
+                primer día: rescatar, sanar, proteger y encontrar hogares definitivos para aquellos que más lo necesitan.
             </p>
-        </div>
+
+            <p>
+                Gracias por acompañarnos en este viaje. Si quieres saber más o formar parte de nuestra historia,
+                <a href="contacto.php">ponte en contacto con nosotros</a>.
+            </p>
+        </section>
+
     </div>
 </section>
 

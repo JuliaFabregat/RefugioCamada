@@ -61,9 +61,9 @@
             </a>
           </li>
 
-          <!-- sólo si hay un usuario logueado -->
+          <!-- Sólo si hay un usuario logueado -->
           <?php if (isset($_SESSION['user_id'])): ?>
-            <li class="ml-auto">
+            <li>
               <a href="../web/logout.php" class="btn btn-danger">
                 Logout (<?= htmlspecialchars($_SESSION['user_name'], ENT_QUOTES, 'UTF-8') ?>)
               </a>

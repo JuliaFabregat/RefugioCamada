@@ -20,13 +20,3 @@ main {
     align-items: center;
     display: flex;
 }
-
-.admin-footer .footer-link {
-    color: var(--color-white);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.admin-footer .footer-link:hover {
-    text-decoration: underline;
-}

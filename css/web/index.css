@@ -1,7 +1,7 @@
 /*  HERO  */
 .hero-index {
     background: url('../../img/index-hero.webp') center/cover no-repeat;
-    min-height: calc(40vh + 300px);
+    min-height: calc(50vh + 300px);
 }
 
 .hero-index h1 {
@@ -17,9 +17,21 @@
     color: var(--color-white);
 }
 
+/*  QUIENES SOMOS  */
+.historia {
+    background-color: var(--color-white);
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+}
+
+.historia-grid {
+    padding: 4rem 0;
+}
+
 /*  VENTAJAS  */
 .ventajas {
-    background: var(--color-bg);
+    background-color: rgb(204, 204, 204);
 }
 
 .ventajas h2 {
@@ -36,7 +48,7 @@
 .ventajas .card {
     background: var(--color-white);
     border-radius: var(--radius);
-    padding: 2rem 1.5rem;
+    padding: 2rem 1rem;
     box-shadow: var(--box-shadow);
     text-align: center;
 }
@@ -45,6 +57,15 @@
     font-size: 3rem !important;
     color: var(--color-accent);
     margin-bottom: 0.5rem;
+}
+
+.card {
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--box-shadow-large);
 }
 
 /*  CTA ADOPTAR  */
@@ -68,18 +89,51 @@
     color: var(--color-white) !important;
 }
 
+.galeria-adopcion {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.img-wrapper {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    flex-shrink: 0;
+}
+
+.img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.galeria-adopcion:hover .img-wrapper {
+    transform: scale(0.85);
+}
+
+.galeria-adopcion .img-wrapper:hover {
+    transform: scale(1.2);
+    opacity: 1;
+    z-index: 1;
+}
+
 /*  FAQ  */
-.faq-container{
+.faq-container {
     background: var(--color-white);
+    padding: 2rem 2rem;
 }
 
 .faq-item {
     padding: 1rem 0;
     border-bottom: 1px solid var(--color-grey);
-}
-
-.faq-item:last-child {
-    border-bottom: none;
 }
 
 .faq-question {
@@ -93,6 +147,7 @@
     cursor: pointer;
     padding: 0;
     position: relative;
+    font-family: var(--font-base);
 }
 
 .faq-question::after {
@@ -119,12 +174,11 @@
     max-height: 200px;
 }
 
-
 /*  CONTACTO  */
 .contacto-final {
     background: var(--color-bg);
 }
 
-.button.aceptar{
+.button.aceptar {
     margin: 0;
 }

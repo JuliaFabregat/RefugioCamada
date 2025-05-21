@@ -107,6 +107,12 @@
     margin-bottom: 1rem;
 }
 
+/* Grid */
+.grid {
+    display: grid;
+    grid-gap: 1.5rem;
+}
+
 /* Contacto */
 .cta {
     padding-top: 40px;

@@ -97,17 +97,20 @@ nav ul li a.on {
   border-bottom-color: transparent;
 }
 
-nav ul li .btn-danger {
+nav ul li a.btn-danger {
   color: var(--color-white);
   background-color: var(--color-danger);
   padding: 0.4rem 0.7rem;
   font-size: 0.9rem;
   font-weight: bold;
+  transition:  0.3s ease;
 }
 
-nav ul li .btn-danger:hover {
+nav ul li a.btn-danger:hover {
   color: var(--color-white);
   background-color: var(--color-danger-hover);
+  border-color: var(--color-danger-hover);
+  background-size: 0% 0%;
 }
 
 /* Menú hamburguesa */
@@ -216,7 +219,7 @@ p {
 .container-web {
   max-width: 1200px;
   margin: 1rem auto;
-  padding: 2rem 1rem;
+  padding: 4rem 0;
 }
 
 /* Ocultar un componente */
@@ -226,12 +229,6 @@ p {
 
 /* Texto centrado */
 .text-center { text-align: center; }
-
-/* Grid */
-/* .grid {
-  display: grid;
-  grid-gap: 1.5rem;
-} */
 
 /* GRID para las Tarjetas de los Animales */
 .grid-tarjetas-animales {
@@ -478,4 +475,17 @@ select option:checked {
   z-index: 1;
   text-align: center;
   color: var(--color-white);
+}
+
+/* TRANSICIONES */
+.fade-in {
+    padding: 4rem 0;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
 }
