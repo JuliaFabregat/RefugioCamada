@@ -84,7 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit">Entrar</button>
         </form>
         <br>
-        <p>¿No tienes cuenta? <a href="register.php">Regístrate aquí</a></p>
+        <p>¿No tienes cuenta? <a href="registro.php">Regístrate aquí</a></p>
+        <p><a href="cambiar-pass.php">Olvidé mi contraseña</a></p>
     </div>
 </body>
 

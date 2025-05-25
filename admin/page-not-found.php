@@ -22,9 +22,7 @@ $section     = '';
 <main>
   <div class="container">
     <h1>¡Lo siento! Rex no ha podido olfatear esta página.</h1>
-    <p>Intenta volver al <a href="index.php">inicio</a> o mándanos un e-mail:
-      <a href="mailto:contacto@refugiocamada.org">contacto@refugiocamada.org</a>
-    </p>
+    <p>Intenta volver al <a href="index.php">inicio</a> o contacta al programador encargado.</p>
   </div>
 </main>
 

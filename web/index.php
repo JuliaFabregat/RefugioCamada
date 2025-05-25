@@ -11,9 +11,9 @@ $imagenes = array_filter($imagenes, function ($img) {
 });
 
 shuffle($imagenes);
-$imagenes = array_slice($imagenes, 0, 6); // Solo 6 imágenes
+$imagenes = array_slice($imagenes, 0, 6); // Solo 6 animales
 
-$title = 'Refugio Camada - Inicio';
+$title = 'Inicio - Refugio Camada';
 $description = 'Bienvenid@ al Refugio Camada en Baena.';
 ?>
 
@@ -61,8 +61,8 @@ $description = 'Bienvenid@ al Refugio Camada en Baena.';
 </section>
 
 <!-- Ventajas de adoptar con Camada -->
-<section class="ventajas">
-    <div class="container-web">
+<section>
+    <div class="container-web ventajas">
         <h2>Por qué adoptar con Camada</h2>
         <div class="ventajas-grid">
             <div class="card">
@@ -92,7 +92,8 @@ $description = 'Bienvenid@ al Refugio Camada en Baena.';
 <!-- Adoptar -->
 <section class="cta-adoptar">
     <div class="container-web text-center">
-        <h2>¿List@ para adoptar?</h2>
+        <h2>¿Quieres adoptar?</h2>
+        <p>Mira nuestros animales refugiados y encuentra tu compañero ideal.</p>
         <div class="galeria-adopcion">
             <?php foreach ($imagenes as $img): ?>
                 <div class="img-wrapper">
@@ -146,26 +147,9 @@ $description = 'Bienvenid@ al Refugio Camada en Baena.';
         </div>
 </section>
 
-<section>
-    <div class="animal-cta">
-        <div class="animal-cta__overlay"></div>
-        <div class="animal-cta__contenido">
-            <h2>¿Tienes alguna duda?</h2>
-            <a href="contacto.php" class="button aceptar">Contáctanos</a>
-        </div>
-    </div>
-</section>
+<?php include '../includes/contacto-ctp.php'; ?>
 
 <?php include '../includes/footer-web.php'; ?>
 
-<script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const item = btn.closest('.faq-item');
-            item.classList.toggle('active');
-            document.querySelectorAll('.faq-item').forEach(other => {
-                if (other !== item) other.classList.remove('active');
-            });
-        });
-    });
-</script>
+<!-- Scripts -->
+<script src="../js/web/index-faq.js" defer></script>

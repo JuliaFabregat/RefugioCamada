@@ -150,12 +150,6 @@ $section     = 'descripcionAnimal';
     <?php endif; ?>
 </main>
 
-<section class="animal-cta">
-    <div class="animal-cta__overlay"></div>
-    <div class="animal-cta__contenido">
-        <h2>¿Tienes alguna duda?</h2>
-        <a href="contacto.php" class="button aceptar">Contáctanos</a>
-    </div>
-</section>
+<?php include '../includes/contacto-ctp.php'; ?>
 
 <?php include '../includes/footer-web.php'; ?>

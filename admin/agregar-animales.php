@@ -360,7 +360,7 @@ $section = 'agregarAnimales';
     </form>
 </main>
 
-<!-- Script -->
-<script src="../js/agregar-animal.js"></script>
-
 <?php include '../includes/footer.php'; ?>
+
+<!-- Script -->
+<script src="../js/admin/agregar-animal.js" defer></script>

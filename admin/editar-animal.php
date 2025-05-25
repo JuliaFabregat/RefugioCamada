@@ -233,7 +233,7 @@ $section = 'listaAnimales';
     </form>
 </main>
 
-<!-- Script -->
-<script src="../js/editar-animal.js"></script>
-
 <?php include '../includes/footer.php'; ?>
+
+<!-- Script -->
+<script src="../js/admin/editar-animal.js"></script>

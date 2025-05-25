@@ -15,11 +15,14 @@
     <link rel="stylesheet" href="../css/styles.css">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/png" href="../img/logoColor_blank.png" alt="Logotipo Camada">
+    <link rel="shortcut icon" type="image/png" href="../img/logo_huella_color.png" alt="Logotipo Camada">
+
+    <!-- CSS FAS FA -->
+    <script src="https://kit.fontawesome.com/01030022b5.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <header>
+    <header class="header-sticky">
         <div class="header-div">
             <div class="logo">
                 <a href="../web/index.php"><img src="../img/logoCompleto.png" alt="Camada Refugio"></a>

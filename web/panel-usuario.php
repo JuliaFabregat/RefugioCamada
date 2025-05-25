@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 session_start();
 require '../includes/database-connection.php';
@@ -32,39 +33,45 @@ $description = 'Panel de los Usuarios del Refugio Camada.';
 
 <!-- HTML -->
 <?php include '../includes/header-web.php'; ?>
-<main class="container">
-    <h1>Mi perfil</h1>
 
-    <section>
-        <h2>Bienvenido, <?= htmlspecialchars($user['nombre']) . ' ' . htmlspecialchars($user['apellidos'])?></h2>
-        <p><strong>Email:</strong> <?= htmlspecialchars($user['email']) ?></p>
-    </section>
-    
-    <section>
-        <h2>Mis solicitudes de adopción</h2>
-        <?php if (!$solicitudes): ?>
-            <p>No has realizado ninguna solicitud aún.</p>
-        <?php else: ?>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Animal</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($solicitudes as $s): ?>
+<link rel="stylesheet" href="../css/web/panel-usuario.css">
+
+<main>
+    <div class="container">
+        <h1>Mi perfil</h1>
+
+        <section>
+            <h2>Bienvenido, <?= htmlspecialchars($user['nombre']) . ' ' . htmlspecialchars($user['apellidos']) ?></h2>
+            <p><strong>Email:</strong> <?= htmlspecialchars($user['email']) ?></p>
+        </section>
+
+        <section>
+            <h2>Mis solicitudes de adopción</h2>
+            <?php if (!$solicitudes): ?>
+                <p>No has realizado ninguna solicitud aún.</p>
+            <?php else: ?>
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td><a href="animal-web.php?id=<?= $s['animal_id'] ?>">
-                                    <?= htmlspecialchars($s['animal_nombre']) ?></a></td>
-                            <td><?= htmlspecialchars($s['fecha']) ?></td>
-                            <td><?= htmlspecialchars($s['resolucion']) ?></td>
+                            <th>Animal</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    </section>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($solicitudes as $s): ?>
+                            <tr>
+                                <td><a href="animal-web.php?id=<?= $s['animal_id'] ?>">
+                                        <?= htmlspecialchars($s['animal_nombre']) ?></a></td>
+                                <td><?= htmlspecialchars($s['fecha']) ?></td>
+                                <td><?= htmlspecialchars($s['resolucion']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </section>
+    </div>
 </main>
+
 <?php include '../includes/footer-web.php'; ?>

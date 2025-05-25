@@ -25,13 +25,10 @@
     margin: 0;
 }
 
-.historia-grid {
-    padding: 4rem 0;
-}
-
 /*  VENTAJAS  */
 .ventajas {
-    background-color: rgb(204, 204, 204);
+    background-color: var(--color-bg);
+    padding-top: 0;
 }
 
 .ventajas h2 {
@@ -59,15 +56,6 @@
     margin-bottom: 0.5rem;
 }
 
-.card {
-    transition: 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--box-shadow-large);
-}
-
 /*  CTA ADOPTAR  */
 .cta-adoptar {
     background: var(--color-accent);
@@ -75,6 +63,11 @@
 }
 
 .cta-adoptar h2 {
+    margin-bottom: 1.5rem;
+    color: var(--color-white);
+}
+
+.cta-adoptar p {
     margin-bottom: 1.5rem;
     color: var(--color-white);
 }

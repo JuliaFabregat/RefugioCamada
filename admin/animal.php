@@ -63,7 +63,6 @@ $section = "descripcionAnimal";
 <link rel="stylesheet" href="../css/web/animal-web.css">
 
 <main>
-
     <div class="container">
         <!-- IMAGEN -->
         <div class="detalles-animal">
@@ -149,7 +148,7 @@ $section = "descripcionAnimal";
 
 </main>
 
-<!-- Scripts -->
-<script src="../js/animal.js" defer></script>
-
 <?php include '../includes/footer.php'; ?>
+
+<!-- Scripts -->
+<script src="../js/admin/animal.js" defer></script>

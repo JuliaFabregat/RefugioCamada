@@ -11,17 +11,6 @@
     padding: 0;
 }
 
-.hero-about-contenido p {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    color: var(--color-white);
-}
-
-/* Acerca de */
-.historia {
-    padding: 4rem 0;
-}
-
 .historia-grid {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
@@ -36,8 +25,9 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.historia-texto h2 {
-    margin-bottom: 1rem;
+.historia-texto h1 {
+    margin: 0;
+    padding: 0;
     color: var(--color-accent);
 }
 
@@ -111,6 +101,24 @@
 .grid {
     display: grid;
     grid-gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background: var(--color-white);
+    border-radius: var(--radius);
+}
+
+.card h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.card p {
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 20px;
 }
 
 /* Contacto */

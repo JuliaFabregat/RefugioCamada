@@ -216,9 +216,9 @@ $section     = 'listaAnimales';
     </div>
 </main>
 
-<!-- Scripts -->
-<script src="../js/eliminar-animal.js" defer></script>
-<script src="../js/lista-animales.js" defer></script>
-<script src="../js/mensaje-exito.js" defer></script>
-
 <?php include '../includes/footer.php'; ?>
+
+<!-- Scripts -->
+<script src="../js/admin/eliminar-animal.js" defer></script>
+<script src="../js/admin/lista-animales.js" defer></script>
+<script src="../js/admin/mensaje-exito.js" defer></script>

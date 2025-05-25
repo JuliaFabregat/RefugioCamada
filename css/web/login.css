@@ -2,6 +2,7 @@
 body{
     background-color: var(--color-primary);
 }
+
 .login-container {
     max-width: 400px;
     margin: 5% auto;

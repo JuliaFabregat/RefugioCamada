@@ -41,6 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
+
+
+
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -53,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <div class="login-container">
-        <h1>Regístrate</h1>
+        <h1>Únete a la camada</h1>
 
         <?php foreach ($errors as $e): ?>
             <p class="error"><?= htmlspecialchars($e, ENT_QUOTES, 'UTF-8') ?></p>
