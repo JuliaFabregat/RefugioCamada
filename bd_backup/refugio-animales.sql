@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-05-2025 a las 22:26:34
+-- Tiempo de generación: 26-05-2025 a las 21:53:32
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,12 +47,13 @@ CREATE TABLE `animales` (
 INSERT INTO `animales` (`id`, `nombre`, `edad`, `genero`, `estado`, `joined`, `especie_id`, `raza_id`, `vet_data_id`, `imagen_id`) VALUES
 (23, 'Warrior', 'Cachorro (6 meses)', 'Macho', 'Disponible', '2025-04-15 07:18:11', 1, 3, 5, 28),
 (24, 'Jinx', 'Joven (2 a&ntilde;os y 1 mes)', 'Hembra', 'Disponible', '2025-04-15 08:02:39', 2, 2, 6, 29),
-(25, 'Apicho', 'Adulto (2 a&ntilde;os)', 'Macho', 'Disponible', '2025-04-16 07:28:54', 6, 4, 7, 37),
+(25, 'Apicho', 'Adulto (3 a&ntilde;os)', 'Macho', 'Disponible', '2025-04-16 07:28:54', 6, 4, 7, 37),
 (26, 'Marlino', 'Cachorro (5 meses)', 'Macho', 'Disponible', '2025-04-26 08:19:01', 1, 5, 8, 31),
 (28, 'Phynx', 'Joven (3 a&ntilde;os)', 'Hembra', 'Adoptado', '2025-04-27 10:39:23', 2, 6, 10, 33),
-(33, 'Lola', 'Adulto (5 años)', 'Hembra', 'Disponible', '2025-05-02 08:13:44', 1, 7, 15, 42),
+(33, 'Lola', 'Adulto (5 años)', 'Hembra', 'Adoptado', '2025-05-02 08:13:44', 1, 7, 15, 42),
 (39, 'Gaty', 'Adulto (8 meses)', 'Macho', 'Disponible', '2025-05-16 15:44:48', 2, 8, 21, 51),
-(40, 'Kenobi', 'Joven (3 a&ntilde;os)', 'Macho', 'Disponible', '2025-05-17 12:14:29', 2, 9, 22, 52);
+(40, 'Kenobii', 'Joven (3 a&ntilde;os)', 'Macho', 'Disponible', '2025-05-17 12:14:29', 2, 9, 22, 52),
+(41, 'Medivh', 'Joven (4 a&ntilde;os)', 'Macho', 'Disponible', '2025-05-25 09:00:43', 2, 10, 23, 53);
 
 -- --------------------------------------------------------
 
@@ -102,7 +103,8 @@ INSERT INTO `imagenes` (`id`, `imagen`, `alt`) VALUES
 (37, 'apicho_681335dcd7503.jpg', 'Apicho'),
 (42, 'lola_68147eb8c0274.jpg', 'Perro: Yorkshire'),
 (51, 'gaty_68275d706e012.jpg', 'Gato: Naranja Comun'),
-(52, 'kenoby_68287da5226c8.jpeg', 'Gato: Atigrado');
+(52, 'kenoby_68287da5226c8.jpeg', 'Gato: Atigrado'),
+(53, 'medivh_6832dc3b96baf.jpeg', 'Gato: Bombay');
 
 -- --------------------------------------------------------
 
@@ -129,7 +131,8 @@ INSERT INTO `raza` (`id`, `nombre`, `especie_id`) VALUES
 (6, 'Esfinge', 2),
 (7, 'Yorkshire', 1),
 (8, 'Naranja Comun', 2),
-(9, 'Atigrado', 2);
+(9, 'Atigrado', 2),
+(10, 'Bombay', 2);
 
 -- --------------------------------------------------------
 
@@ -151,7 +154,9 @@ CREATE TABLE `solicitudes_adopcion` (
 
 INSERT INTO `solicitudes_adopcion` (`id`, `id_animal`, `id_usuario`, `fecha`, `resolucion`) VALUES
 (2, 26, 2, '2025-05-16 13:48:47', 'Denegada'),
-(3, 28, 2, '2025-05-16 14:05:33', 'Aceptada');
+(3, 28, 2, '2025-05-16 14:05:33', 'Aceptada'),
+(4, 33, 2, '2025-05-25 11:59:15', 'Aceptada'),
+(5, 40, 2, '2025-05-26 19:47:30', 'En proceso');
 
 -- --------------------------------------------------------
 
@@ -175,7 +180,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `email`, `password`, `admin`, `created_at`) VALUES
 (1, 'Administrador', 'Camada', 'admin@refugiocamada.org', '$2y$10$SNWgvo5RkhChuS677RWRjugsn30NvIerBcU7T63tgqe6y8fGZF7di', 1, '2025-05-16 12:13:18'),
-(2, 'Alfonso', 'Reverte', 'alfonso@gmail.com', '$2y$10$6qDidZBxm/9WmRdzxzaP2O2YmPT2YsNyRG4Km.PndaVAkknXzhHTW', 0, '2025-05-16 13:31:26');
+(2, 'Alfonso', 'Reverte', 'alfonso@gmail.com', '$2y$10$Xz.akyBhgPEWZBjt4QdveeNpdp9CYVLl4l8E7s8o4XPU9GPWf1A56', 0, '2025-05-16 13:31:26');
 
 -- --------------------------------------------------------
 
@@ -203,7 +208,8 @@ INSERT INTO `vet_data` (`id`, `microchip`, `castracion`, `vacunas`, `info_adicio
 (10, 1, 1, 'Trivalente', 'Problemas de piel leves.'),
 (15, 1, 0, 'N/E', 'N/E'),
 (21, 1, 1, 'Todas', 'Obesidad'),
-(22, 1, 1, 'Todas', 'La fuerza le acompa&ntilde;a');
+(22, 1, 1, 'Todas', 'La fuerza le acompa&ntilde;a'),
+(23, 1, 1, 'Todas', 'Es mago');
 
 --
 -- Índices para tablas volcadas
@@ -268,7 +274,7 @@ ALTER TABLE `vet_data`
 -- AUTO_INCREMENT de la tabla `animales`
 --
 ALTER TABLE `animales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `especies`
@@ -280,19 +286,19 @@ ALTER TABLE `especies`
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de la tabla `raza`
 --
 ALTER TABLE `raza`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitudes_adopcion`
 --
 ALTER TABLE `solicitudes_adopcion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -304,7 +310,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `vet_data`
 --
 ALTER TABLE `vet_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Restricciones para tablas volcadas
