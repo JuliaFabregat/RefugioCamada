@@ -86,6 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <br>
         <p>¿No tienes cuenta? <a href="registro.php">Regístrate aquí</a></p>
         <p><a href="cambiar-pass.php">Olvidé mi contraseña</a></p>
+        <p><a href="index.php">Volver al Refugio</a></p>
     </div>
 </body>
 

@@ -57,8 +57,8 @@ $params['off'] = $offset;
 $animales      = pdo($pdo, $sql, $params)->fetchAll();
 
 // Datos de la página
-$title       = 'Adopta un animal';
-$description = 'Descubre a nuestros peludos disponibles';
+$title       = html_escape('Adopta - Refugio Camada');
+$description = html_escape('Descubre a nuestros peludos disponibles');
 $section     = 'webAnimales';
 ?>
 

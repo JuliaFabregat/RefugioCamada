@@ -63,7 +63,7 @@ $next = pdo($pdo, "SELECT id FROM animales WHERE id > :id ORDER BY id ASC  LIMIT
 
 // Datos
 $title       = html_escape($animal['nombre']);
-$description = "Detalles de {$animal['nombre']}";
+$description = html_escape("Detalles de {$animal['nombre']}");
 $section     = 'descripcionAnimal';
 ?>
 

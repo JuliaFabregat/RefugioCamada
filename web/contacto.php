@@ -58,8 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-$title = 'Contacto - Refugio Camada';
-$description = 'Contacto del Refugio Camada.';
+$title = html_escape('Contacto - Refugio Camada');
+$description = html_escape('Contacto del Refugio Camada.');
+$section     = 'contacto';
 ?>
 
 

@@ -13,8 +13,8 @@ $imagenes = array_filter($imagenes, function ($img) {
 shuffle($imagenes);
 $imagenes = array_slice($imagenes, 0, 6); // Solo 6 animales
 
-$title = 'Inicio - Refugio Camada';
-$description = 'Bienvenid@ al Refugio Camada en Baena.';
+$title = html_escape('Inicio - Refugio Camada');
+$description = html_escape('Bienvenid@ al Refugio Camada en Baena.');
 ?>
 
 

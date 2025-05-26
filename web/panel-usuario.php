@@ -24,8 +24,9 @@ $sql = "SELECT s.id, s.fecha, s.resolucion,
         ORDER BY s.fecha DESC";
 $solicitudes = pdo($pdo, $sql, ['uid' => $userId])->fetchAll();
 
-$title = 'Panel de Usuario - Refugio Camada';
-$description = 'Panel de los Usuarios del Refugio Camada.';
+$title = html_escape('Panel de Usuario - Refugio Camada');
+$description = html_escape('Panel de los Usuarios del Refugio Camada.');
+$section = 'Panel de Usuario';
 ?>
 
 

@@ -288,7 +288,7 @@ $section = 'agregarAnimales';
         <div class="campo">
             <label>Edad:</label>
             <input type="text" name="edad" value="<?= html_escape($animal['edad']) ?>"
-                placeholder="Ej: 2 años, 11 meses"> <br>
+                placeholder="Ej: 4 años, Jóven (2 años)"> <br>
             <span class="errors"><?= $errors['edad'] ?></span>
         </div>
 
