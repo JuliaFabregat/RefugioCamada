@@ -2,24 +2,16 @@
 .admin-dashboard {
     display: flex;
     gap: 2rem;
-    margin-top: 2rem;
 }
 
 .dashboard-izq {
     flex: 1 1 auto;
-
-    h2 {
-        margin-top: 1rem;
-    }
 }
 
 .dashboard-der {
     margin-top: 2rem;
-    flex: 0 0 250px;
-    max-width: 250px;
-    background: var(--color-bg);
-    border: 1px solid #cfcfcf;
-    border-radius: 12px;
+    max-width: 300px;
+    border-radius: var(--radius);
     padding: 1rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -34,74 +26,16 @@
     color: var(--color-primary);
 }
 
-.ultimos-animales {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.tarjeta-animal {
-    background: var(--color-white);
-    overflow: hidden;
-    text-align: center;
-    padding: 0.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    will-change: transform, box-shadow;
-}
-
-.tarjeta-animal:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
-
-.tarjeta-animal img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.tarjeta-animal h3 {
-    margin-top: 1rem;
-    color: var(--color-accent) !important;
-}
-
-.tarjeta-animal:hover h3,
-.tarjeta-animal a:hover h3 {
-    color: var(--color-accent) !important;
-    text-decoration: none !important;
-}
-
-.animal-card p {
-    color: var(--color-primary);
-    margin: 0;
-}
-
-.tarjeta-animal>a {
-    text-decoration: none !important;
-}
-
-.ultimos-animales-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
+/* Info Refugio */
 .refugio-info {
-    margin-top: 2rem;
-    background: var(--color-white);
+    margin-top: 1rem;
+    background: var(--color-accent);
     padding: 1.5rem;
-    border-radius: var(--radius);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .refugio-info h2 {
     margin-bottom: 1rem;
-    color: var(--color-accent);
+    color: var(--color-white);
     font-size: 1.6rem;
 }
 
@@ -113,10 +47,10 @@
 
 .refugio-info ul li {
     margin-bottom: 0.5rem;
-    color: var(--color-primary);
+    color: var(--color-white);
     font-size: 0.95rem;
 }
 
 .refugio-info ul li strong {
-    color: var(--color-dark);
+    color: var(--color-white);
 }

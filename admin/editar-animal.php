@@ -1,17 +1,10 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
+require __DIR__ . '/../includes/admin-auth.php';
 require '../includes/database-connection.php';
 require '../includes/functions.php';
 
-// Sesión
-session_start();
-
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header('Location: login.php');
-    exit;
-}
-
-// Validar id
+// Validar id del animal
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
     redirect('lista-animales.php');
@@ -38,70 +31,73 @@ $razas = pdo($pdo, $sqlRazas, ['especie_id' => $animal['especie_id']])->fetchAll
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // ————————————————————————
-    // 1) Campos básicos
-    // ————————————————————————
     $nombre       = filter_input(INPUT_POST, 'nombre', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $edad         = filter_input(INPUT_POST, 'edad', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $estado       = filter_input(INPUT_POST, 'estado', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $raza_id      = filter_input(INPUT_POST, 'raza_id', FILTER_VALIDATE_INT);
     $raza_nombre  = filter_input(INPUT_POST, 'raza_nombre', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    // Actualizar datos del animal (sin tocar imagen aún)
-    pdo($pdo, "UPDATE animales 
+    // Actualizar datos del animal
+    pdo(
+        $pdo,
+        "UPDATE animales 
                 SET nombre = :nombre, edad = :edad, estado = :estado, raza_id = :raza_id 
-                WHERE id = :id", 
-        compact('nombre','edad','estado','raza_id','id')
+                WHERE id = :id",
+        compact('nombre', 'edad', 'estado', 'raza_id', 'id')
     );
     if ($raza_nombre) {
-        pdo($pdo, "UPDATE raza SET nombre = :nombre WHERE id = :raza_id",
-            ['nombre'=>$raza_nombre,'raza_id'=>$raza_id]
+        pdo(
+            $pdo,
+            "UPDATE raza SET nombre = :nombre WHERE id = :raza_id",
+            ['nombre' => $raza_nombre, 'raza_id' => $raza_id]
         );
     }
 
-    // 2) Subir imagen (si existe)
+    // Subir imagen si se ha seleccionado una nueva
     if (!empty($_FILES['nueva_imagen']['name']) && $_FILES['nueva_imagen']['error'] === UPLOAD_ERR_OK) {
         $tmp       = $_FILES['nueva_imagen']['tmp_name'];
         $fileName  = $_FILES['nueva_imagen']['name'];
         $ext       = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
         $mime      = mime_content_type($tmp);
-        $allowed   = ['jpg','jpeg','png'];
+        $allowed   = ['jpg', 'jpeg', 'png'];
         $maxSize   = 2 * 1024 * 1024;
 
-        if (in_array($ext, $allowed, true)
-         && preg_match('#^image/#', $mime)
-         && $_FILES['nueva_imagen']['size'] <= $maxSize
-         && getimagesize($tmp)
+        if (
+            in_array($ext, $allowed, true)
+            && preg_match('#^image/#', $mime)
+            && $_FILES['nueva_imagen']['size'] <= $maxSize
+            && getimagesize($tmp)
         ) {
-            // construir nombre único
-            $base = preg_replace('/[^a-z0-9]+/i','_', $nombre);
-            $nuevoNombre = strtolower(trim($base,'_')) . '_' . uniqid() . ".$ext";
+            // Nombre del archivo
+            $base = preg_replace('/[^a-z0-9]+/i', '_', $nombre);
+            $nuevoNombre = strtolower(trim($base, '_')) . '_' . uniqid() . ".$ext";
             $destino     = __DIR__ . '/../uploads/' . $nuevoNombre;
 
             if (move_uploaded_file($tmp, $destino)) {
-                // 2.1) insertar en imágenes
+                // Insertar en imágenes
                 pdo($pdo, "INSERT INTO imagenes (imagen, alt) VALUES (:img, :alt)", [
                     'img' => $nuevoNombre,
                     'alt' => $nombre
                 ]);
                 $newImgId = $pdo->lastInsertId();
 
-                // 2.2) actualizar FK en animales
+                // Actualizar FK en animales
                 pdo($pdo, "UPDATE animales SET imagen_id = :imgId WHERE id = :id", [
                     'imgId' => $newImgId,
                     'id'    => $id
                 ]);
 
-                // 2.3) eliminar antigua imagen sólo **DESPUÉS** de actualizar FK
+                // Eliminar antigua imagen *DESPUÉS* de actualizar FK
                 if ($animal['imagen_id']) {
-                    // nombre de fichero antiguo
-                    $oldFile = pdo($pdo,
+                    // Nombre de img antiguo
+                    $oldFile = pdo(
+                        $pdo,
                         "SELECT imagen FROM imagenes WHERE id = :id",
                         ['id' => $animal['imagen_id']]
                     )->fetchColumn();
-                    // borrar fichero
+                    // Borrar fichero
                     @unlink(__DIR__ . '/../uploads/' . $oldFile);
-                    // borrar fila en imágenes
+                    // Borrar fila en imágenes
                     pdo($pdo, "DELETE FROM imagenes WHERE id = :id", [
                         'id' => $animal['imagen_id']
                     ]);
@@ -120,25 +116,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         pdo($pdo, "UPDATE vet_data 
                     SET microchip=:microchip, castracion=:castracion, vacunas=:vacunas, info_adicional=:info 
                     WHERE id=:vid", [
-            'microchip'=> $microchip,
-            'castracion'=> $castracion,
-            'vacunas'=> $vacunas,
-            'info'=> $info,
-            'vid'=> $animal['vet_data_id']
+            'microchip' => $microchip,
+            'castracion' => $castracion,
+            'vacunas' => $vacunas,
+            'info' => $info,
+            'vid' => $animal['vet_data_id']
         ]);
     } else {
-        pdo($pdo, "INSERT INTO vet_data (microchip, castracion, vacunas, info_adicional) 
-                   VALUES (:microchip, :castracion, :vacunas, :info)", 
-            compact('microchip','castracion','vacunas','info')
+        pdo(
+            $pdo,
+            "INSERT INTO vet_data (microchip, castracion, vacunas, info_adicional) 
+                   VALUES (:microchip, :castracion, :vacunas, :info)",
+            compact('microchip', 'castracion', 'vacunas', 'info')
         );
     }
 
     redirect('lista-animales.php?mensaje=modificado');
 }
 
-// Datos para el header
-$title = 'Editar Animal';
-$description = 'Formulario para editar datos del animal';
+// Datos
+$title = html_escape("Editar a {$animal['nombre']}");
+$description = html_escape('Formulario para editar datos del animal');
 $section = 'listaAnimales';
 ?>
 
@@ -151,20 +149,20 @@ $section = 'listaAnimales';
 <!-- CSS -->
 <link rel="stylesheet" href="../css/admin/editar-animal.css">
 
-<main class="formDiv" id="content">
+<main class="formDiv">
 
     <form method="POST" enctype="multipart/form-data">
-
-    
-        <h1>Editar Animal</h1>
+        <h1>Editar a <?= html_escape($animal['nombre']) ?></h1>
 
         <!-- Imagen del animal -->
         <div class="campo">
             <label for="imagen-input" class="imagen-label">
-                <img src="../uploads/<?= html_escape($animal['image_file'] ?? 'blank.jpg') ?>"
-                    alt="<?= html_escape($animal['nombre']) ?>"
-                    class="animal-imagen-clickable">
-                <span class="overlay">Cambiar imagen</span>
+                <div class="imagen-container">
+                    <img src="../uploads/<?= html_escape($animal['image_file'] ?? 'blank.jpg') ?>"
+                        alt="<?= html_escape($animal['nombre']) ?>"
+                        class="animal-imagen-clickable">
+                    <span class="overlay">Cambiar imagen</span>
+                </div>
             </label>
             <input type="file" name="nueva_imagen" id="imagen-input" accept="image/*" class="hidden">
         </div>
@@ -179,9 +177,11 @@ $section = 'listaAnimales';
             <input type="text" name="edad" value="<?= $animal['edad'] ?? '' ?>">
         </div>
 
+        <!-- Como ahora lo controlamos mediante la lista de solicitudes ocultamos el campo -->
+        <!-- Mejora: Quitarlo de la consulta o hacerlo block -->
         <div class="campo">
-            <label>Estado:</label>
-            <select name="estado" required>
+            <label class="ocultar">Estado:</label>
+            <select name="estado" class="ocultar" required>
                 <option value="Disponible" <?= ($animal['estado'] === 'Disponible') ? 'selected' : '' ?>>Disponible</option>
                 <option value="En proceso" <?= ($animal['estado'] === 'En proceso') ? 'selected' : '' ?>>En proceso</option>
                 <option value="Adoptado" <?= ($animal['estado'] === 'Adoptado') ? 'selected' : '' ?>>Adoptado</option>
@@ -207,6 +207,9 @@ $section = 'listaAnimales';
         <br>
 
         <h2>Ficha Veterinaria</h2>
+
+        <br>
+
         <div class="detalle-vet">
             <div class="campo">
                 <label><input type="checkbox" name="microchip" <?= $animal['microchip'] ? 'checked' : '' ?>>Microchip</label>
@@ -228,22 +231,9 @@ $section = 'listaAnimales';
         <a href="lista-animales.php" class="button cancelar">Cancelar</a>
 
     </form>
-
-    <!-- Script -->
-    <script src="../js/editar-animal.js"></script>
-
-    <script>
-        document.getElementById('imagen-input').addEventListener('change', function(e) {
-        const file = this.files[0];
-        
-        if (!file) return;
-        const img = document.querySelector('.animal-imagen-clickable');
-        const reader = new FileReader();
-
-        reader.onload = () => img.src = reader.result;
-        reader.readAsDataURL(file);
-        });
-    </script>
 </main>
 
 <?php include '../includes/footer.php'; ?>
+
+<!-- Script -->
+<script src="../js/admin/editar-animal.js"></script>

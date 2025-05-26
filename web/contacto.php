@@ -1,27 +1,30 @@
 <?php
-// Conexiones
+// contacto.php
 require '../includes/functions.php';
 
-// Inicializar variables
+// Detectamos el modal
+$mostrarModal = isset($_GET["enviado"]) && $_GET["enviado"] == "1";
+
 $nombre = "";
 $email = "";
 $mensaje = "";
+$asunto = "";
 $errores = [
     "nombre" => "",
     "email" => "",
-    "mensaje" => ""
+    "mensaje" => "",
+    "asunto" => "",
+    "terminos" => ""
 ];
 
-// Validación del formulario
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Validar nombre
     if (empty(trim($_POST["nombre"]))) {
         $errores["nombre"] = "El nombre es obligatorio.";
     } else {
         $nombre = htmlspecialchars(trim($_POST["nombre"]));
     }
 
-    // Validar email
     if (empty(trim($_POST["email"]))) {
         $errores["email"] = "El email es obligatorio.";
     } elseif (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
@@ -30,24 +33,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $email = htmlspecialchars(trim($_POST["email"]));
     }
 
-    // Validar mensaje
     if (empty(trim($_POST["mensaje"]))) {
         $errores["mensaje"] = "El mensaje no puede estar vacío.";
     } else {
         $mensaje = htmlspecialchars(trim($_POST["mensaje"]));
     }
 
-    // Si no hay errores
-    if (!array_filter($errores)) {
-        echo "<p style='color: green; text-align: center;'>¡Gracias por tu mensaje!</p>";
+    if (empty(trim($_POST["asunto"]))) {
+        $errores["asunto"] = "El asunto es obligatorio.";
+    } else {
+        $asunto = htmlspecialchars(trim($_POST["asunto"]));
+    }
 
-        // Resetear valores después de enviar
-        $nombre = $email = $mensaje = "";
+    if (!isset($_POST["terminos"])) {
+        $errores["terminos"] = "Debes aceptar los términos y condiciones.";
+    }
+
+    // Si todo está bien, redirigir a enviar.php
+    if (!array_filter($errores)) {
+        session_start();
+        $_SESSION["form_data"] = compact("nombre", "email", "mensaje", "asunto");
+        header("Location: enviar.php");
+        exit;
     }
 }
 
-$title = 'Contacto - Refugio Camada';
-$description = 'Contacto del Refugio Camada.';
+$title = html_escape('Contacto - Refugio Camada');
+$description = html_escape('Contacto del Refugio Camada.');
+$section     = 'contacto';
 ?>
 
 
@@ -56,63 +69,96 @@ $description = 'Contacto del Refugio Camada.';
 <!-- HTML -->
 <?php include '../includes/header-web.php'; ?>
 
-<!-- CSS -->
 <link rel="stylesheet" href="../css/web/contacto.css">
 
-<!-- Hero Section -->
 <section class="hero-contacto">
     <div class="hero-contacto-contenido">
         <h1>Contacto</h1>
     </div>
 </section>
 
-<!-- Contact Form + Info -->
-<section class="container contacto-grid">
+<section>
+    <div class="container contacto-grid">
+        <div class="contacto-form">
+            <!-- Modal del envío del formulario -->
+            <?php if ($mostrarModal): ?>
+                <div id="modal-enviado" class="modal">
+                    <div class="modal-contenido">
+                        <p>¡Formulario enviado correctamente!</p>
+                        <button id="cerrar-modal" class="button">Cerrar</button>
+                    </div>
+                </div>
+            <?php endif; ?>
 
-    <!-- Formulario -->
-    <div class="contacto-form">
-        <h2>Escríbenos</h2>
-        <form action="https://formsubmit.co/juliaperfabregat@gmail.com" method="POST">
-            <div class="campo">
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" required>
+
+            <h2>Escríbenos</h2>
+            <form method="POST" novalidate>
+                <div class="campo">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" value="<?= html_escape($nombre) ?>">
+                    <?php if ($errores['nombre']): ?>
+                        <p class="error"><?= $errores['nombre'] ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="campo">
+                    <label for="asunto">Asunto</label>
+                    <input type="text" id="asunto" name="asunto" value="<?= html_escape($asunto) ?>">
+                    <?php if ($errores['asunto']): ?>
+                        <p class="error"><?= $errores['asunto'] ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="campo">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="<?= html_escape($email) ?>">
+                    <?php if ($errores['email']): ?>
+                        <p class="error"><?= $errores['email'] ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="campo">
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="mensaje"><?= html_escape($mensaje) ?></textarea>
+                    <?php if ($errores['mensaje']): ?>
+                        <p class="error"><?= $errores['mensaje'] ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="campo campo-inline">
+                    <input type="checkbox" id="terminos" name="terminos" <?= isset($_POST["terminos"]) ? "checked" : "" ?>>
+                    <p class="terms">Acepto los términos y condiciones.</p>
+                </div>
+                <?php if ($errores['terminos']): ?>
+                    <p class="error"><?= $errores['terminos'] ?></p>
+                <?php endif; ?>
+
+                <button type="submit" class="button aceptar">Enviar</button>
+            </form>
+        </div>
+
+        <div class="info-container">
+            <div class="refugio-info">
+                <h2>Información del refugio</h2>
+                <p>
+                    <span class="material-icons">email</span>
+                    <a href="mailto:contacto@refugiocamada.org">contacto@refugiocamada.org</a>
+                </p>
+                <p>
+                    <span class="material-icons">call</span>
+                    <a href="tel:+34600123456">+34 600 123 456</a>
+                </p>
+                <p>
+                    <span class="material-icons">location_on</span>
+                    Avenida Castro del Río 15, Baena
+                </p>
+                <p>
+                    <span class="material-icons">schedule</span>
+                    Lun a Vie de 9 a 17hs
+                </p>
             </div>
-
-            <div class="campo">
-                <label for="asunto">Asunto</label>
-                <input type="text" id="asunto" name="asunto" required>
-            </div>
-
-            <div class="campo">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-
-            <div class="campo">
-                <label for="mensaje">Mensaje</label>
-                <textarea id="mensaje" name="mensaje" required></textarea>
-            </div>
-
-            <div class="campo campo-inline">
-                <input type="checkbox" id="terminos" name="terminos" required>
-                <p for="terminos">Acepto los términos y condiciones.</p>
-            </div>
-
-            <button type="submit" class="button aceptar">Enviar</button>
-        </form>
-    </div>
-
-    <!-- Información del refugio -->
-    <div class="info-container">
-        <div class="refugio-info">
-            <h2>Información del refugio</h2>
-            <p><strong>Email:</strong> contacto@refugio-camada.es</p>
-            <p><strong>Teléfono:</strong> +34 600 123 456</p>
-            <p><strong>Ubicación:</strong> Avenida Castro del Río 15, Baena</p>
-            <p><strong>Horario:</strong> Lun a Vie de 9 a 17hs</p>
         </div>
     </div>
-
 </section>
 
 <!-- Mapa -->
@@ -124,3 +170,6 @@ $description = 'Contacto del Refugio Camada.';
 </section>
 
 <?php include '../includes/footer-web.php'; ?>
+
+<!-- Scripts -->
+<script src="../js/web/contacto.js" defer></script>

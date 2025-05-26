@@ -1,3 +1,4 @@
+// Filtros de raza y nombre
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('filtroForm');
     const sel = document.getElementById('especie');

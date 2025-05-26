@@ -1,5 +1,4 @@
 <?php
-
 function is_number($number, $min = 0, $max = 100): bool {
     return ($number >= $min && $number <= $max);
 }

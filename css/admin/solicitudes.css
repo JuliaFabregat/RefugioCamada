@@ -1,0 +1,34 @@
+.status-aceptada {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-enproceso {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-denegada {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.btn-primary{
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.btn-primary:hover{
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-secondary{
+    background-color: var(--color-danger);
+    border-color: var(--color-danger);
+}
+
+.btn-secondary:hover{
+    background-color: var(--color-danger-hover);
+    border-color: var(--color-danger-hover);
+}

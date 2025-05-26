@@ -1,7 +1,6 @@
 /* Contenedor principal */
 .container {
     max-width: 1200px;
-    margin: 2rem auto;
     padding: 0 1rem;
 }
 
@@ -46,6 +45,10 @@
     overflow-wrap: anywhere;
 }
 
+.animal-acciones {
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
 /* Título */
 .animal-info h1 {
     margin-bottom: 1rem;
@@ -115,8 +118,8 @@
     width: 100vw;
     left: 50%;
     margin-left: -50vw;
-    height: 300px;
-    background: url('../img/tu-foto-animal.jpg') center/cover no-repeat;
+    height: 400px;
+    background: url('../../img/index-contacto.jpg') center/cover no-repeat;
 }
 
 .animal-cta__overlay {
@@ -133,13 +136,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: var(--color-white);
-    padding: 0 2rem;
+    padding: 4rem 0;
 }
 
 .animal-cta__contenido h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
+    color: var(--color-white);
 }
 
 /* Responsive */
@@ -157,4 +160,24 @@
         flex-wrap: wrap;
         justify-content: flex-start;
     }
+}
+
+.solicitud-adopcion {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.mensaje {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.login-requerido {
+    color: var(--color-accent);
+}
+
+.no-disponible {
+    color: gray;
 }

@@ -6,169 +6,18 @@
 /**********************/
 :root {
   --color-primary: #344e41;
-  --color-accent:  #588157;
-  --color-bg:   #f2f2f2;
-  --color-dark:    #2b2b2b;
-  --color-white:   #ffffff;
+  --color-accent: #588157;
+  --color-bg: #f2f2f2;
+  --color-dark: #2b2b2b;
+  --color-white: #ffffff;
   --color-grey: #dbdbdb;
-  --color-danger:  #dc3545;
+  --color-danger: #dc3545;
   --color-danger-hover: #9a031e;
 
   /* Tipografía, fuente, transición por defecto */
-  --font-base:       'Nunito', sans-serif;
-  --radius:          8px;
+  --font-base: 'Nunito', sans-serif;
+  --radius: 8px;
   --transition-fast: 0.3s ease;
-}
-
-/**********************/
-/* ESTILOS GENERALES  */
-/**********************/
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background-color: var(--color-bg);
-  font-family: var(--font-base);
-  font-size: 100%;
-}
-
-/* Enlaces */
-a {
-  color: var(--color-accent);
-}
-
-/* Texto */
-h1 {
-  font-size: 2em;
-  font-weight: 600;
-  color: var(--color-primary);
-}
-
-h2{
-  font-size: 1.8rem;
-  color: var(--color-accent);
-}
-
-h3{
-  font-size: 1.6rem;
-  color: var(--color-accent);
-}
-
-p {
-  margin: 0 0 1em 0;
-  color: var(--color-primary);
-}
-
-/* Contenedor */
-.container {
-  max-width: 1200px;
-  margin: 2rem auto 2rem auto;
-  padding: 0 1rem;
-}
-
-.container-web {
-  max-width: 1200px;
-  margin: 1rem auto;
-  padding: 2rem 1rem;
-}
-
-/* Márgenes */
-.mt-1 { margin-top: 1rem; }
-.mt-2 { margin-top: 2rem; }
-.mb-1 { margin-bottom: 1rem; }
-.mb-2 { margin-bottom: 2rem; }
-
-/* Texto centrado */
-.text-center { text-align: center; }
-
-/* Grid */
-.grid {
-  display: grid;
-  grid-gap: 1.5rem;
-}
-
-/* Card */
-.card {
-  background: var(--color-white);
-  border-radius: var(--radius);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  padding: 2rem;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-}
-
-/* Botones (GENERAL) */
-.button {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius);
-  border: 1px solid transparent;
-  text-decoration: none !important;
-  font-size: 1rem;
-  transition: background var(--transition-fast), border-color var(--transition-fast);
-}
-
-/* Botones (TEXTO) Aceptar - Cancelar */
-.button.aceptar {
-  background: var(--color-accent);
-  color: var(--color-white);
-  margin-right: 1rem;
-}
-
-.button.aceptar:hover {
-  background: var(--color-primary);
-  color: var(--color-white);
-}
-
-.button.cancelar {
-  background: var(--color-danger);
-  color: var(--color-white);
-  margin-right: 1rem;
-}
-
-.button.cancelar:hover {
-  background: var(--color-danger-hover);
-}
-
-/* Botones (ICONOS) Editar - Eliminar */
-.btn-edit,
-.btn-delete {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.2rem;
-    height: 2.2rem;
-    border-radius: var(--radius);
-    background-color: var(--color-accent);
-    color: var(--color-white);
-    text-decoration: none !important;
-    transition: background-color 0.2s;
-}
-
-.btn-edit:hover {
-    color: var(--color-white);
-    background-color: var(--color-primary);
-}
-
-.btn-delete {
-    background-color: var(--color-danger);
-}
-
-.btn-delete:hover {
-    color: var(--color-white);
-    background-color: var(--color-danger-hover);
-}
-
-.btn-edit .material-icons,
-.btn-delete .material-icons {
-    font-size: 1.2rem;
-    line-height: 1;
 }
 
 /**********************/
@@ -176,39 +25,41 @@ p {
 /**********************/
 header {
   background-color: var(--color-primary);
-  color:var(--color-white);
+  color: var(--color-white);
 }
 
-header .container {
+.header-div {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
+  padding: 0rem 8rem;
+  height: 70px;
+  width: auto;
 }
 
-.logo img {
+header .logo img {
   max-height: 40px;
 }
 
-/* HEADER-WEB */
-.header-web nav ul {
-  gap: 1.5rem;
+.header-sticky {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: var(--color-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.header-web .logo img {
-  max-height: 50px;
-}
-
-@media (max-width:768px) {
+@media (max-width:500px) {
   .header-web nav ul.show {
-      flex-direction: column;
-      background: var(--color-primary);
-      padding: 1rem;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
+    flex-direction: column;
+    background: var(--color-primary);
+    padding: 1rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
   }
 }
 
@@ -226,7 +77,9 @@ nav ul {
 
 nav ul li a {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   padding: 0.4rem 0.7rem;
   font-weight: 500;
   color: var(--color-white);
@@ -254,19 +107,21 @@ nav ul li a.on {
   border-bottom-color: transparent;
 }
 
-nav ul li .btn-danger {
+nav ul li a.btn-danger {
   color: var(--color-white);
   background-color: var(--color-danger);
   padding: 0.4rem 0.7rem;
   font-size: 0.9rem;
   font-weight: bold;
+  transition: 0.3s ease;
 }
 
-nav ul li .btn-danger:hover {
+nav ul li a.btn-danger:hover {
   color: var(--color-white);
   background-color: var(--color-danger-hover);
+  border-color: var(--color-danger-hover);
+  background-size: 0% 0%;
 }
-
 
 /* Menú hamburguesa */
 .menu-toggle {
@@ -302,6 +157,223 @@ nav ul li .btn-danger:hover {
 }
 
 /**********************/
+/* ESTILOS GENERALES  */
+/**********************/
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  font-family: var(--font-base);
+  font-size: 100%;
+}
+
+main {
+  margin: 2rem 0;
+}
+
+/* Enlaces */
+a {
+  color: var(--color-accent);
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
+.a-blanco {
+  color: var(--color-white);
+}
+
+.a-blanco:hover {
+  font-weight: 800;
+  color: var(--color-white);
+}
+
+/* Encabezados y párrafos */
+h1 {
+  font-size: 2em;
+  margin: 1rem 0;
+  color: var(--color-primary);
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: var(--color-accent);
+  margin-top: 0.8rem;
+}
+
+h3 {
+  font-size: 1.6rem;
+  color: var(--color-accent);
+}
+
+p {
+  color: var(--color-primary);
+}
+
+.errors {
+  color: var(--color-danger);
+}
+
+/* Contenedor general*/
+.container {
+  max-width: 1200px;
+  margin: 2rem auto 2rem auto;
+  padding: 0 1rem;
+}
+
+.container-web {
+  max-width: 1200px;
+  margin: 1rem auto;
+  padding: 3rem 2rem;
+}
+
+/* Ocultar un componente */
+.ocultar {
+  display: none;
+}
+
+/* Texto centrado */
+.text-center {
+  text-align: center;
+}
+
+/* GRID para las Tarjetas de los Animales */
+.grid-tarjetas-animales {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Tarjetas para los Animales */
+.tarjeta-animal {
+  background: var(--color-white);
+  overflow: hidden;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  will-change: transform, box-shadow;
+}
+
+.tarjeta-animal:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.tarjeta-animal img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.tarjeta-animal h3 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tarjeta-animal p {
+  line-height: 0.4rem;
+}
+
+.tarjeta-animal:hover h3,
+.tarjeta-animal a:hover h3 {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.tarjeta-animal>a {
+  text-decoration: none;
+}
+
+/* Tarjetas generales */
+.card {
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--box-shadow-large);
+}
+
+/* Botones (GENERAL) */
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  text-decoration: none !important;
+  font-size: 1rem;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+/* Botones (CONFIRMACIÓN) Aceptar - Cancelar */
+.button.aceptar {
+  background: var(--color-accent);
+  color: var(--color-white);
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.button.aceptar:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.button.cancelar {
+  background: var(--color-danger);
+  color: var(--color-white);
+  margin-right: 1rem;
+}
+
+.button.cancelar:hover {
+  background: var(--color-danger-hover);
+}
+
+/* Botones (ICONOS) Editar - Eliminar */
+.btn-edit,
+.btn-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: var(--radius);
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  text-decoration: none !important;
+  transition: background-color 0.2s;
+}
+
+.btn-edit:hover {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+}
+
+.btn-delete {
+  background-color: var(--color-danger);
+}
+
+.btn-delete:hover {
+  color: var(--color-white);
+  background-color: var(--color-danger-hover);
+}
+
+.btn-edit .material-icons,
+.btn-delete .material-icons {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/**********************/
 /* FORMULARIOS        */
 /**********************/
 /* Contenedor principal */
@@ -309,7 +381,7 @@ nav ul li .btn-danger:hover {
   background: var(--color-white);
   padding: 2rem;
   border-radius: var(--radius);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 800px;
   margin: 2rem auto;
 }
@@ -317,7 +389,6 @@ nav ul li .btn-danger:hover {
 /* Hs */
 .formDiv h1 {
   margin-bottom: 1.5rem;
-  color: var(--color-primary);
 }
 
 /* Campos de los formularios */
@@ -371,7 +442,7 @@ select option:checked {
 .campo textarea:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px rgba(88,129,87,0.2);
+  box-shadow: 0 0 0 2px rgba(88, 129, 87, 0.2);
 }
 
 /* Checkboxes */
@@ -392,6 +463,11 @@ select option:checked {
 .campo-inline input[type="checkbox"] {
   margin-right: 0.5rem;
   margin-bottom: 0;
+}
+
+/* Errores */
+.error {
+  color: var(--color-danger);
 }
 
 /**********************/
@@ -427,4 +503,55 @@ select option:checked {
   z-index: 1;
   text-align: center;
   color: var(--color-white);
+}
+
+/* TRANSICIONES */
+.fade-in {
+  padding: 4rem 0;
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+#btnScrollTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 10000;
+
+  transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease;
+}
+
+#btnScrollTop:hover {
+  background-color: var(--color-accent);
+}
+
+/* Activa el botón visible */
+#btnScrollTop.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 require '../includes/database-connection.php';
 require '../includes/functions.php';
@@ -7,7 +8,7 @@ require '../includes/functions.php';
 $selectedSpecies = $_GET['especie'] ?? '';
 $searchName      = trim($_GET['nombre']  ?? '');
 $page            = max(1, (int)($_GET['p'] ?? 1));
-$perPage         = 20;  // <-- ahora 20 por página
+$perPage         = 8; // Animales por página
 
 // Obtener especies
 $sqlEspeces = "SELECT id, especie FROM especies ORDER BY especie";
@@ -56,8 +57,8 @@ $params['off'] = $offset;
 $animales      = pdo($pdo, $sql, $params)->fetchAll();
 
 // Datos de la página
-$title       = 'Adopta un animal';
-$description = 'Descubre a nuestros peludos disponibles';
+$title       = html_escape('Adopta - Refugio Camada');
+$description = html_escape('Descubre a nuestros peludos disponibles');
 $section     = 'webAnimales';
 ?>
 
@@ -67,79 +68,74 @@ $section     = 'webAnimales';
 <!-- HTML -->
 <?php include '../includes/header-web.php'; ?>
 
-<!-- <link rel="stylesheet" href="../css/admin/index.css"> -->
 <link rel="stylesheet" href="../css/web/lista-animales-web.css">
+<link rel="stylesheet" href="../css/admin/lista-animales.css">
 
-<main class="container layout">
-    <section class="content">
+<main>
+    <div class="container">
+        <section class="lista-animales">
 
-        <h1>Animales en Adopción</h1>
+            <h1>Animales en Adopción</h1>
 
-        <form id="filtroForm" class="filtros">
-            <div>
-                <label for="especie">Especie:</label>
-                <select name="especie" id="especie">
-                    <option value="">Todas</option>
-                    <?php foreach ($especies as $esp): ?>
-                        <option value="<?= $esp['id'] ?>"
-                            <?= $selectedSpecies == $esp['id'] ? 'selected' : '' ?>>
-                            <?= html_escape($esp['especie']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+            <form id="filtroForm" class="divFiltro">
+                <div class="campo">
+                    <label for="especie">Especie:</label>
+                    <select name="especie" id="especie">
+                        <option value="">Todas</option>
+                        <?php foreach ($especies as $esp): ?>
+                            <option value="<?= $esp['id'] ?>"
+                                <?= $selectedSpecies == $esp['id'] ? 'selected' : '' ?>>
+                                <?= html_escape($esp['especie']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" name="nombre" id="nombre"
+                        value="<?= html_escape($searchName) ?>"
+                        placeholder="Buscar por nombre…">
+                </div>
+            </form>
+
+            <div class="grid-tarjetas-animales">
+                <?php if (!$animales): ?>
+                    <p>No hay resultados.</p>
+                <?php endif; ?>
+
+                <?php foreach ($animales as $a): ?>
+                    <article class="tarjeta-animal">
+                        <a href="animal-web.php?id=<?= $a['id'] ?>">
+                            <img src="../uploads/<?= html_escape($a['image_file'] ?: 'blank.jpg') ?>"
+                                alt="<?= html_escape($a['image_alt'] ?: $a['nombre']) ?>">
+                            <h2><?= html_escape($a['nombre']) ?></h2>
+                            <p><strong>Especie:</strong> <?= html_escape($a['especie']) ?></p>
+                            <p><strong>Raza:</strong> <?= html_escape($a['raza']) ?></p>
+                        </a>
+                    </article>
+                <?php endforeach; ?>
             </div>
-            <div>
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" id="nombre"
-                    value="<?= html_escape($searchName) ?>"
-                    placeholder="Buscar por nombre…">
-            </div>
-        </form>
 
-        <div class="grid-animales">
-            <?php if (!$animales): ?>
-                <p>No hay resultados.</p>
+            <?php if ($pages > 1): ?>
+                <nav class="paginacion">
+                    <?php for ($p = 1; $p <= $pages; $p++): ?>
+                        <a href="?<?= http_build_query([
+                                        'especie' => $selectedSpecies,
+                                        'nombre' => $searchName,
+                                        'p'      => $p
+                                    ]) ?>"
+                            class="<?= $p === $page ? 'active' : '' ?>">
+                            <?= $p ?>
+                        </a>
+                    <?php endfor; ?>
+                </nav>
             <?php endif; ?>
 
-            <?php foreach ($animales as $a): ?>
-                <article class="tarjeta-animal">
-                    <a href="animal-web.php?id=<?= $a['id'] ?>">
-                        <img src="../uploads/<?= html_escape($a['image_file'] ?: 'blank.jpg') ?>"
-                            alt="<?= html_escape($a['image_alt'] ?: $a['nombre']) ?>">
-                        <h2><?= html_escape($a['nombre']) ?></h2>
-                        <p><strong>Especie:</strong> <?= html_escape($a['especie']) ?></p>
-                        <p><strong>Raza:</strong> <?= html_escape($a['raza']) ?></p>
-                    </a>
-                </article>
-            <?php endforeach; ?>
-        </div>
-
-        <?php if ($pages > 1): ?>
-            <nav class="paginacion">
-                <?php for ($p = 1; $p <= $pages; $p++): ?>
-                    <a href="?<?= http_build_query([
-                                    'especie' => $selectedSpecies,
-                                    'nombre' => $searchName,
-                                    'p'      => $p
-                                ]) ?>"
-                        class="<?= $p === $page ? 'active' : '' ?>">
-                        <?= $p ?>
-                    </a>
-                <?php endfor; ?>
-            </nav>
-        <?php endif; ?>
-
-    </section>
-
-    <aside class="sidebar">
-        <h3>Lee también</h3>
-        <ul>
-            <li><a href="/web/quienes-somos.php">Quiénes somos</a></li>
-            <li><a href="/web/contacto.php">Contáctanos</a></li>
-            <li><a href="/web/adopta/proceso-adopcion.php">Proceso de adopción</a></li>
-        </ul>
-    </aside>
+        </section>
+    </div>
 </main>
 
-<script src="../js/lista-animales-web.js" defer></script>
 <?php include '../includes/footer-web.php'; ?>
+
+<!-- Scripts -->
+<script src="../js/web/lista-animales-web.js" defer></script>

@@ -1,16 +1,10 @@
 <?php
 declare(strict_types = 1);
+require __DIR__ . '/../includes/admin-auth.php';
 require '../includes/database-connection.php';
 require '../includes/functions.php';
 
-// Sesión
-session_start();
-
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header('Location: login.php');
-    exit;
-}
-
+// Obtenemos el id del animal a eliminar
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
     redirect('lista-animales.php');
@@ -57,7 +51,7 @@ try {
     if ($vet_data_id) {
         $sql_delete_vet = "DELETE FROM vet_data WHERE id = :vet_data_id";
         pdo($pdo, $sql_delete_vet, ['vet_data_id' => $vet_data_id]);
-    }
+    } 
 
     redirect('lista-animales.php', ['success' => "Animal {$result['nombre']} eliminado correctamente"]);
 } catch (PDOException $e) {

@@ -16,17 +16,7 @@ main {
     background-color: var(--color-primary);
     color: var(--color-white);
     text-align: center;
-    padding: 0.75rem 0;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-}
-
-.admin-footer .footer-link {
-    color: var(--color-white);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.admin-footer .footer-link:hover {
-    text-decoration: underline;
+    height: 70px;
+    align-items: center;
+    display: flex;
 }
