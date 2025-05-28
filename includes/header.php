@@ -62,10 +62,10 @@
           </li>
 
           <!-- Sólo si hay un usuario logueado -->
-          <?php if (isset($_SESSION['user_id'])): ?>
+          <?php if (isset($_SESSION['usuario_id'])): ?>
             <li>
               <a href="../web/logout.php" class="btn btn-danger">
-                Logout (<?= htmlspecialchars($_SESSION['user_name'], ENT_QUOTES, 'UTF-8') ?>)
+                Logout (<?= htmlspecialchars($_SESSION['usuario_nombre'], ENT_QUOTES, 'UTF-8') ?>)
               </a>
             </li>
           <?php endif; ?>

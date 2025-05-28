@@ -110,6 +110,10 @@
     max-width: 90%;
 }
 
+.modal-contenido p{
+    color: var(--color-primary);
+}
+
 .modal .button {
     margin-top: 1rem;
     color: var(--color-white);

@@ -36,11 +36,11 @@
                     <li><a href="contacto.php">CONTACTO</a></li>
                     <!-- ICONO DE LOGIN/USUARIO -->
                     <?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
-                    <?php if (isset($_SESSION['user_id'])): ?>
+                    <?php if (isset($_SESSION['usuario_id'])): ?>
                         <li>
                             <a href="panel-usuario.php" title="Mi perfil">
                                 <span class="material-icons">account_circle</span>
-                                <?= htmlspecialchars($_SESSION['user_name'], ENT_QUOTES, 'UTF-8') ?>
+                                <?= htmlspecialchars($_SESSION['usuario_nombre'], ENT_QUOTES, 'UTF-8') ?>
                             </a>
                         </li>
                         <li>

@@ -2,9 +2,9 @@
 session_start();
 
 if (
-    !isset($_SESSION['user_id'])
- || !isset($_SESSION['is_admin'])
- || $_SESSION['is_admin'] !== true 
+    !isset($_SESSION['usuario_id'])
+ || !isset($_SESSION['usuario_admin'])
+ || $_SESSION['usuario_admin'] !== true 
 ) {
     // redirigimos fuera del admin
     header('Location: ../web/index.php');

@@ -4,6 +4,10 @@
     padding: 0 1rem;
 }
 
+.animal-web {
+    margin-top: 8rem;
+}
+
 /* Volver / Siguiente juntos y centrados */
 .nav-animal {
     display: flex;

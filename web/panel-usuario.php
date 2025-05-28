@@ -1,29 +1,30 @@
 <?php
-
 declare(strict_types=1);
 session_start();
 require '../includes/database-connection.php';
 require '../includes/functions.php';
+require_once '../models/Usuario.php';
+require_once '../models/SolicitudAdopcion.php';
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['usuario_id'])) {
     header('Location: login.php');
     exit;
 }
 
-// Datos del usuario
-$userId = $_SESSION['user_id'];
-$sql = "SELECT nombre, apellidos, email FROM usuarios WHERE id = :id";
-$user = pdo($pdo, $sql, ['id' => $userId])->fetch();
+$userId = $_SESSION['usuario_id'];
+
+$user = Usuario::obtenerPorId($pdo, $userId);
+
+if (!$user) {
+    // Si no se encuentra el usuario, redirigir al login o mostrar error
+    header('Location: login.php');
+    exit;
+}
 
 // Sus solicitudes de adopción
-$sql = "SELECT s.id, s.fecha, s.resolucion,
-               a.nombre AS animal_nombre, a.id AS animal_id
-        FROM solicitudes_adopcion s
-        JOIN animales a ON s.id_animal = a.id
-        WHERE s.id_usuario = :uid
-        ORDER BY s.fecha DESC";
-$solicitudes = pdo($pdo, $sql, ['uid' => $userId])->fetchAll();
+$solicitudes = SolicitudAdopcion::obtenerPorUsuario($pdo, $userId);
 
+// Datos
 $title = html_escape('Panel de Usuario - Refugio Camada');
 $description = html_escape('Panel de los Usuarios del Refugio Camada.');
 $section = 'Panel de Usuario';
@@ -42,13 +43,13 @@ $section = 'Panel de Usuario';
         <h1>Mi perfil</h1>
 
         <section>
-            <h2>Bienvenido, <?= htmlspecialchars($user['nombre']) . ' ' . htmlspecialchars($user['apellidos']) ?></h2>
-            <p><strong>Email:</strong> <?= htmlspecialchars($user['email']) ?></p>
+            <h2>Bienvenido, <?= htmlspecialchars($user->getNombre()) . ' ' . htmlspecialchars($user->getApellidos()) ?></h2>
+            <p><strong>Email:</strong> <?= htmlspecialchars($user->getEmail()) ?></p>
         </section>
 
         <section>
             <h2>Mis solicitudes de adopción</h2>
-            <?php if (!$solicitudes): ?>
+            <?php if (empty($solicitudes)): ?>
                 <p>No has realizado ninguna solicitud aún.</p>
             <?php else: ?>
                 <table class="table">
@@ -60,14 +61,16 @@ $section = 'Panel de Usuario';
                         </tr>
                     </thead>
                     <tbody>
+                    <tbody>
                         <?php foreach ($solicitudes as $s): ?>
                             <tr>
-                                <td><a href="animal-web.php?id=<?= $s['animal_id'] ?>">
-                                        <?= htmlspecialchars($s['animal_nombre']) ?></a></td>
+                                <td><?= htmlspecialchars($s['animal_nombre']) ?></td>
                                 <td><?= htmlspecialchars($s['fecha']) ?></td>
                                 <td><?= htmlspecialchars($s['resolucion']) ?></td>
                             </tr>
                         <?php endforeach; ?>
+                    </tbody>
+
                     </tbody>
                 </table>
             <?php endif; ?>

@@ -26,7 +26,6 @@ body{
 }
 
 .login-container .form-control {
-    margin-bottom: 1rem;
     padding: 0.75rem;
     width: 100%;
     border: 1px solid #ced4da;
@@ -65,4 +64,17 @@ body{
 }
 .error.hidden {
     opacity: 0;
+}
+
+.success {
+    background-color: #d4edda;
+    color: var(--color-primary);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 1em;
+    border: 1px solid #c3e6cb;
+}
+
+.btnLogin{
+    margin-top: 1rem;
 }

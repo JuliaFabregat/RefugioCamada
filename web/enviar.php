@@ -6,7 +6,7 @@ if (!isset($_SESSION["form_data"])) {
 }
 
 $data = $_SESSION["form_data"];
-unset($_SESSION["form_data"]); // Limpiar para evitar reenvíos
+unset($_SESSION["form_data"]);
 ?>
 
 <!-- HTML -->

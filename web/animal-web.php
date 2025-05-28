@@ -1,29 +1,21 @@
 <?php
+
 declare(strict_types=1);
 session_start();
 require '../includes/database-connection.php';
 require '../includes/functions.php';
+require_once '../models/Animal.php';
+require_once '../models/SolicitudAdopcion.php';
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
 if (!$id) {
+    // Redirige a página 404 si no hay ID válido
     include '../web/page-not-found.php';
     exit;
 }
 
-// Obtener datos del animal
-$sql = "SELECT 
-          a.*,
-          r.nombre AS raza,
-          e.especie, e.descripcion AS especie_descripcion,
-          i.imagen AS image_file, i.alt AS image_alt,
-          v.microchip, v.castracion, v.vacunas, v.info_adicional
-        FROM animales a
-        JOIN especies e ON a.especie_id = e.id
-        JOIN raza r ON a.raza_id = r.id
-        LEFT JOIN imagenes i ON a.imagen_id = i.id
-        LEFT JOIN vet_data v ON a.vet_data_id = v.id
-        WHERE a.id = :id";
-$animal = pdo($pdo, $sql, ['id' => $id])->fetch();
+$animal = Animal::obtenerPorId($pdo, $id);
 if (!$animal) {
     include '../web/page-not-found.php';
     exit;
@@ -31,25 +23,15 @@ if (!$animal) {
 
 // Procesar solicitud si se envió
 $mensaje = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
-    // Verificar que no exista solicitud aceptada para este animal
-    $sqlAceptada = "SELECT COUNT(*) FROM solicitudes_adopcion WHERE id_animal = :aid AND resolucion = 'Aceptada'";
-    $tieneAceptada = pdo($pdo, $sqlAceptada, ['aid' => $id])->fetchColumn();
-
-    if ($tieneAceptada) {
-        $mensaje = 'Este animal ya fue adoptado, no puedes enviar otra solicitud.';
-    } else if ($animal['estado'] === 'Disponible' || $animal['estado'] === 'En proceso') {
-        $sql = "SELECT COUNT(*) FROM solicitudes_adopcion
-                WHERE id_usuario = :uid AND id_animal = :aid";
-        $params = ['uid' => $_SESSION['user_id'], 'aid' => $id];
-        $yaSolicitada = pdo($pdo, $sql, $params)->fetchColumn();
-
-        if ($yaSolicitada) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['usuario_id'])) {
+    if ($animal['estado'] === 'Disponible' || $animal['estado'] === 'En proceso') {
+        if (SolicitudAdopcion::yaAceptada($pdo, $id)) {
+            $mensaje = 'Este animal ya fue adoptado, no puedes enviar otra solicitud.';
+        } elseif (SolicitudAdopcion::yaSolicitada($pdo, $id, $_SESSION['usuario_id'])) {
             $mensaje = 'Ya has enviado una solicitud para este animal.';
         } else {
-            $sql = "INSERT INTO solicitudes_adopcion (id_usuario, id_animal, fecha, resolucion)
-                    VALUES (:uid, :aid, NOW(), 'En proceso')";
-            pdo($pdo, $sql, $params);
+            $solicitud = new SolicitudAdopcion($_SESSION['usuario_id'], $id);
+            $solicitud->guardar($pdo);
             $mensaje = 'Solicitud enviada correctamente. Te contactaremos pronto.';
         }
     } else {
@@ -58,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
 }
 
 // Anterior / siguiente
-$prev = pdo($pdo, "SELECT id FROM animales WHERE id < :id ORDER BY id DESC LIMIT 1", ['id' => $id])->fetchColumn();
-$next = pdo($pdo, "SELECT id FROM animales WHERE id > :id ORDER BY id ASC  LIMIT 1", ['id' => $id])->fetchColumn();
+$prev = Animal::obtenerAnterior($pdo, $id);
+$next = Animal::obtenerSiguiente($pdo, $id);
 
 // Datos
 $title       = html_escape($animal['nombre']);
@@ -75,7 +57,7 @@ $section     = 'descripcionAnimal';
 
 <link rel="stylesheet" href="../css/web/animal-web.css">
 
-<main class="container">
+<main class="container animal-web">
     <div class="nav-animal">
         <?php if ($prev): ?>
             <a href="?id=<?= $prev ?>">&lt; ANTERIOR</a>
@@ -133,7 +115,7 @@ $section     = 'descripcionAnimal';
         </div>
     </div>
 
-    <?php if (isset($_SESSION['user_id']) && $animal['estado'] === 'Disponible'): ?>
+    <?php if (isset($_SESSION['usuario_id']) && in_array($animal['estado'], ['Disponible', 'En proceso'])): ?>
         <div class="solicitud-adopcion">
             <?php if ($mensaje): ?>
                 <p class="mensaje"><?= html_escape($mensaje) ?></p>
@@ -143,9 +125,9 @@ $section     = 'descripcionAnimal';
                 </form>
             <?php endif; ?>
         </div>
-    <?php elseif (!isset($_SESSION['user_id'])): ?>
+    <?php elseif (!isset($_SESSION['usuario_id'])): ?>
         <p class="mensaje login-requerido">Inicia sesión para solicitar la adopción de este animal.</p>
-    <?php elseif ($animal['estado'] !== 'Disponible'): ?>
+    <?php elseif (!in_array($animal['estado'], ['Disponible', 'En proceso'])): ?>
         <p class="mensaje no-disponible">Este animal ya no está disponible para adopción.</p>
     <?php endif; ?>
 </main>
