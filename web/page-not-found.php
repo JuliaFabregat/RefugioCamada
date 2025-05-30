@@ -3,13 +3,15 @@ declare(strict_types=1);
 
 http_response_code(404);
 
-require_once '../includes/database-connection.php';
+require_once '../models/Conexion.php';
+$pdo = Conexion::obtenerConexion();
+
 require_once '../includes/functions.php';
 
 // Datos para la vista
+$title       = html_escape('Página no encontrada');
+$description       = html_escape('Página no encontrada');
 $section     = '';
-$title       = 'Página no encontrada';
-$description = '';
 ?>
 
 <!-- HTML -->

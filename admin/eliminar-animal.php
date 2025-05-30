@@ -1,8 +1,11 @@
 <?php
 declare(strict_types = 1);
 require __DIR__ . '/../includes/admin-auth.php';
-require '../includes/database-connection.php';
+require_once '../models/Conexion.php';
 require '../includes/functions.php';
+
+// Obtener conexión
+$pdo = Conexion::obtenerConexion();
 
 // Obtenemos el id del animal a eliminar
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
@@ -53,7 +56,7 @@ try {
         pdo($pdo, $sql_delete_vet, ['vet_data_id' => $vet_data_id]);
     } 
 
-    redirect('lista-animales.php', ['success' => "Animal {$result['nombre']} eliminado correctamente"]);
+    redirect('lista-animales.php', ['deleted' => "Animal {$result['nombre']} eliminado correctamente"]);
 } catch (PDOException $e) {
     redirect('lista-animales.php', ['error' => 'Error al eliminar: ' . $e->getMessage()]);
 }

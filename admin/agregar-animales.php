@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 require __DIR__ . '/../includes/admin-auth.php';
-require '../includes/database-connection.php';
-require '../includes/functions.php';
 require '../includes/validate.php';
+require_once '../models/Conexion.php';
+require '../includes/functions.php';
+
+// Obtener conexión
+$pdo = Conexion::obtenerConexion();
+
 
 // Obtenemos la lista de especies
 $sql_especies = "SELECT id, especie FROM especies ORDER BY especie";

@@ -1,45 +1,25 @@
 <?php
 
 declare(strict_types=1);
+
 require __DIR__ . '/../includes/admin-auth.php';
-require '../includes/database-connection.php';
-require '../includes/functions.php';
+require_once __DIR__ . '/../models/Conexion.php';
+require_once __DIR__ . '/../models/Animal.php';
+require_once __DIR__ . '/../includes/functions.php';
 
-// Consulta: últimos 4 animales
-$sql = "SELECT 
-            a.id, 
-            a.nombre, 
-            r.nombre AS raza,
-            a.edad, 
-            a.genero, 
-            a.joined,
-            e.especie AS especie,
-            i.imagen AS image_file,
-            i.alt AS image_alt
-        FROM animales AS a
-        JOIN especies AS e ON a.especie_id = e.id
-        JOIN raza AS r ON a.raza_id = r.id
-        LEFT JOIN imagenes AS i ON a.imagen_id = i.id
-        ORDER BY a.joined DESC
-        LIMIT 4;";
+// Obtener conexión
+$pdo = Conexion::obtenerConexion();
 
-$ultimosAnimales = pdo($pdo, $sql)->fetchAll();
+// Obtener últimos animales y estadísticas
+$ultimosAnimales = Animal::obtenerUltimos($pdo, 4);
+$estadisticas = Animal::obtenerEstadisticas($pdo);
 
-// Consulta: estadísticas del refugio
-$sqlTotal = "SELECT 
-                COUNT(*) AS total,
-                SUM(estado = 'Disponible') AS disponibles,
-                SUM(estado = 'En proceso') AS en_proceso,
-                SUM(estado = 'Adoptado') AS adoptados
-            FROM animales;";
-
-$estadisticas = pdo($pdo, $sqlTotal)->fetch();
-
-// Datos
+// Meta info
 $title = html_escape('Refugio Camada - Admin');
 $description = html_escape('Inicio del Administrador');
 $section = 'Inicio';
 ?>
+
 
 
 
@@ -97,7 +77,6 @@ $section = 'Inicio';
             <ul>
                 <li><b>Total de animales:</b> <?= $estadisticas['total'] ?></li>
                 <li><b>Disponibles:</b> <?= $estadisticas['disponibles'] ?></li>
-                <li><b>En proceso:</b> <?= $estadisticas['en_proceso'] ?></li>
                 <li><b>Adoptados:</b> <?= $estadisticas['adoptados'] ?></li>
             </ul>
         </aside>

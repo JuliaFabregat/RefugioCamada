@@ -1,8 +1,11 @@
 <?php
 declare(strict_types=1);
 require __DIR__ . '/../includes/admin-auth.php';
-require '../includes/database-connection.php';
+require_once '../models/Conexion.php';
 require '../includes/functions.php';
+
+// Obtener conexión
+$pdo = Conexion::obtenerConexion();
 
 // Validar id del animal
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);

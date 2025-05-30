@@ -4,6 +4,7 @@ require '../includes/functions.php';
 
 $title = 'Quiénes Somos - Refugio Camada';
 $description = 'Conoce la historia, misión y visión del Refugio Camada en Baena.';
+$section = 'quienesSomos';
 ?>
 
 

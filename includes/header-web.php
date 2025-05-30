@@ -1,3 +1,8 @@
+<?php
+$current = basename($_SERVER['PHP_SELF']);
+?>
+
+
 <!DOCTYPE html>
 <html lang="es-ES">
 
@@ -27,13 +32,16 @@
             <div class="logo">
                 <a href="../web/index.php"><img src="../img/logoCompleto.png" alt="Camada Refugio"></a>
             </div>
-            <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+
             <nav>
-                <ul>
-                    <li><a href="../web/index.php">INICIO</a></li>
-                    <li><a href="lista-animales-web.php">ADOPTA</a></li>
-                    <li><a href="quienes-somos.php">QUIÉNES SOMOS</a></li>
-                    <li><a href="contacto.php">CONTACTO</a></li>
+                <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+                    ☰
+                </button>
+                <ul id="menu">
+                    <li><a href="../web/index.php" class="<?= $current === 'index.php' ? 'on' : '' ?>">INICIO</a></li>
+                    <li><a href="lista-animales-web.php" class="<?= $current === 'lista-animales-web.php' ? 'on' : '' ?>">ADOPTA</a></li>
+                    <li><a href="quienes-somos.php" class="<?= $current === 'quienes-somos.php' ? 'on' : '' ?>">QUIÉNES SOMOS</a></li>
+                    <li><a href="contacto.php" class="<?= $current === 'contacto.php' ? 'on' : '' ?>">CONTACTO</a></li>
                     <!-- ICONO DE LOGIN/USUARIO -->
                     <?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
                     <?php if (isset($_SESSION['usuario_id'])): ?>
@@ -60,7 +68,9 @@
         </div>
     </header>
     <script>
-        document.querySelector('.menu-toggle').addEventListener('click', () => {
-            document.getElementById('menu-web').classList.toggle('show');
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.menu-toggle').addEventListener('click', () => {
+                document.getElementById('menu-web').classList.toggle('show');
+            });
         });
     </script>

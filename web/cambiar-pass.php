@@ -1,7 +1,11 @@
 <?php
+
 declare(strict_types=1);
 session_start();
-require '../includes/database-connection.php';
+
+require_once '../models/Conexion.php';
+$pdo = Conexion::obtenerConexion();
+
 require '../includes/functions.php';
 require '../models/Usuario.php';
 

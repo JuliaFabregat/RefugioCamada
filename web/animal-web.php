@@ -1,8 +1,13 @@
 <?php
 
 declare(strict_types=1);
-session_start();
-require '../includes/database-connection.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once '../models/Conexion.php';
+$pdo = Conexion::obtenerConexion();
+
 require '../includes/functions.php';
 require_once '../models/Animal.php';
 require_once '../models/SolicitudAdopcion.php';
@@ -11,13 +16,13 @@ $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 if (!$id) {
     // Redirige a página 404 si no hay ID válido
-    include '../web/page-not-found.php';
+    include 'page-not-found.php';
     exit;
 }
 
 $animal = Animal::obtenerPorId($pdo, $id);
 if (!$animal) {
-    include '../web/page-not-found.php';
+    include 'page-not-found.php';
     exit;
 }
 

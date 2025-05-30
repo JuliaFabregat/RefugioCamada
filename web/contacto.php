@@ -1,5 +1,4 @@
 <?php
-// contacto.php
 require '../includes/functions.php';
 
 // Detectamos el modal

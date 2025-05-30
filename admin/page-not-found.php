@@ -2,10 +2,11 @@
 declare(strict_types=1);
 http_response_code(404);
 require __DIR__ . '/../includes/admin-auth.php';
-require_once '../includes/database-connection.php';
-require_once '../includes/functions.php';
 
-$sql = "SELECT id, name FROM category WHERE navigation = 1;";
+require_once '../models/Conexion.php';
+$pdo = Conexion::obtenerConexion();
+
+require_once '../includes/functions.php';
 
 // Datos
 $title       = html_escape('Página no encontrada');

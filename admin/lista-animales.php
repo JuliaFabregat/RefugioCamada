@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 require __DIR__ . '/../includes/admin-auth.php';
-require '../includes/database-connection.php';
 require '../includes/functions.php';
+require_once '../models/Conexion.php';
+require_once '../models/Animal.php';
+
+// Obtener conexión
+$pdo = Conexion::obtenerConexion();
 
 // Filtros
 $especieSeleccionada = $_GET['especie'] ?? '';
@@ -21,38 +25,14 @@ if ($estadoSeleccionado !== '' && !in_array($estadoSeleccionado, $validarEstado,
 }
 
 // Consulta
-$sql = "SELECT 
-          a.id,
-          a.nombre,
-          a.edad,
-          a.estado,
-          e.especie,
-          i.imagen AS image_file
-        FROM animales AS a
-        JOIN especies AS e ON a.especie_id = e.id
-        LEFT JOIN imagenes AS i ON a.imagen_id = i.id";
+$filtros = [
+    'especie' => $especieSeleccionada,
+    'nombre'  => $buscarNombre,
+    'estado'  => $estadoSeleccionado
+];
 
-$condicion = [];
-$params = [];
+$animales = Animal::obtenerFiltrados($pdo, $filtros);
 
-if ($especieSeleccionada !== '') {
-    $condicion[]         = "e.id = :especie_id";
-    $params['especie_id'] = $especieSeleccionada;
-}
-if ($buscarNombre !== '') {
-    $condicion[]      = "a.nombre LIKE :nombre";
-    $params['nombre']  = '%' . $buscarNombre . '%';
-}
-if ($estadoSeleccionado !== '') {
-    $condicion[]      = "a.estado = :estado";
-    $params['estado']  = $estadoSeleccionado;
-}
-if ($condicion) {
-    $sql .= ' WHERE ' . implode(' AND ', $condicion);
-}
-$sql .= " ORDER BY a.nombre ASC";
-
-$animales = pdo($pdo, $sql, $params)->fetchAll();
 
 // Para el select de especies
 $sqlEspecies = "SELECT id, especie FROM especies ORDER BY especie ASC";
@@ -87,6 +67,13 @@ $section     = 'listaAnimales';
         <?php if (isset($_GET['success'])): ?>
             <div id="mensaje-exito" class="alert success">
                 ✅ Animal agregado correctamente.
+            </div>
+        <?php endif; ?>
+
+        <!-- Confirmación de animal agregado -->
+        <?php if (isset($_GET['deleted'])): ?>
+            <div id="mensaje-exito" class="alert success">
+                ✅ Animal eliminado correctamente.
             </div>
         <?php endif; ?>
 

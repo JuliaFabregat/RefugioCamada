@@ -3,6 +3,14 @@ require_once 'Conexion.php';
 
 class Auth
 {
+    // Asegura que la sesión esté iniciada
+    private static function asegurarSesion(): void
+    {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+    }
+
     // Intenta hacer login con email y contraseña
     public static function login(string $email, string $password): bool
     {
@@ -25,22 +33,25 @@ class Auth
     // Destruye la sesión para hacer logout
     public static function logout(): void
     {
-        session_start();
+        self::asegurarSesion();
         $_SESSION = [];
+        if (ini_get("session.use_cookies")) {
+            setcookie(session_name(), '', time() - 42000, '/');
+        }
         session_destroy();
     }
 
     // Comprueba si el usuario está logueado
     public static function isLoggedIn(): bool
     {
-        session_start();
+        self::asegurarSesion();
         return !empty($_SESSION['usuario_id']);
     }
 
     // Devuelve el nombre completo del usuario logueado
     public static function getUserName(): ?string
     {
-        session_start();
+        self::asegurarSesion();
         return $_SESSION['usuario_nombre'] ?? null;
     }
 }

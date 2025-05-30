@@ -1,53 +1,25 @@
 <?php
-
 declare(strict_types=1);
 require __DIR__ . '/../includes/admin-auth.php';
-require '../includes/database-connection.php';
-require '../includes/functions.php';
+require_once '../models/Conexion.php';
+require_once '../models/Animal.php';
+require_once '../includes/functions.php';
 
-// Validar ID del animal
+$pdo = Conexion::obtenerConexion();
+
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
     include 'page-not-found.php';
     exit;
 }
 
-// Obtener datos del animal
-$sql = "SELECT 
-            a.id, 
-            a.nombre, 
-            a.edad, 
-            a.genero, 
-            a.joined,
-            a.estado,
-            r.nombre AS raza,
-            e.especie,
-            e.descripcion AS especie_descripcion,
-            i.imagen AS image_file,
-            i.alt AS image_alt,
-            v.microchip,
-            v.castracion,
-            v.vacunas,
-            v.info_adicional
-        FROM animales AS a
-        LEFT JOIN raza AS r ON a.raza_id = r.id
-        LEFT JOIN especies AS e ON r.especie_id = e.id
-        LEFT JOIN imagenes AS i ON a.imagen_id = i.id
-        LEFT JOIN vet_data AS v ON a.vet_data_id = v.id
-        WHERE a.id = :id";
-
-$animal = pdo($pdo, $sql, ['id' => $id])->fetch();
-
+$animal = Animal::obtenerPorId($pdo, $id);
 if (!$animal) {
     include 'page-not-found.php';
     exit;
 }
 
-// Especies
-$sql_especies = "SELECT id, especie FROM Especies";
-$especies_nav = pdo($pdo, $sql_especies)->fetchAll();
-
-// Datos
+// Datos para la plantilla
 $title = html_escape("Info de {$animal['nombre']}");
 $description = html_escape("Detalles de {$animal['nombre']} - {$animal['raza']}{$animal['especie']}");
 $section = "descripcionAnimal";
@@ -64,23 +36,21 @@ $section = "descripcionAnimal";
 
 <main>
     <div class="container">
-        <!-- IMAGEN -->
         <div class="detalles-animal">
             <div class="animal-imagen">
                 <img src="../uploads/<?= html_escape($animal['image_file'] ?? 'blank.jpg') ?>"
-                    alt="<?= html_escape($animal['image_alt'] ?? 'Imagen de animal') ?>">
+                     alt="<?= html_escape($animal['image_alt'] ?? 'Imagen de animal') ?>">
             </div>
 
             <div class="animal-info">
-                <!-- BOTÓN DE EDICIÓN -->
                 <div class="animal-acciones">
                     <a href="editar-animal.php?id=<?= $animal['id'] ?>" class="btn-edit">
                         <span class="material-icons" aria-hidden="true">edit</span>
                     </a>
                     <a href="#" class="btn-delete"
-                        data-id="<?= $animal['id'] ?>"
-                        data-nombre="<?= html_escape($animal['nombre']) ?>"
-                        title="Eliminar">
+                       data-id="<?= $animal['id'] ?>"
+                       data-nombre="<?= html_escape($animal['nombre']) ?>"
+                       title="Eliminar">
                         <span class="material-icons" aria-hidden="true">delete</span>
                     </a>
                 </div>
@@ -123,12 +93,12 @@ $section = "descripcionAnimal";
             </div>
         </div>
 
-        <!-- Modal de eliminar -->
+        <!-- Modal eliminar -->
         <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalEliminarLabel">Confirmar eliminación</h5>
+                        <h5 class="modal-title">Confirmar eliminación</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -145,10 +115,7 @@ $section = "descripcionAnimal";
             </div>
         </div>
     </div>
-
 </main>
 
 <?php include '../includes/footer.php'; ?>
-
-<!-- Scripts -->
 <script src="../js/admin/animal.js" defer></script>

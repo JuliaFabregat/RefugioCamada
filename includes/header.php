@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  
+
   <header>
     <div class="header-div">
 
@@ -32,9 +32,10 @@
         <a href="index.php"><img src="../img/logoCompleto.png" alt="Logotipo Camada - Refugio Animales"></a>
       </div>
 
-      <button class="menu-toggle" aria-label="Abrir menú">☰</button>
-
       <nav>
+        <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+          ☰
+        </button>
         <ul id="menu">
           <li>
             <a href="index.php"
@@ -75,10 +76,9 @@
   </header>
 
   <script>
-    const toggleBtn = document.querySelector('.menu-toggle');
-    const menu = document.getElementById('menu');
-
-    toggleBtn.addEventListener('click', () => {
-      menu.classList.toggle('show');
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('.menu-toggle').addEventListener('click', () => {
+        document.getElementById('menu-web').classList.toggle('show');
+      });
     });
   </script>

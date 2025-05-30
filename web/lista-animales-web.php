@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
-require '../includes/database-connection.php';
+declare(strict_types=1);require_once '../models/Conexion.php';
+$pdo = Conexion::obtenerConexion();
 require '../includes/functions.php';
 require_once '../models/Animal.php';
 

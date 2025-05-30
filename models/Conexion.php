@@ -10,10 +10,10 @@ class Conexion {
             $port     = '';
             $charset  = 'utf8mb4';
 
-            // $username = 'testuser';
-            // $password = '1234';
-            $username = 'adminCamada';
-            $password = 'W-O5lPxxiFfntx3h';
+            $username = 'testuser';
+            $password = '1234';
+            // $username = 'adminCamada';
+            // $password = 'W-O5lPxxiFfntx3h';
 
             $options  = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

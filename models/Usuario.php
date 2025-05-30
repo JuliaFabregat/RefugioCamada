@@ -85,6 +85,19 @@ class Usuario
         $this->password = $password;
     }
 
+    // Crear usuario desde un array
+    private static function crearDesdeArray(array $row): self
+    {
+        return new self(
+            $row['nombre'],
+            $row['apellidos'],
+            $row['email'],
+            $row['password'],
+            (bool)$row['admin'],
+            (int)$row['id']
+        );
+    }
+
     // Validación de registro
     public function validarRegistro(): array
     {
@@ -103,42 +116,38 @@ class Usuario
         return $errores;
     }
 
-
     // Obtener usuario por ID
     public static function obtenerPorId(PDO $pdo, int $id): ?self
     {
-        $sql = "SELECT id, nombre, apellidos, email, password, admin FROM usuarios WHERE id = :id LIMIT 1";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(['id' => $id]);
-        $row = $stmt->fetch();
+        try {
+            $sql = "SELECT id, nombre, apellidos, email, password, admin FROM usuarios WHERE id = :id LIMIT 1";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            $row = $stmt->fetch();
 
-        if (!$row) {
+            return $row ? self::crearDesdeArray($row) : null;
+        } catch (PDOException $e) {
             return null;
         }
-
-        return new self(
-            $row['nombre'],
-            $row['apellidos'],
-            $row['email'],
-            $row['password'],
-            (bool)$row['admin'],
-            (int)$row['id']
-        );
     }
 
     // Insertar nuevo usuario
     public function registrar(PDO $pdo): void
     {
-        $sql = "INSERT INTO usuarios (nombre, apellidos, email, password, admin, created_at)
-                VALUES (:n, :a, :e, :p, 0, NOW())";
+        try {
+            $sql = "INSERT INTO usuarios (nombre, apellidos, email, password, admin, created_at)
+                VALUES (:nombre, :apellidos, :email, :password, 0, NOW())";
 
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            'n' => $this->nombre,
-            'a' => $this->apellidos,
-            'e' => $this->email,
-            'p' => password_hash($this->password, PASSWORD_DEFAULT)
-        ]);
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                'nombre' => $this->nombre,
+                'apellidos' => $this->apellidos,
+                'email' => $this->email,
+                'password' => password_hash($this->password, PASSWORD_DEFAULT)
+            ]);
+        } catch (PDOException $e) {
+            throw new Exception('Error al registrar usuario: ' . $e->getMessage());
+        }
     }
 
     // Registrar nuevo usuario si se cumplen las validaciones
@@ -163,8 +172,6 @@ class Usuario
         return $errores;
     }
 
-
-
     // Obtener usuario por email - para login
     public static function obtenerPorEmail(PDO $pdo, string $email): ?self
     {
@@ -177,23 +184,20 @@ class Usuario
             return null;
         }
 
-        return new self(
-            $row['nombre'],
-            $row['apellidos'],
-            $row['email'],
-            $row['password'],
-            (bool)$row['admin'],
-            (int)$row['id']
-        );
+        return $row ? self::crearDesdeArray($row) : null;
     }
 
     // Verifica si el email ya existe en la BD
     public function emailDuplicado(PDO $pdo): bool
     {
-        $sql = "SELECT COUNT(*) FROM usuarios WHERE email = :email";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(['email' => $this->email]);
-        return $stmt->fetchColumn() > 0;
+        try {
+            $sql = "SELECT COUNT(*) FROM usuarios WHERE email = :email";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['email' => $this->email]);
+            return $stmt->fetchColumn() > 0;
+        } catch (PDOException $e) {
+            return true;
+        }
     }
 
     // Cambiar contraseña - Usuario
