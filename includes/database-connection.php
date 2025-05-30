@@ -1,4 +1,6 @@
 <?php
+
+// YA NO SE USA, SE USA LA CLASE Conexion.php PERO SE MANTIENE PARA VER LA EVOLUCION DE LA CONEXIÓN
 $type     = 'mysql';
 $server   = 'localhost';
 $db       = 'refugio-animales';

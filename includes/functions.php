@@ -1,5 +1,5 @@
 <?php
-// Funciones de conexión a la base de datos
+// Funciones de conexión a la base de datos en caso de consultas directas
 function pdo(PDO $pdo, string $sql, array $arguments = null)
 {
     if (!$arguments) {
@@ -34,7 +34,7 @@ function redirect(string $location, array $parameters = [], $response_code = 302
     exit;
 }
 
-// ERRORES Y EXCEPCIONES
+// ERRORES Y EXCEPCIONES - Desarrollo
 // Convierte errores en excepciones
 set_error_handler('handle_error');
 function handle_error($error_type, $error_message, $error_file, $error_line)
